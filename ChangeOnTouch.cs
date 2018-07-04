@@ -6,8 +6,6 @@ using HoloToolkit.Unity;
 
 public class ChangeOnTouch : MonoBehaviour, IInputHandler, IFocusable, ISourceStateHandler {
 
-    Vector3 A;
-    Vector3 B;
     public float LerpSpeed = 2.5f;
     bool cubeOutward = true;
     InputEventData gazeData;
@@ -45,8 +43,6 @@ public class ChangeOnTouch : MonoBehaviour, IInputHandler, IFocusable, ISourceSt
     // Use this for initialization
     void Start () {
 
-        B = A;
-        A = transform.position;
 
 
 	}
