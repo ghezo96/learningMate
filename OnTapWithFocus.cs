@@ -38,9 +38,6 @@ public class OnTapWithFocus : MonoBehaviour, IInputHandler, IFocusable
         //objectFocus = true;
         resizeObject = true;
 
-
-
-
     }
 
     public void OnFocusExit()

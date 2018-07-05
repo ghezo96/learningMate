@@ -10,21 +10,19 @@ public class OnFocus : MonoBehaviour, IFocusable
 
 
 
-    bool moveCube = false;
+    bool onFocus = false;
 
 
     Vector3 currentCubePos;
     Vector3 restCubePos;
-    Vector3 targetVector;
+    Vector3 offsetVector;
 
-    public Vector3 cubeOffset = new Vector3(1f, 1f, 1f);
+    bool moveBack = false;
 
     //Vector3 closeCubePos = new Vector3(0f, 0f, 10f);
 
 
     float lerpSpeed = 5f;
-
-    bool completedLerp = false;
 
     //Vector3 Close;
     //Vector3 Far = new Vector3(0, 0, 6);
@@ -34,20 +32,21 @@ public class OnFocus : MonoBehaviour, IFocusable
     public void OnFocusEnter()
     {
         InputManager.Instance.PushModalInputHandler(gameObject);
-
-        moveCube = true;
+        onFocus = true;
+        StartCoroutine(CubeMovement());   
 
         //Close = transform.position - CameraCache.Main.transform.position;
         Debug.Log("Focusing on " + gameObject);
         //transform.position = Close;
-        InputManager.Instance.PushModalInputHandler(gameObject);
     }
 
     public void OnFocusExit()
     {
         InputManager.Instance.PopModalInputHandler();
 
-        moveCube = false;
+        onFocus = false;
+        moveBack = false;
+
 
 
         Debug.Log("Lost foucs on  " + gameObject);
@@ -60,43 +59,41 @@ public class OnFocus : MonoBehaviour, IFocusable
     {
         //transform.position = new Vector3(0, 0, 6);
         restCubePos = transform.position;
+        offsetVector = new Vector3(0, 0, 10f);
 
     }
 
     void Update()
     {
-        //cubeOutward = false;
-        whileInFocus();
-    }
-
-    void whileInFocus()
-    {
         currentCubePos = transform.position;
-        Vector3 targetVector = CameraCache.Main.transform.position + cubeOffset;
-
-        if (moveCube)
+        //cubeOutward = false;
+        if (onFocus && !moveBack)
         {
-            Debug.Log("Moving object");
-            if(transform.position != targetVector)
-            {
-                transform.position = Vector3.Lerp(currentCubePos, targetVector, lerpSpeed * Time.deltaTime);
-            }
-            else
-            {
-                moveCube = false;
-            }
-
+            objectMoveForward();
         }
-        else
+        else if(moveBack)
         {
-            Debug.Log("Moving object back");
-            transform.position = Vector3.Lerp(currentCubePos, restCubePos, lerpSpeed * Time.deltaTime);
+            objectMoveBackward();
         }
     }
 
-    IEnumerator CubeSelection()
+    void objectMoveForward()
     {
+        Debug.Log("Moving object forward");
+        transform.position = Vector3.Lerp(currentCubePos, offsetVector, lerpSpeed * Time.deltaTime);
+    }
 
-        yield return new WaitForSeconds(2);
+    void objectMoveBackward()
+    {
+        Debug.Log("Moving object backward");
+        transform.position = Vector3.Lerp(currentCubePos, restCubePos, lerpSpeed * Time.deltaTime);
+    }
+
+    IEnumerator CubeMovement()
+    {
+        yield return new WaitForSeconds(2f);
+        moveBack = true;
+        yield return new WaitForSeconds(2f);
+        moveBack = false;
     }
 }
