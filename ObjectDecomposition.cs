@@ -6,7 +6,7 @@ using HoloToolkit.Unity.InputModule;
 public class ObjectDecomposition : MonoBehaviour, IInputHandler {
 
     public Transform[] ObjectList;
-    public float[] ObjectXValues;
+    public Vector3[] InitialPositions;
 
     [Header("Timing variables")]
     public float LerpDuration = 1f;
@@ -16,13 +16,15 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
 
     private bool ExtendedObjects = false;
 
+    private bool MovingPhase = false;
+
     public void OnInputDown(InputEventData eventData)
     {
-        if(!ExtendedObjects)
+        if(!ExtendedObjects && !MovingPhase)
         {
             MoveObjectsForwards();
         }
-        else
+        else if(ExtendedObjects && !MovingPhase)
         {
             MoveObjectsBackwards();
         }
@@ -40,8 +42,8 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
         StopAllCoroutines();
         for (int i = 0; i < ObjectList.Length; i++)
         {
-            float offset = MaxDistance * i / (float)ObjectList.Length;
-            StartCoroutine(MoveObject(ObjectList[i], ObjectList[i].localPosition, offset, false));
+            float offset = MaxDistance * i / ((float)ObjectList.Length - 1);
+            StartCoroutine(MoveObject(ObjectList[i], InitialPositions[i], InitialPositions[i] + Vector3.right * offset, false));
         }
     }
     
@@ -50,13 +52,14 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
         StopAllCoroutines();
         for (int i = 0; i < ObjectList.Length; i++)
         {
-            StartCoroutine(MoveObject(ObjectList[i], ObjectList[i].localPosition, ObjectXValues[i], true));
+            StartCoroutine(MoveObject(ObjectList[i], ObjectList[i].localPosition, InitialPositions[i], true));
         }
     }
 
 
-    IEnumerator MoveObject(Transform movingObject, Vector3 startPosition, float endXValue, bool reverse)
+    IEnumerator MoveObject(Transform movingObject, Vector3 startPosition, Vector3 endPosition, bool reverse)
     {
+        MovingPhase = true;
         float startTime = Time.time;
         while(Time.time - startTime <= LerpDuration)
         {
@@ -64,27 +67,21 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
             float curveValue = MovementCurve.Evaluate(percentageComplete);
         
             float targetXValue = 0f;
+
             if (reverse)
             {
-                targetXValue = (1f - curveValue) * (endXValue + startPosition.x);
+                targetXValue = curveValue * (endPosition.x - startPosition.x);
             }
             else
             {
-                targetXValue = curveValue * (endXValue + startPosition.x);
+                targetXValue = curveValue * (endPosition.x);// + startPosition.x);
             }
-            
-        
-            Vector3 targetPosition = startPosition;
-            targetPosition.x = targetXValue;
-        
+
+            Vector3 targetPosition = startPosition + transform.right * targetXValue;
             movingObject.localPosition = targetPosition;
             yield return null;
         }
 
-        Vector3 endPosition = startPosition;
-        endPosition.x = endXValue;
-        movingObject.localPosition = endPosition;
-       
         if (reverse)
         {
             ExtendedObjects = false;
@@ -93,18 +90,21 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
         {
             ExtendedObjects = true;
         }
+
+        MovingPhase = false;
         yield return null;
     }
 
     void InitialiseArrays()
     {
         ObjectList = new Transform[transform.childCount];
-        ObjectXValues = new float[transform.childCount];
+        InitialPositions = new Vector3[transform.childCount];
         int i = 0;
         foreach (Transform child in transform)
         {
+
             ObjectList[i] = child;
-            ObjectXValues[i] = child.position.x;
+            InitialPositions[i] = child.localPosition;
             i++;
         }
     }
