@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public PanelWindow recordWindow;
     public PanelWindow statusWindow;
 
-    public GameObject menuContainer;
+    public MainMenuContainer menuContainer;
 
 
 
@@ -47,33 +47,35 @@ public class Player : MonoBehaviour {
             button.Clicked += OnButtonClicked;
         }
 
-       // MainMenuContainer menuContainer =  gameObject.GetComponentInChildren<MainMenuContainer>();
+        menuContainer =  gameObject.GetComponentInChildren<MainMenuContainer>();
 
-        menuContainer.SetActive(false);
+        //menuContainer.SetActive(true);
     }
 
     private void OnButtonClicked(GameObject button)
     {
-        Debug.Log(button.name);
+        Debug.Log(button.name + "menu buttons");
 
-        if (button.name == "PropertyButton")
-        {
-            propertyWindow.Show();
-            propertyWindow.TitleText = "Property title window";
-            propertyWindow.DescriptionText = "This is properlty window description";
+        menuContainer.SetActiveStatus(false);
 
-        } else if(button.name == "RecordButton")
-        {
-            recordWindow.Show();
-            recordWindow.TitleText = "Record title window";
-            recordWindow.DescriptionText = "This is Record window description";
+        //if (button.name == "PropertyButton")
+        //{
+        //    propertyWindow.Show();
+        //    propertyWindow.TitleText = "Property title window";
+        //    propertyWindow.DescriptionText = "This is properlty window description";
 
-        } else  if(button.name == "StatusButton")
-        {
-            statusWindow.Show();
-            statusWindow.TitleText = "Status title window";
-            statusWindow.DescriptionText = "This is Status window description";
-        }
+        //} else if(button.name == "RecordButton")
+        //{
+        //    recordWindow.Show();
+        //    recordWindow.TitleText = "Record title window";
+        //    recordWindow.DescriptionText = "This is Record window description";
+
+        //} else  if(button.name == "StatusButton")
+        //{
+        //    statusWindow.Show();
+        //    statusWindow.TitleText = "Status title window";
+        //    statusWindow.DescriptionText = "This is Status window description";
+        //}
     }
 
 

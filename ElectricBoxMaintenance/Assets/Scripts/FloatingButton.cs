@@ -12,6 +12,8 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
     //public GameObject disableRay;
     public Image iconImage;
     public string caption;
+    Vector3 initialScale;
+    Vector3 targetScale;
 
     public delegate void ClickDelegate(GameObject button);
 
@@ -26,23 +28,13 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
 
     // Use this for initialization
     void Start () {
-		
         // setup text and icon of the button
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+       
 	}
 
-    //public void OnFocusEnter()
-    //{
-    //    disableRay.GetComponent<RaycastPositioning>().enabled = false;
-    //}
-
-    //public void OnFocusExit()
-    //{
-    //    disableRay.GetComponent<RaycastPositioning>().enabled = true;
-    //}
 }

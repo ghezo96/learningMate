@@ -6,7 +6,7 @@ using UnityEngine;
 public class PanelWindow : MonoBehaviour {
 
     //close button
-    private HoloToolkit.Unity.InputModule.Tests.TestButton closeButton;
+    private FloatingButton closeButton;
 
     private PanelDescription panelDescription;
     // var to hold the panel width
@@ -29,13 +29,13 @@ public class PanelWindow : MonoBehaviour {
         panelDescription.setDescription(DescriptionText);
 
         // Get the close button and listen for close events
-        closeButton = gameObject.GetComponentInChildren<HoloToolkit.Unity.InputModule.Tests.TestButton>();
-        closeButton.Activated += CloseButton_Activated;
+        closeButton = gameObject.GetComponentInChildren<FloatingButton>();
+        closeButton.Clicked += CloseButton_Activated;
 
     }
 
     // panel close button handler
-    private void CloseButton_Activated(HoloToolkit.Unity.InputModule.Tests.TestButton source)
+    private void CloseButton_Activated(GameObject source)
     {
         Hide();
     }
