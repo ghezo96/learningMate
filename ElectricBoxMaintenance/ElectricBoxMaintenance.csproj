@@ -929,6 +929,7 @@
     <Compile Include="Assets\HoloToolkit-Examples\UX\Scripts\Widgets\TextMeshColorThemeWidget.cs" />
     <Compile Include="Assets\HoloToolkit-Examples\UX\Scripts\Widgets\TextureThemeWidget.cs" />
     <Compile Include="Assets\Scripts\FloatingButton.cs" />
+    <Compile Include="Assets\Scripts\MainMenuContainer.cs" />
     <Compile Include="Assets\Scripts\PanelDescription.cs" />
     <Compile Include="Assets\Scripts\PanelWindow.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class FloatingButton : MonoBehaviour, IInputClickHandler {
 
-
+    //public GameObject disableRay;
     public Image iconImage;
     public string caption;
 
@@ -35,4 +35,14 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
 	void Update () {
 		
 	}
+
+    //public void OnFocusEnter()
+    //{
+    //    disableRay.GetComponent<RaycastPositioning>().enabled = false;
+    //}
+
+    //public void OnFocusExit()
+    //{
+    //    disableRay.GetComponent<RaycastPositioning>().enabled = true;
+    //}
 }

@@ -10,6 +10,9 @@ public class Player : MonoBehaviour {
     public PanelWindow recordWindow;
     public PanelWindow statusWindow;
 
+    public GameObject menuContainer;
+
+
 
     public int numberOfObjects = 10;
 
@@ -43,6 +46,10 @@ public class Player : MonoBehaviour {
         {
             button.Clicked += OnButtonClicked;
         }
+
+       // MainMenuContainer menuContainer =  gameObject.GetComponentInChildren<MainMenuContainer>();
+
+        menuContainer.SetActive(false);
     }
 
     private void OnButtonClicked(GameObject button)
