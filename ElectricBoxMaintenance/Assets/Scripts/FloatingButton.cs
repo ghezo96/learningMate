@@ -13,7 +13,6 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
     Vector3 targetScale;
 
     public delegate void ClickDelegate(GameObject button);
-
     public event ClickDelegate Clicked;
 
     public void OnInputClicked(InputClickedEventData eventData)

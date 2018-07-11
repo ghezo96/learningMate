@@ -13,18 +13,14 @@ public class WindowManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        recordWindow.SetActive(true);
+        propertyWindow.SetActive(true);
+        statusWindow.SetActive(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    public void displayInfoPanel()
-    {
-        recordWindow.SetActive(true);
-        propertyWindow.SetActive(true);
-        statusWindow.SetActive(true);
-    }
 }

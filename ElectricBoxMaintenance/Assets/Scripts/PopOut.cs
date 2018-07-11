@@ -55,6 +55,6 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 
     public void OnInputUp(InputEventData eventData)
     {
-        throw new System.NotImplementedException();
+        
     }
 }
