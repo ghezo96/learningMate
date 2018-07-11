@@ -52,7 +52,7 @@ public class OnTapWithFocus : MonoBehaviour, IInputHandler, IFocusable
     public void OnInputDown(InputEventData eventData)
     {
         StartCoroutine(CubeMovementTimer());
-        transform.localScale = transform.localScale * 0.8f;
+        //transform.localScale = transform.localScale * 0.8f;
         eventData.Use();
     }
 

@@ -32,7 +32,7 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
                     //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
                     Quad.transform.position = pointOfHit;
-                    Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
+                    //Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
                     Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
                 }
             }
