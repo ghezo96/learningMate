@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
-public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler
+public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocusable
 {
     Vector3 initialPosition;
     Vector3 pointerPosition;
@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler
 
     public void OnInputDown(InputEventData eventData)
     {
-        InputManager.Instance.PushModalInputHandler(gameObject);
+        
         clicked = true;
         sourceID = eventData.SourceId;
         inputSource = eventData.InputSource;
@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler
 
     public void OnInputUp(InputEventData eventData)
     {
-        InputManager.Instance.PopModalInputHandler();
+        
         clicked = false;
         inputSource = null;
     }
@@ -73,5 +73,15 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler
     {
         InputManager.Instance.PopModalInputHandler();
         clicked = false;
+    }
+
+    public void OnFocusEnter()
+    {
+        InputManager.Instance.PushModalInputHandler(gameObject);
+    }
+
+    public void OnFocusExit()
+    {
+        InputManager.Instance.PopModalInputHandler();
     }
 }
