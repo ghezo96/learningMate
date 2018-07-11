@@ -50,7 +50,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 
     public void OnInputDown(InputEventData eventData)
     {
-        transform.localScale = transform.localScale*0.8f;
+        //transform.localScale = transform.localScale*0.8f;
     }
 
     public void OnInputUp(InputEventData eventData)

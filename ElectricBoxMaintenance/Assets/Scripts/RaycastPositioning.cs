@@ -10,17 +10,17 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     RaycastHit hit;
     Vector3 normalAtHitPosition;
     Vector3 pointOfHit;
-    int layer = 1 << 31;
-    //int layer = 1 << 8;
-    bool state = false;
-    public GameObject activeMenu;
+    //int layer = 1 << 31;
+    int layer = 1 << 8;
+    bool state = false;    
     
     public void OnInputDown(InputEventData eventData)
     {
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
         {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
-            //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
+            //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TransparentFX"))
+            //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
             {
                 Quad.SetActive(true);
                 state = true;
@@ -29,10 +29,10 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
                     Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
                     normalAtHitPosition = hit.normal;
                     pointOfHit = hit.point;
-                    Debug.Log("Normal: " + normalAtHitPosition.ToString());
+                    //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
                     Quad.transform.position = pointOfHit;
-                    Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition*-1, Vector3.up);
+                    Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
                     Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
                 }
             }
@@ -46,9 +46,9 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     public void OnInputUp(InputEventData eventData)
     {
         state = false;
-        activeMenu.SetActive(true);
-
-        //InputManager.Instance.RemoveGlobalListener(gameObject);
+       Quad.GetComponent<Movement>().enabled = true;
+        //gameObject.GetComponent<RaycastPositioning>().enabled = false;
+        
     }
 
     // Use this for initialization
@@ -60,8 +60,8 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
 	// Update is called once per frame
 	void Update ()
     {       
-        if(state)
-            Raycast();       
+        //if(state && Quad.GetComponent<OnFocusQuad>().focusState == true)
+        //    Raycast();       
     }
 
     public void PlacementFinished()
@@ -69,18 +69,18 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
         InputManager.Instance.RemoveGlobalListener(gameObject);
     }
 
-    void Raycast()
-    {
-        //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
-        //{
-        //    Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
-        //    normalAtHitPosition = hit.normal;
-        //    pointOfHit = hit.point;
-        //    Debug.Log("Normal: " + normalAtHitPosition.ToString());            
+    //void Raycast()
+    //{
+    //    if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
+    //    {
+    //        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
+    //        normalAtHitPosition = hit.normal;
+    //        pointOfHit = hit.point;
+    //        //Debug.Log("Normal: " + normalAtHitPosition.ToString());            
 
-        //    Quad.transform.position = Vector3.Lerp(Quad.transform.position,pointOfHit,lerpTime);
-        //    Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
-        //    Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
-        //}
-    }
+    //        Quad.transform.position = Vector3.Lerp(Quad.transform.position,pointOfHit,lerpTime);
+    //        Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
+    //        Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
+    //    }
+    //}   
 }
