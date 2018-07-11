@@ -54,11 +54,11 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocu
             if (clicked && inputSource.TryGetGripPosition(sourceID, out pointerPosition))
             {
                 Vector3 handMovementDirection = pointerPosition - previousPosition;
-                //handMovementDirection = transform.InverseTransformDirection(handMovementDirection);
+                handMovementDirection = transform.InverseTransformDirection(handMovementDirection);
                 handMovementDirection.z = 0f;
-                //handMovementDirection = transform.TransformDirection(handMovementDirection);
+                handMovementDirection = transform.TransformDirection(handMovementDirection);
                 previousPosition = pointerPosition;
-                gameObject.transform.position += handMovementDirection;
+                gameObject.transform.position += handMovementDirection*1.5f;
                 Debug.Log("aaaaa "+gameObject.name);
 
             }
@@ -78,10 +78,13 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocu
     public void OnFocusEnter()
     {
         InputManager.Instance.PushModalInputHandler(gameObject);
+        clicked = true;
     }
 
     public void OnFocusExit()
-    {
+    {if (!clicked) { 
         InputManager.Instance.PopModalInputHandler();
+            }
+        clicked = false;
     }
 }
