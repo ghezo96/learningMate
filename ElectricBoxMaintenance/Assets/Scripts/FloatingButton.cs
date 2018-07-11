@@ -8,10 +8,7 @@ using UnityEngine.UI;
 
 
 public class FloatingButton : MonoBehaviour, IInputClickHandler {
-
-    //public GameObject disableRay;
-    public Image iconImage;
-    public string caption;
+    
     Vector3 initialScale;
     Vector3 targetScale;
 

@@ -8,7 +8,8 @@ public class OnTapWithFocus : MonoBehaviour, IInputHandler, IFocusable
 
     Vector3 currentObjectPos;
     Vector3 objectRestPos;
-    public float objectExtend = -0.2f;
+    public float objectExtend = 0f;
+    
 
 
     Vector3 currentScale;
@@ -51,6 +52,7 @@ public class OnTapWithFocus : MonoBehaviour, IInputHandler, IFocusable
     public void OnInputDown(InputEventData eventData)
     {
         StartCoroutine(CubeMovementTimer());
+        transform.localScale = transform.localScale * 0.8f;
         eventData.Use();
     }
 
