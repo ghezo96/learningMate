@@ -46,7 +46,7 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     public void OnInputUp(InputEventData eventData)
     {
         state = false;
-       Quad.GetComponent<Movement>().enabled = true;
+      gameObject.GetComponent<RaycastPositioning>().enabled = false;
         //gameObject.GetComponent<RaycastPositioning>().enabled = false;
         
     }

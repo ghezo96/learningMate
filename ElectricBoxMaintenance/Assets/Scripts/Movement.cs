@@ -54,9 +54,9 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocu
             if (clicked && inputSource.TryGetGripPosition(sourceID, out pointerPosition))
             {
                 Vector3 handMovementDirection = pointerPosition - previousPosition;
-                handMovementDirection = transform.InverseTransformDirection(handMovementDirection);
+                //handMovementDirection = transform.InverseTransformDirection(handMovementDirection);
                 handMovementDirection.z = 0f;
-                handMovementDirection = transform.TransformDirection(handMovementDirection);
+                //handMovementDirection = transform.TransformDirection(handMovementDirection);
                 previousPosition = pointerPosition;
                 gameObject.transform.position += handMovementDirection;
                 Debug.Log("aaaaa "+gameObject.name);
