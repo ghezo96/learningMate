@@ -12,7 +12,8 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     Vector3 pointOfHit;
     int layer = 1 << 31;
     //int layer = 1 << 8;
-    bool state = false;    
+    bool state = false;
+    Vector3 camForward;
     
     public void OnInputDown(InputEventData eventData)
     {
@@ -29,10 +30,15 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
                     Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
                     normalAtHitPosition = hit.normal;
                     pointOfHit = hit.point;
-                    //Debug.Log("Normal: " + normalAtHitPosition.ToString());
+
+                    if (normalAtHitPosition != Camera.main.ViewportToWorldPoint(Camera.main.transform.forward))
+                    {
+                        normalAtHitPosition = Camera.main.transform.forward;
+                    }
+                    Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
                     Quad.transform.position = pointOfHit;
-                    //Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
+                    Quad.transform.rotation = Quaternion.LookRotation(normalAtHitPosition, Vector3.up);
                     Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
                 }
             }
