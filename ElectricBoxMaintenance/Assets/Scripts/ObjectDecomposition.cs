@@ -43,7 +43,7 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
         for (int i = 0; i < ObjectList.Length; i++)
         {
             float offset = MaxDistance * i / ((float)ObjectList.Length - 1);
-            StartCoroutine(MoveObject(ObjectList[i], InitialPositions[i], InitialPositions[i] + Vector3.right * offset, false));
+            StartCoroutine(MoveObject(ObjectList[i], InitialPositions[i], InitialPositions[i] + Vector3.forward * offset, false));
         }
     }
     
@@ -70,14 +70,14 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
 
             if (reverse)
             {
-                targetXValue = curveValue * (endPosition.x - startPosition.x);
+                targetXValue = curveValue * (endPosition.z - startPosition.z);
             }
             else
             {
-                targetXValue = curveValue * (endPosition.x);// + startPosition.x);
+                targetXValue = curveValue * (endPosition.z);// + startPosition.z);
             }
 
-            Vector3 targetPosition = startPosition + transform.right * targetXValue;
+            Vector3 targetPosition = startPosition + -transform.forward * targetXValue;
             movingObject.localPosition = targetPosition;
             yield return null;
         }

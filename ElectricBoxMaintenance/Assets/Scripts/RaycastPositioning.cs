@@ -14,6 +14,9 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     //int layer = 1 << 8;
     bool state = false;
     Vector3 camForward;
+
+     
+
     
     public void OnInputDown(InputEventData eventData)
     {
