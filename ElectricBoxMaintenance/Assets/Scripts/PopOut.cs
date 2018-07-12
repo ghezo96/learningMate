@@ -15,20 +15,22 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
    // public GameObject Camera;
     public void OnFocusEnter()
     {
+        anim.SetBool("AnimFocus", true);
         focused = true;
         //Camera.GetComponent<RaycastPositioning>().enabled = false;
         //transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         //initialScale = transform.localScale;
         targetScale = initialScale*1.2f;
-        anim.SetBool("AnimFocus", true);
+        
     }
 
     public void OnFocusExit()
     {
+
+        anim.SetBool("AnimFocus", false);
         focused = false;
         //Camera.GetComponent<RaycastPositioning>().enabled = true;
         //transform.localScale = Vector3.one;
-        anim.SetBool("AnimFocus", false);
 
     }   
 
@@ -41,7 +43,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 	// Update is called once per frame
 	void Update ()
     {
-        if (focused)
+       if (focused)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * 5f);
         }

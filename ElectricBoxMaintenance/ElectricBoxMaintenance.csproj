@@ -940,6 +940,8 @@
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PopOut.cs" />
     <Compile Include="Assets\Scripts\RaycastPositioning.cs" />
+    <Compile Include="Assets\Scripts\RecogniseObject.cs" />
+    <Compile Include="Assets\Scripts\SpatialMagic.cs" />
     <Compile Include="Assets\Scripts\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
