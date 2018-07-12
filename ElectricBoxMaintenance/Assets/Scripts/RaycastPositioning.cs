@@ -6,7 +6,7 @@ using HoloToolkit.Unity.InputModule;
 public class RaycastPositioning : MonoBehaviour, IInputHandler
 {
     public GameObject Quad;
-    public float lerpTime = 0.01f; 
+    public float lerpTime = 0.01f;
     RaycastHit hit;
     Vector3 normalAtHitPosition;
     Vector3 pointOfHit;
@@ -15,12 +15,12 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     bool state = false;
     Vector3 camForward;
 
-     
 
-    
+
+
     public void OnInputDown(InputEventData eventData)
     {
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
         {
             //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TransparentFX"))
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
@@ -55,20 +55,20 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     public void OnInputUp(InputEventData eventData)
     {
         state = false;
-      gameObject.GetComponent<RaycastPositioning>().enabled = false;
+        gameObject.GetComponent<RaycastPositioning>().enabled = false;
         //gameObject.GetComponent<RaycastPositioning>().enabled = false;
-        
+
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        InputManager.Instance.AddGlobalListener(gameObject);        
+        InputManager.Instance.AddGlobalListener(gameObject);
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {       
+
+    // Update is called once per frame
+    void Update()
+    {
         //if(state && Quad.GetComponent<OnFocusQuad>().focusState == true)
         //    Raycast();       
     }

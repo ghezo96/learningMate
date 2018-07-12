@@ -9,7 +9,7 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
     public Vector3[] InitialPositions;
 
     [Header("Timing variables")]
-    public float LerpDuration = 1f;
+    public float LerpDuration = 0.5f;
     [Header("Spatial variables")]
     public float MaxDistance = 1f;
     public AnimationCurve MovementCurve;
