@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
+    public ObjectDecomposition boxDecomp;
 
 
     // Use this for initialization
@@ -27,7 +28,8 @@ public class Player : MonoBehaviour {
 
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
-
+        // play the decomposition 
+        boxDecomp.ElectricBoxMovement();
     }
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
-public class ObjectDecomposition : MonoBehaviour, IInputHandler {
+public class ObjectDecomposition : MonoBehaviour {
 
     public Transform[] ObjectList;
     public Vector3[] InitialPositions;
@@ -15,27 +15,22 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
     public AnimationCurve MovementCurve;
 
     private bool ExtendedObjects = false;
-
     private bool MovingPhase = false;
 
-    public void OnInputDown(InputEventData eventData)
+
+    public void ElectricBoxMovement()
     {
-        if(!ExtendedObjects && !MovingPhase)
+        if (!ExtendedObjects && !MovingPhase)
         {
             MoveObjectsForwards();
         }
-        else if(ExtendedObjects && !MovingPhase)
+        else if (ExtendedObjects && !MovingPhase)
         {
             MoveObjectsBackwards();
         }
-        eventData.Use();
-
     }
 
-    public void OnInputUp(InputEventData eventData)
-    {
-        eventData.Use();
-    }
+
 
     void MoveObjectsForwards()
     {
@@ -74,10 +69,10 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
             }
             else
             {
-                targetXValue = curveValue * (endPosition.z);// + startPosition.z);
+                targetXValue = curveValue * (endPosition.z);
             }
 
-            Vector3 targetPosition = startPosition + -transform.forward * targetXValue;
+            Vector3 targetPosition = startPosition + Vector3.forward * targetXValue;
             movingObject.localPosition = targetPosition;
             yield return null;
         }
@@ -97,6 +92,14 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
 
     void InitialiseArrays()
     {
+
+        /*
+        GameObject UXHandler = GameObject.Find("UXHandler");
+        Transform Box = UXHandler.transform.GetChild(0);
+        Transform ElectricBox = Box.GetChild(0);
+        */
+
+
         ObjectList = new Transform[transform.childCount];
         InitialPositions = new Vector3[transform.childCount];
         int i = 0;

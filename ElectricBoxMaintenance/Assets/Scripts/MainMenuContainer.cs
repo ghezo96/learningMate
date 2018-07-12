@@ -17,7 +17,7 @@ public class MainMenuContainer : MonoBehaviour {
 
         buttons = gameObject.GetComponentsInChildren<FloatingButton>();
 
-        foreach ( FloatingButton button in buttons)
+        foreach (FloatingButton button in buttons)
         {
             button.Clicked += OnButtonClicked;
         }
