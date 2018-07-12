@@ -74,7 +74,7 @@ public class ObjectDecomposition : MonoBehaviour, IInputHandler {
             }
             else
             {
-                targetXValue = curveValue * (endPosition.z);// + startPosition.z);
+                targetXValue = curveValue * (endPosition.z);
             }
 
             Vector3 targetPosition = startPosition + -transform.forward * targetXValue;
