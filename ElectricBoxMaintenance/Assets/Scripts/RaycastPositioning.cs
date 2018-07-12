@@ -10,8 +10,8 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     RaycastHit hit;
     Vector3 normalAtHitPosition;
     Vector3 pointOfHit;
-    int layer = 1 << 31;
-    //int layer = 1 << 8;
+    //int layer = 1 << 31;
+    int layer = 1 << 8;
     bool state = false;    
     
     public void OnInputDown(InputEventData eventData)
@@ -19,8 +19,8 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
         {
             //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TransparentFX"))
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
-            //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
+            //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
             {
                 Quad.SetActive(true);
                 state = true;
