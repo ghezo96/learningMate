@@ -930,7 +930,6 @@
     <Compile Include="Assets\Scripts\MenuManage.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\ObjectDecomposition.cs" />
-    <Compile Include="Assets\Scripts\ObjectDecompositionV2.cs" />
     <Compile Include="Assets\Scripts\OnTapWithFocus.cs" />
     <Compile Include="Assets\Scripts\PanelDescription.cs" />
     <Compile Include="Assets\Scripts\PanelWindow.cs" />
