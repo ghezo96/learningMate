@@ -18,6 +18,11 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        if (homeButton.isActiveAndEnabled)
+        {
+            homeButton.setActiveStatus(false);
+        }
+       
         Debug.Log("In Start");
 
         // create holographic buttons to get started with
@@ -40,6 +45,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
         homeButton.setActiveStatus(true);
+
     }
 
     // Update is called once per frame
