@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
     string inputTitleText;
     string inputDescriptionText;
     public FloatingButton homeButton;
+    public FloatingButton liveInfo;
+    public GameObject theBox;
     
 
     // Use this for initialization
@@ -23,8 +25,17 @@ public class Player : MonoBehaviour {
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
+        liveInfo.Clicked += liveInfo_Clicked;
     }
 
+    public void liveInfo_Clicked(GameObject button)
+    {
+        windowManager.SetActive(false);
+        mainMenuContainer.SetActiveStatus(false);
+        button.SetActive(true); 
+        theBox.GetComponent<ObjectDecomposition>().ElectricBoxMovement();
+    
+    }
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
