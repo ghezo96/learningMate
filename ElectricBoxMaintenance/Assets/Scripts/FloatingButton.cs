@@ -21,6 +21,10 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
         Clicked(eventData.selectedObject);
     }
 
+    public void setActiveStatus(bool status)
+    {
+        gameObject.SetActive(status);
+    }
 
     // Use this for initialization
     void Start () {

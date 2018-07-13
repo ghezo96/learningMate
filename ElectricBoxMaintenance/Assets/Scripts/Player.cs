@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
     string inputTextName;
     string inputTitleText;
     string inputDescriptionText;
+    public FloatingButton homeButton;
     
 
     // Use this for initialization
@@ -21,17 +22,24 @@ public class Player : MonoBehaviour {
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
-        
+        homeButton.Clicked += HomeButton_Clicked;
     }
 
+    // HomeButton click event handler
+    private void HomeButton_Clicked(GameObject button)
+    {
+        windowManager.SetActive(false);
+        mainMenuContainer.SetActiveStatus(true);
+        // Hide home button
+        button.SetActive(false);
+    }
 
     private void OnButtonClicked(GameObject button)
     {
-        Debug.Log(button.name + "menu buttons");
-
+        //Debug.Log(button.name + "menu buttons");
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
-
+        homeButton.setActiveStatus(true);
     }
 
     // Update is called once per frame
@@ -39,12 +47,4 @@ public class Player : MonoBehaviour {
        
     }
 
-    private void OnDestroy()
-    {
-        FloatingButton[] buttons = gameObject.GetComponentsInChildren<FloatingButton>();
-        foreach (FloatingButton button in buttons)
-        {
-            button.Clicked -= OnButtonClicked;
-        }
-    }
 }
