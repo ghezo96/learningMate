@@ -25,7 +25,7 @@ public class PanelWindow : MonoBehaviour {
     private string descriptionText;
 
 
-    void Start () {
+    void Start() {
 
         //Get the panel description container and set the description
         //panelDescription = gameObject.GetComponentInChildren<PanelDescription>();
@@ -36,6 +36,11 @@ public class PanelWindow : MonoBehaviour {
         closeButton = gameObject.GetComponentInChildren<FloatingButton>();
         closeButton.Clicked += CloseButton_Activated;
 
+    }
+
+    public void setTitle(string title)
+    {
+        TitleText = title;
     }
 
     // panel close button handler
