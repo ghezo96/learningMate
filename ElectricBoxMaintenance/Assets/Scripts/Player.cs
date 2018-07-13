@@ -20,17 +20,17 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        if (homeButton.isActiveAndEnabled)
-        {
-            homeButton.setActiveStatus(false);
-        }
-       
         Debug.Log("In Start");
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
+
+        if (homeButton.isActiveAndEnabled)
+        {
+            homeButton.setActiveStatus(false);
+        }
     }
 
     public void liveInfo_Clicked(GameObject button)
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(false);
         button.SetActive(true); 
-        theBox.GetComponent<ObjectDecomposition>().ElectricBoxMovement();
+        theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
     
     }
     // HomeButton click event handler
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(true);
         // Hide home button
         button.SetActive(false);
+        theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
     }
 
     private void OnButtonClicked(GameObject button)
