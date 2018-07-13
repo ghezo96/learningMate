@@ -9,12 +9,25 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
 
     [SerializeField]
     public GameObject _object;
-    string debugInfo;
-    bool scanning = false;
+    public TextMesh SpatialText;
+
+    bool inScan = false;
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        SpatialUnderstanding.Instance.RequestFinishScan();
+        if(inScan)
+        {
+            SpatialUnderstanding.Instance.RequestFinishScan();
+            SpatialUnderstanding.Instance.ScanStateChanged += ScanStateChanged;
+            inScan = false;
+        }
+        else
+        {
+            SpatialUnderstanding.Instance.RequestBeginScanning();
+            SpatialUnderstanding.Instance.ScanStateChanged -= ScanStateChanged;
+            inScan = true;
+        }
+
         eventData.Use();
     }
 
@@ -23,11 +36,11 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
         switch (SpatialUnderstanding.Instance.ScanState)
         {
             case SpatialUnderstanding.ScanStates.Scanning:
-                Debug.Log("start scan");
+                SpatialText.text = "Scan Start";
                 ///LogSurfaceState();
                 break;
             case SpatialUnderstanding.ScanStates.Done:
-                Debug.Log("scan finished");
+                SpatialText.text = "Scan Finish";
                 ///LogSurfaceState();
                 InstantiateObjectOnTable();
                 break;
@@ -66,7 +79,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             (shapeConstraint == null) ? 0 : shapeConstraint.Count,
             shapeConstraintsPtr) == 0)
         {
-            Debug.Log("Failed to create object");
+            SpatialText.text = "Failed to create object";
         }
     }
 
@@ -77,16 +90,34 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             new SpatialUnderstandingDllShapes.ShapeComponent(
                 new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
                 {
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.3f, 0.5f),
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.4f, 0.6f),
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_SurfaceCount_Is(5),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.4f, 0.6f),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.3f, 0.5f)
                 }),
+
+            new SpatialUnderstandingDllShapes.ShapeComponent(
+                new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
+                {
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.15f, 0.2f),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.3f, 0.5f)
+                }),
+
+            new SpatialUnderstandingDllShapes.ShapeComponent(
+                new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
+                {
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.4f, 0.6f),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.15f, 0.2f)
+                }),
+
         };
 
         var shapeConstraints = new List<SpatialUnderstandingDllShapes.ShapeConstraint>()
         {
-            SpatialUnderstandingDllShapes.ShapeConstraint.Create_NoOtherSurface(),
+            SpatialUnderstandingDllShapes.ShapeConstraint.Create_RectanglesSameLength(0,2),
+            SpatialUnderstandingDllShapes.ShapeConstraint.Create_RectanglesPerpendicular(0,1),
+            SpatialUnderstandingDllShapes.ShapeConstraint.Create_RectanglesPerpendicular(0,2)
         };
 
         AddShapeDefinition("ElectricBox", shapeComponents, shapeConstraints);
@@ -108,21 +139,12 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
                         Quaternion.LookRotation(shapeResults[0].position.normalized, Vector3.up));
             // For some reason the halfDims of the shape result are always 0,0,0 so we can't scale 
             // to the size of the surface. This may be a bug in the HoloToolkit?
-            Debug.Log("Placed Hologram");
+
+            SpatialText.text = "Placed Hologram";
         }
         else
         {
-            /*
-            // Create a fallback - Instantiate the cube in front of the player and let the user tap
-            // it and place it where ever the fuck they want (includes walls)
-            Vector3 pos = Camera.main.transform.position + Camera.main.transform.forward * 2f;
-            var cube = Instantiate(_object, pos, Quaternion.identity);
-            cube.AddComponent<HoloToolkit.Unity.Interpolator>();
-            cube.AddComponent<HoloToolkit.Unity.SpatialMapping.TapToPlace>();
-            Debug.Log("Not enough space for the hologram");
-            */
-
-            Debug.Log("Hologram not placed");
+            SpatialText.text = "Hologram not placed";
         }
     }
 
@@ -130,8 +152,6 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
     // Use this for initialization
     void Start () {
         InputManager.Instance.PushModalInputHandler(gameObject);
-        SpatialUnderstanding.Instance.ScanStateChanged += ScanStateChanged;
-
     }
 	
 	// Update is called once per frame
