@@ -84,7 +84,12 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocu
     public void OnFocusExit()
     {if (!clicked) { 
         InputManager.Instance.PopModalInputHandler();
-            }
-        clicked = false;
+            clicked = false;
+        }
+        else
+        {
+            clicked = true;
+        }
+        //clicked = false;
     }
 }
