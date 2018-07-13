@@ -14,7 +14,6 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        Debug.Log("Requesting scan finish");
         SpatialUnderstanding.Instance.RequestFinishScan();
         eventData.Use();
     }
@@ -25,11 +24,11 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
         {
             case SpatialUnderstanding.ScanStates.Scanning:
                 Debug.Log("start scan");
-                LogSurfaceState();
+                ///LogSurfaceState();
                 break;
             case SpatialUnderstanding.ScanStates.Done:
                 Debug.Log("scan finished");
-                LogSurfaceState();
+                ///LogSurfaceState();
                 InstantiateObjectOnTable();
                 break;
             default:
@@ -37,6 +36,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
         }
     }
 
+    /*
     private void LogSurfaceState()
     {
         IntPtr statPtr = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStatsPtr();
@@ -52,6 +52,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             Debug.Log(debugInfo);
         }
     }
+    */
 
     void AddShapeDefinition(string shapeName,
                         List<SpatialUnderstandingDllShapes.ShapeComponent> shapeComponent,
@@ -111,14 +112,17 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
         }
         else
         {
+            /*
             // Create a fallback - Instantiate the cube in front of the player and let the user tap
             // it and place it where ever the fuck they want (includes walls)
             Vector3 pos = Camera.main.transform.position + Camera.main.transform.forward * 2f;
-
             var cube = Instantiate(_object, pos, Quaternion.identity);
             cube.AddComponent<HoloToolkit.Unity.Interpolator>();
             cube.AddComponent<HoloToolkit.Unity.SpatialMapping.TapToPlace>();
             Debug.Log("Not enough space for the hologram");
+            */
+
+            Debug.Log("Hologram not placed");
         }
     }
 

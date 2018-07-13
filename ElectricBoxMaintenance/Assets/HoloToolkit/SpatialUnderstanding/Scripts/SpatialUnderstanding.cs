@@ -16,7 +16,7 @@ namespace HoloToolkit.Unity
     public class SpatialUnderstanding : Singleton<SpatialUnderstanding>
     {
         // Consts
-        public const float ScanSearchDistance = 8.0f;
+        public const float ScanSearchDistance = 2.0f;
 
         // Enums
         public enum ScanStates
