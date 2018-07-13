@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelWindow : MonoBehaviour {
 
@@ -14,10 +15,13 @@ public class PanelWindow : MonoBehaviour {
     // var to hold the panel height
     public float PanelHeight;
 
-    [SerializeField]
+    public TextMesh titleTextField;
+    public TextMesh descriptionTextField;
+
+   
     private string titleText;
 
-    [SerializeField]
+    
     private string descriptionText;
 
 
@@ -67,8 +71,9 @@ public class PanelWindow : MonoBehaviour {
         set
         {
             descriptionText = value;
-            
-           
+
+            descriptionTextField.text = descriptionText;
+
         }
     }
 
@@ -82,6 +87,7 @@ public class PanelWindow : MonoBehaviour {
         set
         {
             titleText = value;
+            titleTextField.text = titleText;
            
         }
     }
