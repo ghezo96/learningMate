@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VertexUnityPlayer;
 
 public class PanelWindow : MonoBehaviour {
 
@@ -27,6 +28,10 @@ public class PanelWindow : MonoBehaviour {
 
     void Start () {
 
+        //GameObject newNode = SceneLink.Instance.CreateNode();
+
+        //GameObject newNodeLink = newNode.FindNodeLink();
+        //newNodeLink.GetComponent<NodeLink>();
         //Get the panel description container and set the description
         //panelDescription = gameObject.GetComponentInChildren<PanelDescription>();
         //panelDescription.setTitle(TitleText);
