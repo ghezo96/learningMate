@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
+
+        Debug.Log("Testing gibhub branch");
         
     }
 
