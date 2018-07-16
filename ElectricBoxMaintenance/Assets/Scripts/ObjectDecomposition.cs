@@ -17,9 +17,6 @@ public class ObjectDecomposition : MonoBehaviour {
     private bool ExtendedObjects = false;
     private bool MovingPhase = false;
 
-
-
-
     public void MoveObjectsForwards()
     {
         StopAllCoroutines();
