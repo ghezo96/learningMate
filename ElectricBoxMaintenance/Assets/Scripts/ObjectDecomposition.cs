@@ -18,21 +18,21 @@ public class ObjectDecomposition : MonoBehaviour {
     private bool MovingPhase = false;
 
 
-    public void ElectricBoxMovement()
-    {
-        if (!ExtendedObjects && !MovingPhase)
-        {
-            MoveObjectsForwards();
-        }
-        else if (ExtendedObjects && !MovingPhase)
-        {
-            MoveObjectsBackwards();
-        }
-    }
+    //public void ElectricBoxMovement()
+    //{
+    //    if (!ExtendedObjects && !MovingPhase)
+    //    {
+    //        MoveObjectsForwards();
+    //    }
+    //    else if (ExtendedObjects && !MovingPhase)
+    //    {
+    //        MoveObjectsBackwards();
+    //    }
+    //}
 
 
 
-    void MoveObjectsForwards()
+    public void MoveObjectsForwards()
     {
         StopAllCoroutines();
         for (int i = 0; i < ObjectList.Length; i++)
@@ -42,7 +42,7 @@ public class ObjectDecomposition : MonoBehaviour {
         }
     }
     
-    void MoveObjectsBackwards()
+    public void MoveObjectsBackwards()
     {
         StopAllCoroutines();
         for (int i = 0; i < ObjectList.Length; i++)

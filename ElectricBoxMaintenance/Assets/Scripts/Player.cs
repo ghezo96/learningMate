@@ -15,6 +15,10 @@ public class Player : MonoBehaviour {
     public FloatingButton homeButton;
     public FloatingButton liveInfo;
     public GameObject theBox;
+    public FloatingButton Reset;
+    public GameObject Camera;
+    public GameObject MainBox;
+   
     
 
     // Use this for initialization
@@ -26,14 +30,20 @@ public class Player : MonoBehaviour {
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
+        Reset.Clicked += Reset_Clicked;
     }
 
+    public void Reset_Clicked (GameObject button)
+    {
+        Camera.GetComponent<RaycastPositioningV1>().enabled = true;
+        MainBox.SetActive(false);
+    }
     public void liveInfo_Clicked(GameObject button)
     {
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(false);
         button.SetActive(true); 
-        theBox.GetComponent<ObjectDecomposition>().ElectricBoxMovement();
+        theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
     
     }
     // HomeButton click event handler
@@ -43,6 +53,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(true);
         // Hide home button
         button.SetActive(false);
+        theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
     }
 
     private void OnButtonClicked(GameObject button)
