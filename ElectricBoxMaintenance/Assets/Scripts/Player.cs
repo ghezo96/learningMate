@@ -62,6 +62,7 @@ public class Player : MonoBehaviour {
         // Hide home button
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
+        Reset.setActiveStatus(true);
     }
 
     private void OnButtonClicked(GameObject button)
@@ -70,6 +71,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
         homeButton.setActiveStatus(true);
+        Reset.setActiveStatus(false);
 
     }
 
