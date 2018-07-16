@@ -17,21 +17,6 @@ public class ObjectDecomposition : MonoBehaviour {
     private bool ExtendedObjects = false;
     private bool MovingPhase = false;
 
-
-    //public void ElectricBoxMovement()
-    //{
-    //    if (!ExtendedObjects && !MovingPhase)
-    //    {
-    //        MoveObjectsForwards();
-    //    }
-    //    else if (ExtendedObjects && !MovingPhase)
-    //    {
-    //        MoveObjectsBackwards();
-    //    }
-    //}
-
-
-
     public void MoveObjectsForwards()
     {
         StopAllCoroutines();

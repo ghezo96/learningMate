@@ -30,7 +30,15 @@ public class Player : MonoBehaviour {
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
+
         Reset.Clicked += Reset_Clicked;
+
+
+        if (homeButton.isActiveAndEnabled)
+        {
+            homeButton.setActiveStatus(false);
+        }
+
     }
 
     public void Reset_Clicked (GameObject button)
@@ -62,6 +70,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
         homeButton.setActiveStatus(true);
+
     }
 
     // Update is called once per frame
