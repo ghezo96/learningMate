@@ -15,16 +15,12 @@ public class Player : MonoBehaviour {
     public FloatingButton homeButton;
     public FloatingButton liveInfo;
     public GameObject theBox;
-
-    private AudioSource AudioSource;
     
 
     // Use this for initialization
     void Start ()
     {
         Debug.Log("In Start");
-
-        AudioSource = gameObject.GetComponent<AudioSource>();
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
@@ -61,7 +57,6 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(true);
         homeButton.setActiveStatus(true);
-        AudioSource.PlayOneShot(AudioSource.clip);
 
     }
 
