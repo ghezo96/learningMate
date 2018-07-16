@@ -1,4 +1,4 @@
-﻿dotnet build
+﻿dotnet publish
 
 Import-Module Posh-SSH
 
@@ -27,7 +27,7 @@ $SSHSession = New-SSHSession -ComputerName $RemoteHost -Credential $Credential
 $InvokeResult = Invoke-SSHCommand -Command $MkdirCommand -Session ($SSHSession).SessionId  -EnsureConnection
 SFTPSession
 # Move to the output directory of the script
-cd .\bin\Debug\netcoreapp2.0
+cd .\bin\Debug\netcoreapp2.0\publish
 
 # Get all files to be uploaded
 $Files = Get-ChildItem
