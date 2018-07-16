@@ -93,6 +93,7 @@ namespace HoloToolkit.Unity
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ShapeComponentConstraint
         {
+
             /// <summary>
             /// Constructs a constraint requiring the component to not be a part of a specified shape
             /// </summary>

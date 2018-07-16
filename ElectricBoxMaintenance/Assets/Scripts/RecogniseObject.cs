@@ -90,7 +90,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             new SpatialUnderstandingDllShapes.ShapeComponent(
                 new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
                 {
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(0.1f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.4f, 0.6f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.3f, 0.5f)
                 }),
@@ -98,7 +98,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             new SpatialUnderstandingDllShapes.ShapeComponent(
                 new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
                 {
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(0.1f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.15f, 0.2f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.3f, 0.5f)
                 }),
@@ -106,7 +106,7 @@ public class RecogniseObject : MonoBehaviour, IInputClickHandler {
             new SpatialUnderstandingDllShapes.ShapeComponent(
                 new List<SpatialUnderstandingDllShapes.ShapeComponentConstraint>()
                 {
-                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(),
+                    SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_IsRectangle(0.1f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleLength_Between(0.4f, 0.6f),
                     SpatialUnderstandingDllShapes.ShapeComponentConstraint.Create_RectangleWidth_Between(0.15f, 0.2f)
                 }),
