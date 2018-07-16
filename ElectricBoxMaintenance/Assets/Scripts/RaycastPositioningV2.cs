@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
-public class RaycastPositioning : MonoBehaviour, IInputHandler
+public class RaycastPositioningV2 : MonoBehaviour, IInputHandler
 {
     public GameObject Quad;
     public float lerpTime = 0.01f;
@@ -55,8 +55,8 @@ public class RaycastPositioning : MonoBehaviour, IInputHandler
     public void OnInputUp(InputEventData eventData)
     {
         state = false;
-        gameObject.GetComponent<RaycastPositioning>().enabled = false;
-        //gameObject.GetComponent<RaycastPositioning>().enabled = false;
+        gameObject.GetComponent<RaycastPositioningV2>().enabled = false;
+       
 
     }
 

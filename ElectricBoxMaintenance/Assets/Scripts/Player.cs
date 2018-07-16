@@ -15,6 +15,10 @@ public class Player : MonoBehaviour {
     public FloatingButton homeButton;
     public FloatingButton liveInfo;
     public GameObject theBox;
+    public FloatingButton Reset;
+    public GameObject Camera;
+    public GameObject MainBox;
+   
     
 
     // Use this for initialization
@@ -27,12 +31,21 @@ public class Player : MonoBehaviour {
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
 
+        Reset.Clicked += Reset_Clicked;
+
+
         if (homeButton.isActiveAndEnabled)
         {
             homeButton.setActiveStatus(false);
         }
+
     }
 
+    public void Reset_Clicked (GameObject button)
+    {
+        Camera.GetComponent<RaycastPositioningV1>().enabled = true;
+        MainBox.SetActive(false);
+    }
     public void liveInfo_Clicked(GameObject button)
     {
         windowManager.SetActive(false);
