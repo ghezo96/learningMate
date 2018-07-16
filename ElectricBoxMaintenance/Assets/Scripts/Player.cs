@@ -18,6 +18,9 @@ public class Player : MonoBehaviour {
     public FloatingButton Reset;
     public GameObject Camera;
     public GameObject MainBox;
+    public GameObject MainBoxDoor;
+    public GameObject MainBoxPanel;
+    bool boxStatus = true;
    
     
 
@@ -48,15 +51,28 @@ public class Player : MonoBehaviour {
     }
     public void liveInfo_Clicked(GameObject button)
     {
+        boxStatus = true;
+       
+            MainBoxDoor.SetActive(false);
+            MainBoxPanel.SetActive(false);
+      
+        
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(false);
         button.SetActive(true); 
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+        
     
     }
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
+        if (boxStatus)
+        {
+            boxStatus = false;
+            MainBoxDoor.SetActive(true);
+            MainBoxPanel.SetActive(true);
+        }
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
         // Hide home button
