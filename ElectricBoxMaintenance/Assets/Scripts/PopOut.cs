@@ -12,6 +12,8 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
     bool focused = false;
     Animator anim;
 
+    private AudioSource AudioSource;
+
    // public GameObject Camera;
     public void OnFocusEnter()
     {
@@ -21,6 +23,8 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
         //transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         //initialScale = transform.localScale;
         targetScale = initialScale*1.2f;
+
+        AudioSource.PlayOneShot(AudioSource.clip);
         
     }
 
@@ -38,6 +42,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
     void Start () {
         initialScale = gameObject.transform.localScale;
         anim = gameObject.GetComponentInChildren<Animator>();
+        AudioSource = GetComponentInParent<AudioSource>();
 	}
 	
 	// Update is called once per frame
