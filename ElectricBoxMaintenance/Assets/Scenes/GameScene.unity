@@ -3491,7 +3491,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 61ff2ac03cbcaad4086f0f9effa02b16, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e7baa8ff231a0d54aa60430714b6ac83, type: 2}
+      objectReference: {fileID: 2100000, guid: 7ee801dc9e39c5f4cb9edfbf58fb5aba, type: 2}
     - target: {fileID: 400000, guid: 61ff2ac03cbcaad4086f0f9effa02b16, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -4310,7 +4310,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c7c1eef4b22439a4f8228bb1833374e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5c6b1adfa88b764ea0365abc1113032, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4318,7 +4318,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!1001 &2095227547
 Prefab:
