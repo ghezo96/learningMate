@@ -22,3 +22,4 @@ obj/
 ehthumbs.db
 Thumbs.db
 /*.meta
+*.csproj
