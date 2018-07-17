@@ -50,6 +50,9 @@ public class Player : MonoBehaviour {
         Camera.GetComponent<RaycastPositioningV1>().enabled = true;
         MainBox.SetActive(false);
         BoundingBox.SetActive(true);
+        Reset.setActiveStatus(false);
+        homeButton.setActiveStatus(true);
+        mainMenuContainer.SetActiveStatus(false);
     }
     public void liveInfo_Clicked(GameObject button)
     {
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour {
         // Hide home button
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
-
+        MainBox.GetComponent<Movement>().enabled = false;
         Reset.setActiveStatus(true);
     }
 
