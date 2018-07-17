@@ -86,6 +86,7 @@ public class Player : MonoBehaviour {
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         MainBox.GetComponent<Movement>().enabled = false;
         Reset.setActiveStatus(true);
+        BoundingBox.SetActive(false);
     }
 
     private void OnButtonClicked(GameObject button)
