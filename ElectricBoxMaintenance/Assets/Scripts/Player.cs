@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.UX.Buttons;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     
     public GameObject windowManager;
@@ -16,12 +17,21 @@ public class Player : MonoBehaviour {
     public FloatingButton liveInfo;
     public GameObject theBox;
     public FloatingButton Reset;
+    public FloatingButton Next;
+    public FloatingButton Previous;
+    public FloatingButton MyGuide;
+    public FloatingButton RemoteAssist;
+    public FloatingButton Collab;
     public GameObject Camera;
     public GameObject MainBox;
     public GameObject MainBoxDoor;
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
+    public GuideManager interactiveGuide;
+    public MainMenuContainer interactiveMenuContainer;
+
     bool boxStatus = true;
+    bool guideBool = false;
    
     
 
@@ -32,10 +42,13 @@ public class Player : MonoBehaviour {
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
+       // interactiveMenuContainer.ButtonClicked += MyGuide_Clicked;
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
 
         Reset.Clicked += Reset_Clicked;
+        MyGuide.Clicked += MyGuide_Clicked;
+        
 
 
         if (homeButton.isActiveAndEnabled)
@@ -81,6 +94,13 @@ public class Player : MonoBehaviour {
         }
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
+        MyGuide.setActiveStatus(true);
+        liveInfo.setActiveStatus(true);
+        Reset.setActiveStatus(true);
+        RemoteAssist.setActiveStatus(true);
+        Collab.setActiveStatus(true);
+        interactiveGuide.setActiveStatus(false);
+        interactiveMenuContainer.SetActiveStatus(false);
         // Hide home button
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
@@ -100,6 +120,23 @@ public class Player : MonoBehaviour {
 
     }
 
+    void MyGuide_Clicked(GameObject button)
+    {
+        guideBool = true;
+        //mainMenuContainer.SetActiveStatus(false);
+        MyGuide.setActiveStatus(false);
+        liveInfo.setActiveStatus(false);
+        Reset.setActiveStatus(false);
+        homeButton.setActiveStatus(true);
+        RemoteAssist.setActiveStatus(false);
+        Collab.setActiveStatus(false);
+        
+        interactiveGuide.setActiveStatus(true);
+        interactiveMenuContainer.SetActiveStatus(true);
+       
+        //button.SetActive(false);
+        //windowManager.SetActive(false);
+    }
     // Update is called once per frame
     void Update () {
        

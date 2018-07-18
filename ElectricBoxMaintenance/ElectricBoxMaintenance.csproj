@@ -232,6 +232,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GuideManager.cs" />
     <Compile Include="Assets\HoloToolkit\Boundary\Scripts\BoundaryManager.cs" />
     <Compile Include="Assets\HoloToolkit\Boundary\Scripts\SceneContentAdjuster.cs" />
     <Compile Include="Assets\HoloToolkit\Common\Scripts\CalibrationSpace.cs" />
@@ -942,6 +943,7 @@
     <Compile Include="Assets\Scripts\ResponseObject.cs" />
     <Compile Include="Assets\Scripts\SpatialMagic.cs" />
     <Compile Include="Assets\Scripts\WindowManager.cs" />
+    <Compile Include="Assets\StepGuide.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HoloToolkit-Examples\Medical\Shaders\PlaneCut.cginc" />

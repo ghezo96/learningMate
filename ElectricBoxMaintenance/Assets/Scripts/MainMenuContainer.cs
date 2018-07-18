@@ -39,4 +39,14 @@ public class MainMenuContainer : MonoBehaviour {
     {
         gameObject.SetActive(status);
     }
+
+    private void OnDestroy()
+    {
+        buttons = gameObject.GetComponentsInChildren<FloatingButton>();
+
+        foreach (FloatingButton button in buttons)
+        {
+            button.Clicked -= OnButtonClicked;
+        }
+    }
 }
