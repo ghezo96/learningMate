@@ -926,6 +926,7 @@
     <Compile Include="Assets\HoloToolkit-Examples\UX\Scripts\Widgets\ScaleThemeWidget.cs" />
     <Compile Include="Assets\HoloToolkit-Examples\UX\Scripts\Widgets\TextMeshColorThemeWidget.cs" />
     <Compile Include="Assets\HoloToolkit-Examples\UX\Scripts\Widgets\TextureThemeWidget.cs" />
+    <Compile Include="Assets\OnFocusResize.cs" />
     <Compile Include="Assets\Scripts\FloatingButton.cs" />
     <Compile Include="Assets\Scripts\MainMenuContainer.cs" />
     <Compile Include="Assets\Scripts\MenuManage.cs" />
