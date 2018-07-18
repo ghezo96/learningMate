@@ -77,7 +77,9 @@ public class Player : MonoBehaviour
         
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(false);
-        button.SetActive(true);
+        //button.SetActive(true);
+        Reset.setActiveStatus(false);
+        homeButton.setActiveStatus(true);
         BoundingBox.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
         
