@@ -13,7 +13,7 @@ public class WindowManager : MonoBehaviour {
     ResponseObject responseObject;
 
 
-    string response = "{\"WindowText\":[{\"WindowName\":\"PropertyWindow\",\"WindowTitle\":\"Property\",\"WindowDescription\":\"This is fuse box\"},{\"WindowName\":\"RecordWindow\",\"WindowTitle\":\"Previous Record\",\"WindowDescription\":\"Last maintenance done on 02/07/2018\"},{\"WindowName\":\"StatusWindow\",\"WindowTitle\":\"Current Status\",\"WindowDescription\":\"All components working correctly\"}]}";
+    string response = "{\"WindowText\":[{\"WindowName\":\"PropertyWindow\",\"WindowTitle\":\"Properties:\",\"WindowDescription\":\"• Fuse Box ID: (0001A)\"},{\"WindowName\":\"RecordWindow\",\"WindowTitle\":\"Previous Record\",\"WindowDescription\":\"• Last maintained on: (17/04/2018 14:57 GMT)\"},{\"WindowName\":\"StatusWindow\",\"WindowTitle\":\"• Current Status\",\"WindowDescription\":\"• (Isolated/Mains Bypass/Battery Backup/Battery)\"}]}";
 
     // Use this for initialization
     void Start () {
