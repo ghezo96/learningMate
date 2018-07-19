@@ -367,11 +367,12 @@ namespace HoloToolkit.Unity.InputModule
 
             controllerModelGameObject = new GameObject { name = "glTFController" };
             GLTFComponent gltfScript = controllerModelGameObject.AddComponent<GLTFComponent>();
-            gltfScript.GLTFConstant = gltfScript.GLTFStandard = gltfScript.GLTFStandardSpecular = GLTFMaterial.shader;
-            gltfScript.UseStream = true;
-            gltfScript.GLTFStream = new MemoryStream(fileBytes);
+            // todo: fix this in WSA
+            //gltfScript.GLTFConstant = gltfScript.GLTFStandard = gltfScript.GLTFStandardSpecular = GLTFMaterial.shader;
+            //gltfScript.UseStream = true;
+            //gltfScript.GLTFStream = new MemoryStream(fileBytes);
 
-            yield return gltfScript.WaitForModelLoad();
+            //yield return gltfScript.WaitForModelLoad();
 
             FinishControllerSetup(controllerModelGameObject, source.handedness, GenerateKey(source));
         }

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1135289388978984}
+  m_IsPrefabParent: 1
+--- !u!1 &1135289388978984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4863552212767980}
+  - component: {fileID: 114951662006468330}
+  - component: {fileID: 114198574072760776}
+  m_Layer: 0
+  m_Name: SceneLink
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4863552212767980
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135289388978984}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.5658875, y: -0.8235581, z: 0.6081103}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114198574072760776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135289388978984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -776688615, guid: b7721917c3244cb4582143166f69b343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneId: 5fb59c2c-aee4-4fab-9ab3-ceb5548fce52
+  SceneIdSet: 0
+  ViewpointId: 
+  SceneAssets: []
+  PrefabBindings: []
+  ViewpointObject: {fileID: 0}
+  ViewpointHost: {fileID: 0}
+  SceneLinkState: {fileID: 0}
+  GltfLoader: {fileID: 11400000, guid: b77230992b3ff3f4fa30ee86408d0d32, type: 2}
+  AutoConnect: 0
+--- !u!114 &114951662006468330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135289388978984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1660723707, guid: b7721917c3244cb4582143166f69b343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServiceUrl: https://staging.vertx.cloud
+  OnAuthenticated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114198574072760776}
+        m_MethodName: Connect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
