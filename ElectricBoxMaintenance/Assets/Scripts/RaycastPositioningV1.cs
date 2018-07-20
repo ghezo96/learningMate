@@ -6,14 +6,14 @@ using HoloToolkit.Unity.InputModule;
 public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
 {
     public GameObject Quad;
-    //public GameObject CameraLink;
+
     public GameObject SpatialUnder;
     public float lerpTime = 0.01f; 
     RaycastHit hit;
     Vector3 normalAtHitPosition;
     Vector3 pointOfHit;
     int layer = 1 << 31;
-    //int layer = 1 << 8;
+    int layer2 = 1 << 8;
     bool raycast = false;
     bool move = true;
     Vector3 initialCameraPosition;
@@ -37,16 +37,16 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
             Quad.GetComponent<Movement>().enabled = false;
         }
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer) || Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer2))
         {
             //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TransparentFX"))
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping"))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Spatial Mapping")|| hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
             //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
             {
                 Quad.SetActive(true);
                 SpatialUnder.SetActive(false);
                 
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer) && raycast)
+                if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer) || Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer2)) && raycast)
                 {
                     Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
                     normalAtHitPosition = hit.normal;
@@ -111,7 +111,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
 
     void Raycast()
     {
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer) || Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer2))
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
             normalAtHitPosition = hit.normal;
