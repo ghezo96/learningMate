@@ -22,9 +22,7 @@ public class Player : MonoBehaviour {
     public GameObject MainBoxDoor;
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
-
-    public GameObject SpatialUnder;
-
+    public GameObject SpatialMesh;
     bool boxStatus = true;
    
     
@@ -54,7 +52,7 @@ public class Player : MonoBehaviour {
     {
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
-        //SpatialMesh.SetActive(false);
+        SpatialMesh.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
@@ -68,8 +66,7 @@ public class Player : MonoBehaviour {
         Reset.setActiveStatus(false);
         StartButton.setActiveStatus(true);
         mainMenuContainer.SetActiveStatus(false);
-        SpatialUnder.SetActive(true);
-
+        SpatialMesh.SetActive(true);
     }
     public void liveInfo_Clicked(GameObject button)
     {
