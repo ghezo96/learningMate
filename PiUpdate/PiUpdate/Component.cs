@@ -63,6 +63,13 @@ public class Component
         return "{\"name\": \"" + this.name + "\", \"state\": \"" + this.currentCharge + "\"}";
     }
 
+    public string getPinNumber()
+    {
+        int index = this.GPIO.Length - 1;
+        char pinNumber = this.GPIO[index];
+        return pinNumber.ToString();
+    }
+
     public void update()
     {
         this.previousCharge = this.currentCharge;
