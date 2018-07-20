@@ -68,7 +68,6 @@ public class Player : MonoBehaviour {
         Reset.setActiveStatus(false);
         StartButton.setActiveStatus(true);
         mainMenuContainer.SetActiveStatus(false);
-
         SpatialUnder.SetActive(true);
 
     }

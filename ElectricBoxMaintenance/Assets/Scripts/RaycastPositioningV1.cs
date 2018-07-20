@@ -6,6 +6,7 @@ using HoloToolkit.Unity.InputModule;
 public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
 {
     public GameObject Quad;
+
     public GameObject SpatialUnder;
     public float lerpTime = 0.01f; 
     RaycastHit hit;
