@@ -15,8 +15,8 @@ $RemoteHost = '10.39.1.48'
 # Set the file paths
 $FilePath = ""
 $UnixTime = [int][double]::Parse((Get-Date -UFormat %s))
-$SftpPath = '/home/pi/Desktop/dotnetProjects/' + $ProjectName + $UnixTime
-$MkdirCommand = 'mkdir ' + $SftpPath
+$SftpPath = '/home/pi/Desktop/dotnetProjects/' + $ProjectName 
+$MkdirCommand =  'rm -Rf' + $SftpPath + '&& mkdir ' + $SftpPath
 
 
 # Create the SFTP session
@@ -35,7 +35,7 @@ $Files = Get-ChildItem
 # Upload the files
 Foreach($File in $Files)
 {
-    Set-SFTPFile -SessionId ($SFTPSession).SessionId -LocalFile $File -RemotePath $SftpPath
+    Set-SFTPFile -SessionId ($SFTPSession).SessionId -LocalFile $File -RemotePath $SftpPath -Overwrite
 }
 
 #Disconnect all SFTP Sessions
