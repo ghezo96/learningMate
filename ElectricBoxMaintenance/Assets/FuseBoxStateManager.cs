@@ -21,16 +21,19 @@ public class FuseBoxStateManager : MonoBehaviour {
     {
         if(newState == SceneLinkStatus.Connected)
         {
+            Debug.Log("VERTX connected");
             StartCoroutine(SetupFusebox());
         }
 
         if(newState == SceneLinkStatus.Disconnected)
         {
-            sceneLink.transform.Find("fusebox-vertx");
-            sceneLink.transform.Find("hand-Key-Animation");
-            sceneLink.transform.Find("arrow-switch-1");
-            sceneLink.transform.Find("arrow-switch-2");
-            sceneLink.transform.Find("arrow-switch-3");
+            Debug.Log("VERTX disconnected");
+            //finds and destorys gameobjects created
+            DestroyObject(sceneLink.transform.Find("fusebox-vertx").gameObject);
+            DestroyObject(sceneLink.transform.Find("hand-Key-Animation").gameObject);
+            DestroyObject(sceneLink.transform.Find("arrow-switch-1").gameObject);
+            DestroyObject(sceneLink.transform.Find("arrow-switch-2").gameObject);
+            DestroyObject(sceneLink.transform.Find("arrow-switch-3").gameObject);
         }
     }
 
@@ -56,7 +59,7 @@ public class FuseBoxStateManager : MonoBehaviour {
             new Vector3(0f, 0f, 0f),
             Quaternion.identity,
             Vector3.one,
-            "41fb345e-02a6-41fb-abdd-57e9b099acc0"
+            "ac100581-430a-4817-b2c8-9978144b521f"
             );
 
         GameObject switchOne = SceneLink.Instance.CreateNode(

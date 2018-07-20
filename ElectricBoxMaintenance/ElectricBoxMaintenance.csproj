@@ -215,8 +215,14 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
-    <Reference Include="GLTFSerialization">
-      <HintPath>Assets/UnityGLTF/Plugins/GLTFSerialization.dll</HintPath>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle">
       <HintPath>Assets/Vertex/Plugins/BouncyCastle.dll</HintPath>
@@ -227,20 +233,14 @@
     <Reference Include="VertexDataTypes">
       <HintPath>Assets/Vertex/Plugins/VertexDataTypes.dll</HintPath>
     </Reference>
-    <Reference Include="VertexUnityPlayer">
-      <HintPath>Assets/Vertex/Plugins/VertexUnityPlayer.dll</HintPath>
-    </Reference>
     <Reference Include="VertexUnityPlayer_Editor">
       <HintPath>Assets/Vertex/Plugins/VertexUnityPlayer_Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+    <Reference Include="GLTFSerialization">
+      <HintPath>Assets/UnityGLTF/Plugins/GLTFSerialization.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/Sijan.Rana/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    <Reference Include="VertexUnityPlayer">
+      <HintPath>Assets/Vertex/Plugins/VertexUnityPlayer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
