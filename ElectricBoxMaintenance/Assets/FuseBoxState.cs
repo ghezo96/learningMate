@@ -19,6 +19,6 @@ public class FuseBoxState : MonoBehaviour {
     public void StateUpdate(string state)
     {
         Debug.Log(state);
-        Destroy(GameObject.Instantiate(prefab, transform.position, transform.rotation), 5.0f);
+        GameObject.Instantiate(prefab, transform.position, transform.rotation);
     }
 }
