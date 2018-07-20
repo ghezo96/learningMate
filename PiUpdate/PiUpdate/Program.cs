@@ -35,7 +35,7 @@ namespace PiUpdate
             //boxStatus.door = "OPEN";
 
             //boxStatus.switchStatusList = new List<SwitchStatus>();
-            components.Add(new Component("Switch 1", "46babdc8-1e65-4361-b610-bdf40e198351", "gpio8", "0"));
+            components.Add(new Component("Switch 1", "gpio8", "0"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
@@ -80,7 +80,7 @@ namespace PiUpdate
                         client.Headers.Add("Content-Type", "application/json");
                         Console.WriteLine(json);
                         Console.WriteLine("Client sending to VERTX");
-                        client.UploadData("/session/fire/134959e9-2b71-460e-9144-3d4d3a445b83/" + component.getGUID() + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
+                        client.UploadData("/session/fire/134959e9-2b71-460e-9144-3d4d3a445b83/8039a87d-1524-4ba8-826d-4b7326f5696e/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
                     }
                 }
                 

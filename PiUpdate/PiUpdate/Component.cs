@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 public class Component
 {
     private string name;
-    private string GUID;
     private string GPIO;
     private string currentCharge;
     public string previousCharge;
@@ -21,10 +20,9 @@ public class Component
         previousCharge = "0";
 	}
 
-    public Component(string name, string GUID, string GPIO, string currentCharge)
+    public Component(string name, string GPIO, string currentCharge)
     {
         this.name = name;
-        this.GUID = GUID;
         this.GPIO = GPIO;
         this.currentCharge = currentCharge;
         this.previousCharge = this.currentCharge;
@@ -33,10 +31,6 @@ public class Component
     public string getGPIO()
     {
         return this.GPIO;
-    }
-    public string getGUID()
-    {
-        return this.GUID;
     }
     public string getName()
     {
