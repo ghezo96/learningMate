@@ -54,7 +54,7 @@ public class Player : MonoBehaviour {
     {
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
-        SpatialMesh.SetActive(false);
+        //SpatialMesh.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
