@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
     public GameObject MainBoxDoor;
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
+    public GameObject SpatialUnder;
     bool boxStatus = true;
    
     
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour {
         Reset.setActiveStatus(false);
         homeButton.setActiveStatus(true);
         mainMenuContainer.SetActiveStatus(false);
+        SpatialUnder.SetActive(true);
     }
     public void liveInfo_Clicked(GameObject button)
     {
