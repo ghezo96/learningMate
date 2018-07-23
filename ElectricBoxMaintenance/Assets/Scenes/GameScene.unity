@@ -938,6 +938,7 @@ MonoBehaviour:
   MainBoxPanel: {fileID: 604143487}
   BoundingBox: {fileID: 1257177183}
   SpatialMesh: {fileID: 1888008851}
+  BoxModel: {fileID: 202706426}
 --- !u!4 &837539776
 Transform:
   m_ObjectHideFlags: 0
@@ -3062,6 +3063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Quad: {fileID: 1113229465}
+  BoxModel: {fileID: 202706426}
   lerpTime: 0.01
 --- !u!1001 &1302399807
 Prefab:
