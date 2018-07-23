@@ -9,8 +9,8 @@ public class FuseBoxStateManager : MonoBehaviour
 
     public SceneLink sceneLink;
 
-    public GameObject FuseboxNode;
-    public GameObject handKeyAnimation;
+    private GameObject FuseboxNode;
+    private GameObject handKeyAnimation;
 
 
 
@@ -23,9 +23,10 @@ public class FuseBoxStateManager : MonoBehaviour
 
     private void SceneLink_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
     {
+        //Debug.Log("SceneLink_OnStateChange - VERTX connected : newstate " + newState );
         if (newState == SceneLinkStatus.Connected)
         {
-            Debug.Log("VERTX connected");
+            Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
             StartCoroutine(SetUpEventHandler());
         }
 
@@ -35,10 +36,10 @@ public class FuseBoxStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
 
-        handKeyAnimation = CreateNode("vertx-event-handler", "");
-        handKeyAnimation.AddComponent<VertxEventHandler>();
-
         //CreateNode("Vertx-electrical-box", "863b5c9a-7b83-4a88-b4d6-41a33bdba80e");
+        //GameObject HandlerNode = CreateNodeWithPrefab("HandlerNode", "", "EventHandlerNodeLink");
+        GameObject HandlerNode = CreateNode("VertxEventManager", null);
+        HandlerNode.AddComponent<VertxEventHandler>();
 
     }
 
@@ -50,14 +51,12 @@ public class FuseBoxStateManager : MonoBehaviour
 
         if (vertxObject == null)
         {
-            vertxThing = SceneLink.Instance.CreateNode(name, 
+            vertxThing = SceneLink.Instance.CreateNode(name,
                 new Vector3(0f, 0f, 0f),
                 Quaternion.identity,
                 Vector3.one,
                 id
            );
-
-            //vertxThing = vertxObject.gameObject;
         }
         else
         {
@@ -69,6 +68,35 @@ public class FuseBoxStateManager : MonoBehaviour
         return vertxThing;
 
     }
+
+    //private GameObject CreateNodeWithPrefab(string name, string id, string prefabId)
+    //{
+
+    //    Debug.Log("Node: " + name + " id : " + id);
+    //    var vertxObject = sceneLink.transform.Find(name);
+    //    GameObject vertxThing;
+
+    //    if (vertxObject == null)
+    //    {
+    //        vertxThing = SceneLink.Instance.CreateNode(name,
+    //            new Vector3(0f, 0f, 0f),
+    //            Quaternion.identity,
+    //            Vector3.one,
+    //            id,
+    //            null,
+    //            prefabId
+    //       );
+    //        //vertxThing = vertxObject.gameObject;
+    //    }
+    //    else
+    //    {
+    //        vertxThing = vertxObject.gameObject;
+
+    //    }
+    //    return vertxThing;
+
+    //}
+
 
     // Update is called once per frame
     void Update()
