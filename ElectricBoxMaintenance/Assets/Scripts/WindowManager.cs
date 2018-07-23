@@ -28,7 +28,7 @@ public class WindowManager : MonoBehaviour {
         responseObject = JsonConvert.DeserializeObject<ResponseObject>(response);
 
         Debug.Log(responseObject.WindowText.Count);
-        SetWindowText();
+        //SetWindowText();
 
     }
 	

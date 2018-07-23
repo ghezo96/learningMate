@@ -787,6 +787,18 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 957769481}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Current Status:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Currently Output Power From: \r(Mains/Battery)\r\n\u2022 Action
+        Required:\r (None/Repair/Maintenance)\r\r\n\u2022 Days until Next Service:
+        (7 Days - 17/07/2018)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -1140,6 +1152,18 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 1124944201}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Previous Record:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Previous Engineer: (Aslan Silva, trainee)\r\n\u2022 Last maintained
+        on: (17/04/2018 14:57 GMT)\r\n\u2022 Maintenance conducted: \r\n(Fuse replacement
+        - 17/04/2018 15:17 GMT)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -2575,6 +2599,17 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 1517536039}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Properties:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Fuse Box ID\r: (0001A)\r\n\u2022 IOT Device Software Version
+        number\r: (1.0.0.1)\r\n\u2022 IOT Device Model\r: (Raspberry Pi 3.0.2)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
