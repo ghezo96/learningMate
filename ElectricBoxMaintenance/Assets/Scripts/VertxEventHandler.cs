@@ -24,8 +24,6 @@ public class VertxEventHandler : MonoBehaviour {
 		
 	}
 
-
-
     public void OnUpdate(object message)
     {
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
