@@ -76,11 +76,15 @@ public class VertxEventHandler : MonoBehaviour {
     // Validate IoT message and start the next set of instruction
     private void ValidateUserAction(Message message)
     {
-        //currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //if(currentGameObject != null)
+        //{
+        //    currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //}
+        
         if (message.name == "KEY_ANIMATION")
         {
-            currentGameObject = (message.state == 0) 
-                ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f") 
+            currentGameObject = (message.state == 0)
+                ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f")
                 : StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a");
         }
         if (message.name == "SWITCH_ONE" && message.state == 1)
@@ -92,25 +96,25 @@ public class VertxEventHandler : MonoBehaviour {
         }
         if (message.name == "SWITCH_TWO" && message.state == 1)
         {
-            
+
             currentGameObject = (message.state == 0)
                 ? StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c")
                 : StartNextInstruction("SWITCH_THREE", "a635a8ae-3107-49b0-a103-7340d65e51e4");
 
         }
+
         currentGameObject.GetComponent<IComponent>().OnNotify(message);
     }
 
-
-
+    // Start next instruction
     private GameObject StartNextInstruction(string name, string id)
     {
-        
+        GameObject vertxObject = CreateNode(name, id);
+        vertxObject.AddComponent<KeyAnimEventHandler>();
+        return vertxObject;
 
-        GameObject keyAnimationObject = CreateNode(name, id);
-        keyAnimationObject.AddComponent<KeyAnimEventHandler>();
-        return keyAnimationObject;
     }
+
 
     private void UpdateComponentStatus(Message message)
     {

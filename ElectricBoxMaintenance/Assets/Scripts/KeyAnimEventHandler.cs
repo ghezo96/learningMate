@@ -31,4 +31,5 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
     {
         Destroy(gameObject);
     }
+
 }

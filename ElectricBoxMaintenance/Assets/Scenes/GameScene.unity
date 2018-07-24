@@ -1232,7 +1232,7 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: e34c6e36-1e7f-46f4-8a95-61a646b29f11
+      value: 73d44ea6-23f5-4846-a4c7-120d4a144027
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
