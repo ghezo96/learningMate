@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 
 namespace PiUpdate
 {
@@ -16,7 +13,10 @@ namespace PiUpdate
 
         static void Main(string[] args)
         {
-            components.Add(new Component("Switch 1", "gpio8", "0"));
+            string guid = "4e7c7996-d624-4f56-8dbe-7bcff2f8f89c";
+            string sceneId = "6553bc4a-f278-4fb6-a2d6-4d679d883d9d";
+            components.Add(new Component("keyAnimation", "gpio8", "0"));
+            components.Add(new Component("switchOne", "gpio7", "0"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
@@ -29,6 +29,7 @@ namespace PiUpdate
                     File.WriteAllText("/sys/class/gpio/export", component.getPinNumber());
                     File.WriteAllText("/System/class/gpio/" + component.getGPIO() + "/direction", "in");
                 }
+                    component.update();
             }
 
             //Constant service running to check state change
@@ -45,7 +46,9 @@ namespace PiUpdate
                         client.Headers.Add("Content-Type", "application/json");
                         Console.WriteLine(json);
                         Console.WriteLine("Client sending to VERTX");
-                        client.UploadData("/session/fire/134959e9-2b71-460e-9144-3d4d3a445b83/8039a87d-1524-4ba8-826d-4b7326f5696e/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
+                        client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
+                        Console.WriteLine("Data sent");
+                        //System.Threading.Thread.Sleep(1000);
                     }
                 }
                 

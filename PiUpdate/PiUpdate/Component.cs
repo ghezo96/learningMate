@@ -60,7 +60,7 @@ public class Component
 
     public string getJson()
     {
-        return "{\"name\": \"" + this.name + "\", \"state\": \"" + this.currentCharge + "\"}";
+        return "{\"name\": \"" + this.name + "\", \"state\": " + this.currentCharge + "}";
     }
 
     public string getPinNumber()
