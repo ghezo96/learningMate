@@ -51,7 +51,7 @@ public class FuseBoxStateManager : MonoBehaviour
 
         if (vertxObject == null)
         {
-            vertxThing = SceneLink.Instance.CreateNode(name,
+            vertxThing = sceneLink.CreateNode(name,
                 new Vector3(0f, 0f, 0f),
                 Quaternion.identity,
                 Vector3.one,

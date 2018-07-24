@@ -40,17 +40,17 @@ public class VertxEventHandler : MonoBehaviour {
         componentList = componentsStatusObject.Components;
         InitaliseAnimations();
         //
-        GameObject keyAnimationObject = CreateNode("KeyAnimation", "ac100581-430a-4817-b2c8-9978144b521f");
+        GameObject keyAnimationObject = CreateNode("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f");
         keyAnimationObject.AddComponent<KeyAnimEventHandler>();
         currentGameObject = keyAnimationObject;
     }
 
     void InitaliseAnimations()
     {
-        AnimationDictionary.Add("keyAnimation", "ac100581-430a-4817-b2c8-9978144b521f");
-        AnimationDictionary.Add("Anim_Switch1", "36748b64-8251-4b76-8672-d67d5522dfb1");
-        AnimationDictionary.Add("Anim_Switch2", "c74cf1eb-da54-448e-b5c2-a423d16064a4");
-        AnimationDictionary.Add("Anim_Switch3", "ec53c75e-ec10-4014-8d96-f73f2e27ca82");
+        AnimationDictionary.Add("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f");
+        AnimationDictionary.Add("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a");
+        AnimationDictionary.Add("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
+        AnimationDictionary.Add("SWITCH_THREE", "a635a8ae-3107-49b0-a103-7340d65e51e4");
     }
 
 
@@ -62,46 +62,54 @@ public class VertxEventHandler : MonoBehaviour {
 
     public void OnUpdate(object message)
     {
-        Debug.Log("OnUpdate: " + message);
+        // Deserialize the message received by IOT
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
-
         Debug.Log("OnUpdate: " + _message.name + " status => " + _message.state);
-
-        string animationName = _message.name;
-
-        // Update component 
-        UpdateComponentStatus(_message);
-
-        currentGameObject.GetComponent<IComponent>().OnNotify(_message);
-
-        // Start next set of instruction base on message received by IOT
-
-        if(_message.name == "keyAnimation" &&  _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch1", "66d507fc-e459-4ba0-883c-654643d0b28a");
-            
-            
-        }
-        if (_message.name == "switchOne" && _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch2", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
-            
-        }
-        if (_message.name == "switchTwo" && _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch3", "a635a8ae-3107-49b0-a103-7340d65e51e4");
-            
-        }
         
+        // Update component 
+        // UpdateComponentStatus(_message);
 
+        //Validate message received from IoT and then Start next set of instruction base on message
+        ValidateUserAction(_message);
     }
 
-    private void StartNextInstruction(string name, string id)
+    // Validate IoT message and start the next set of instruction
+    private void ValidateUserAction(Message message)
     {
-        currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        if (message.name == "KEY_ANIMATION")
+        {
+            currentGameObject = (message.state == 0) 
+                ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f") 
+                : StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a");
+        }
+        if (message.name == "SWITCH_ONE" && message.state == 1)
+        {
+            currentGameObject = (message.state == 0)
+                ? StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a")
+                : StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
+
+        }
+        if (message.name == "SWITCH_TWO" && message.state == 1)
+        {
+            
+            currentGameObject = (message.state == 0)
+                ? StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c")
+                : StartNextInstruction("SWITCH_THREE", "a635a8ae-3107-49b0-a103-7340d65e51e4");
+
+        }
+        currentGameObject.GetComponent<IComponent>().OnNotify(message);
+    }
+
+
+
+    private GameObject StartNextInstruction(string name, string id)
+    {
+        
+
         GameObject keyAnimationObject = CreateNode(name, id);
         keyAnimationObject.AddComponent<KeyAnimEventHandler>();
-        currentGameObject = keyAnimationObject;
+        return keyAnimationObject;
     }
 
     private void UpdateComponentStatus(Message message)

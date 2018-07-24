@@ -1232,9 +1232,10 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: 134959e9-2b71-460e-9144-3d4d3a445b83
+      value: e34c6e36-1e7f-46f4-8a95-61a646b29f11
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &924339312
@@ -3994,8 +3995,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLink: {fileID: 1406508355}
-  FuseboxNode: {fileID: 0}
-  handKeyAnimation: {fileID: 0}
 --- !u!1 &1449726032
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
 
         if(message.state == 1)
         {
-            Destroy(gameObject);
+            Debug.Log("Message state: " + message.state);
+            DestroyObject(gameObject);
         }
        
     }
