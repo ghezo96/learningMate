@@ -734,6 +734,18 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 957769481}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Current Status:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Currently Output Power From: \r(Mains/Battery)\r\n\u2022 Action
+        Required:\r (None/Repair/Maintenance)\r\r\n\u2022 Days until Next Service:
+        (7 Days - 17/07/2018)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -916,7 +928,6 @@ MonoBehaviour:
   windowManager: {fileID: 1233016410}
   mainMenuContainer: {fileID: 1786907492}
   homeButton: {fileID: 1367924225}
-  liveInfo: {fileID: 1997516086}
   StartButton: {fileID: 924339323}
   theBox: {fileID: 202706426}
   Reset: {fileID: 1242329385}
@@ -926,6 +937,8 @@ MonoBehaviour:
   MainBoxPanel: {fileID: 604143487}
   BoundingBox: {fileID: 1257177183}
   SpatialMesh: {fileID: 1888008851}
+  BoxModel: {fileID: 202706426}
+  SceneLinkScriptForGuide: {fileID: 0}
 --- !u!4 &837539776
 Transform:
   m_ObjectHideFlags: 0
@@ -1152,6 +1165,18 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 1124944201}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Previous Record:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Previous Engineer: (Aslan Silva, trainee)\r\n\u2022 Last maintained
+        on: (17/04/2018 14:57 GMT)\r\n\u2022 Maintenance conducted: \r\n(Fuse replacement
+        - 17/04/2018 15:17 GMT)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -1160,6 +1185,58 @@ Transform:
   m_PrefabParentObject: {fileID: 4801993393754850, guid: 50b0a189e89d6984882f9268ad255f51,
     type: 2}
   m_PrefabInternal: {fileID: 906611461}
+--- !u!1001 &917642467
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: ViewpointObject
+      value: 
+      objectReference: {fileID: 1257388057}
+    - target: {fileID: 1941915913401856, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &924339312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1657,7 @@ GameObject:
   - component: {fileID: 961347274}
   - component: {fileID: 961347273}
   m_Layer: 5
-  m_Name: Remote Assistance
+  m_Name: RemoteAssistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1987,8 +2064,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1113229465}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.558, y: 0, z: -0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1638002519}
@@ -2001,7 +2078,7 @@ Transform:
   - {fileID: 924339313}
   m_Father: {fileID: 837539776}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113229467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2986,6 +3063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Quad: {fileID: 1113229465}
+  BoxModel: {fileID: 202706426}
   lerpTime: 0.01
 --- !u!1001 &1302399807
 Prefab:
@@ -3049,6 +3127,17 @@ Prefab:
       propertyPath: descriptionTextField
       value: 
       objectReference: {fileID: 1517536039}
+    - target: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Properties:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 102496789618890736, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2022 Fuse Box ID\r: (0001A)\r\n\u2022 IOT Device Software Version
+        number\r: (1.0.0.1)\r\n\u2022 IOT Device Model\r: (Raspberry Pi 3.0.2)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -3683,11 +3772,11 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 5e02388bcf89289489a71a542411619e, type: 2}
     - target: {fileID: 100022, guid: 1e053a62caec5354d95d262f5f4aec80, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100036, guid: 1e053a62caec5354d95d262f5f4aec80, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300048, guid: 1e053a62caec5354d95d262f5f4aec80, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4540,7 +4629,7 @@ GameObject:
   - component: {fileID: 1926709812}
   - component: {fileID: 1926709811}
   m_Layer: 5
-  m_Name: My Guide
+  m_Name: InteractiveGuide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4810,7 +4899,7 @@ GameObject:
   - component: {fileID: 1997516085}
   - component: {fileID: 1997516084}
   m_Layer: 5
-  m_Name: Live Information
+  m_Name: LiveInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

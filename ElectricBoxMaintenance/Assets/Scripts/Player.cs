@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.UX.Buttons;
+using VertexUnityPlayer;
 
 public class Player : MonoBehaviour {
 
@@ -13,7 +14,6 @@ public class Player : MonoBehaviour {
     string inputTitleText;
     string inputDescriptionText;
     public FloatingButton homeButton;
-    public FloatingButton liveInfo;
     public FloatingButton StartButton;
     public GameObject theBox;
     public FloatingButton Reset;
@@ -23,7 +23,10 @@ public class Player : MonoBehaviour {
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
+    public GameObject BoxModel;
+    public GameObject SceneLinkScriptForGuide;
     bool boxStatus = true;
+    private List<string> listOfAnimationsInGuide = new List<string> { "KeyAnimation", "SWITCH_ONE", "SWITCH_TWO", "SWITCH_THREE" };
    
     
 
@@ -35,11 +38,9 @@ public class Player : MonoBehaviour {
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
-        liveInfo.Clicked += liveInfo_Clicked;
         StartButton.Clicked += Start_Clicked;
-
+        SpatialMesh.SetActive(true);
         Reset.Clicked += Reset_Clicked;
-
 
         if (homeButton.isActiveAndEnabled)
         {
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(true);
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
+        BoxModel.SetActive(true);
     }
 
     public void Reset_Clicked (GameObject button)
@@ -67,23 +69,9 @@ public class Player : MonoBehaviour {
         StartButton.setActiveStatus(true);
         mainMenuContainer.SetActiveStatus(false);
         SpatialMesh.SetActive(true);
+        BoxModel.SetActive(false);
     }
-    public void liveInfo_Clicked(GameObject button)
-    {
-        boxStatus = true;
-       
-            MainBoxDoor.SetActive(false);
-            MainBoxPanel.SetActive(false);
-      
-        
-        windowManager.SetActive(false);
-        mainMenuContainer.SetActiveStatus(false);
-        button.SetActive(true);
-        BoundingBox.SetActive(false);
-        theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
-        
-    
-    }
+
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
@@ -100,16 +88,55 @@ public class Player : MonoBehaviour {
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         Reset.setActiveStatus(true);
+        
+        //foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
+        //{
+        //    if (listOfAnimationsInGuide.Contains(a.name))
+        //    {
+        //        //Debug.Log("a guid is: " + a.Guid);
+        //        //a.gameObject.SetActive(false);
+        //        //Destroy(a.gameObject);
+        //        //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //        Destroy(a.gameObject);
+        //        //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //        Debug.Log("Destroyed: " + a.name);
+        //    }
+        //    //if (a.name == "VertxEventManager")
+        //    //{
+        //    //    //Destroy(a.gameObject);
+        //    //    a.gameObject.SetActive(false);
+        //    //}
+
+        //}
+       // SceneLinkScriptForGuide.GetComponent<FuseBoxStateManager>().enabled = false;
+
     }
 
     private void OnButtonClicked(GameObject button)
     {
         //Debug.Log(button.name + "menu buttons");
-        mainMenuContainer.SetActiveStatus(false);
-        windowManager.SetActive(true);
-        homeButton.setActiveStatus(true);
-        Reset.setActiveStatus(false);
-        BoundingBox.SetActive(false);
+
+        if(button.name == "LiveInformation")
+        {
+            mainMenuContainer.SetActiveStatus(false);
+            windowManager.SetActive(true);
+            homeButton.setActiveStatus(true);
+            Reset.setActiveStatus(false);
+            BoundingBox.SetActive(false);
+            boxStatus = true;
+            MainBoxDoor.SetActive(false);
+            MainBoxPanel.SetActive(false);
+            BoundingBox.SetActive(false);
+            theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+        }
+        else if(button.name == "InteractiveGuide")
+        {
+            mainMenuContainer.SetActiveStatus(false);
+            windowManager.SetActive(false);
+            Reset.setActiveStatus(false);
+            homeButton.setActiveStatus(true);
+        }
+      
 
     }
 
