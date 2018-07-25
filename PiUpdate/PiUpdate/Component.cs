@@ -2,9 +2,6 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
 public class Component
 {
     private string name;

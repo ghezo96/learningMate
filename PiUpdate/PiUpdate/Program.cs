@@ -13,10 +13,12 @@ namespace PiUpdate
 
         static void Main(string[] args)
         {
-            string guid = "4e7c7996-d624-4f56-8dbe-7bcff2f8f89c";
-            string sceneId = "6553bc4a-f278-4fb6-a2d6-4d679d883d9d";
-            components.Add(new Component("keyAnimation", "gpio8", "0"));
-            components.Add(new Component("switchOne", "gpio7", "0"));
+            string guid = "4789e6e2-45f2-45d1-b2b7-0af7073a4151";
+            string sceneId = "b7993275-9930-4f11-a6aa-93ea2cefc4f6";
+            components.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
+            components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
+            components.Add(new Component("SWITCH_TWO", "gpio18", "0"));
+            components.Add(new Component("SWITCH_THREE", "gpio17", "0"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
@@ -48,7 +50,6 @@ namespace PiUpdate
                         Console.WriteLine("Client sending to VERTX");
                         client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
                         Console.WriteLine("Data sent");
-                        //System.Threading.Thread.Sleep(1000);
                     }
                 }
                 
