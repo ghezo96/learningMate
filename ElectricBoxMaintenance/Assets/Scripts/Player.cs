@@ -14,9 +14,7 @@ public class Player : MonoBehaviour {
     string inputTitleText;
     string inputDescriptionText;
     public FloatingButton homeButton;
-    public FloatingButton liveInfo;
     public FloatingButton StartButton;
-    public FloatingButton InteractiveGuideButton;
     public GameObject theBox;
     public FloatingButton Reset;
     public GameObject Camera;
@@ -40,12 +38,9 @@ public class Player : MonoBehaviour {
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
-        liveInfo.Clicked += liveInfo_Clicked;
         StartButton.Clicked += Start_Clicked;
-        InteractiveGuideButton.Clicked += InteractiveButton_Clicked;
-
+        SpatialMesh.SetActive(true);
         Reset.Clicked += Reset_Clicked;
-
 
         if (homeButton.isActiveAndEnabled)
         {
@@ -76,22 +71,7 @@ public class Player : MonoBehaviour {
         SpatialMesh.SetActive(true);
         BoxModel.SetActive(false);
     }
-    public void liveInfo_Clicked(GameObject button)
-    {
-        boxStatus = true;
-       
-            MainBoxDoor.SetActive(false);
-            MainBoxPanel.SetActive(false);
-      
-        
-        windowManager.SetActive(false);
-        mainMenuContainer.SetActiveStatus(false);
-        button.SetActive(true);
-        BoundingBox.SetActive(false);
-        theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
-        
-    
-    }
+
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
@@ -109,50 +89,27 @@ public class Player : MonoBehaviour {
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         Reset.setActiveStatus(true);
         
-        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
-        {
-            if (listOfAnimationsInGuide.Contains(a.name))
-            {
-                //Debug.Log("a guid is: " + a.Guid);
-                //a.gameObject.SetActive(false);
-                //Destroy(a.gameObject);
-                //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
-                Destroy(a.gameObject);
-                //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
-                Debug.Log("Destroyed: " + a.name);
-            }
-            //if (a.name == "VertxEventManager")
-            //{
-            //    //Destroy(a.gameObject);
-            //    a.gameObject.SetActive(false);
-            //}
-
-        }
-        SceneLinkScriptForGuide.GetComponent<FuseBoxStateManager>().enabled = false;
-
-    }
-
-    private void InteractiveButton_Clicked(GameObject button)
-    {
-        windowManager.SetActive(false);
-
-       // mainMenuContainer.SetActiveStatus(false);
-        homeButton.setActiveStatus(false);
-        SceneLinkScriptForGuide.GetComponent<FuseBoxStateManager>().enabled = true;
-        //GameObject HandlerNode = SceneLink.Instance.CreateNode("VertxEventManager", new Vector3(0f, 0f, 0f),
-        //        Quaternion.identity,
-        //        Vector3.one,
-        //        null
-        //   );
-        //HandlerNode.AddComponent<VertxEventHandler>();
         //foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         //{
-        //    if (a.name == "VertxEventManager")
+        //    if (listOfAnimationsInGuide.Contains(a.name))
         //    {
-        //        a.gameObject.SetActive(true);
+        //        //Debug.Log("a guid is: " + a.Guid);
+        //        //a.gameObject.SetActive(false);
+        //        //Destroy(a.gameObject);
+        //        //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //        Destroy(a.gameObject);
+        //        //a.gameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
+        //        Debug.Log("Destroyed: " + a.name);
         //    }
+        //    //if (a.name == "VertxEventManager")
+        //    //{
+        //    //    //Destroy(a.gameObject);
+        //    //    a.gameObject.SetActive(false);
+        //    //}
 
         //}
+       // SceneLinkScriptForGuide.GetComponent<FuseBoxStateManager>().enabled = false;
+
     }
 
     private void OnButtonClicked(GameObject button)
@@ -166,12 +123,18 @@ public class Player : MonoBehaviour {
             homeButton.setActiveStatus(true);
             Reset.setActiveStatus(false);
             BoundingBox.SetActive(false);
+            boxStatus = true;
+            MainBoxDoor.SetActive(false);
+            MainBoxPanel.SetActive(false);
+            BoundingBox.SetActive(false);
+            theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
         }
         else if(button.name == "InteractiveGuide")
         {
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
+            homeButton.setActiveStatus(true);
         }
       
 

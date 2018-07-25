@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4693966552656072}
   - component: {fileID: 114598098266529332}
   - component: {fileID: 114296273663961542}
-  - component: {fileID: 114203067088503562}
   m_Layer: 0
   m_Name: SceneLink
   m_TagString: Untagged
@@ -42,18 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114203067088503562
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1941915913401856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ea6911f2ba772a46a4ba0bf41692ecf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLink: {fileID: 114296273663961542}
 --- !u!114 &114296273663961542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,13 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: -776688615, guid: b7721917c3244cb4582143166f69b343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneId: 6553bc4a-f278-4fb6-a2d6-4d679d883d9d
+  SceneId: 2ebc9ff0-6e89-4813-b870-aecfcb99e17a
   SceneIdSet: 0
   ViewpointId: 
   SceneAssets: []
   PrefabBindings:
   - {fileID: 1274452605071820, guid: cd23163a7a0fd014bab28bb55e42e209, type: 2}
-  - {fileID: 1855563722365582, guid: 37ab1f246875f1945ae4ec1118cbc4eb, type: 2}
   ViewpointObject: {fileID: 0}
   ViewpointHost: {fileID: 0}
   SceneLinkState: {fileID: 0}

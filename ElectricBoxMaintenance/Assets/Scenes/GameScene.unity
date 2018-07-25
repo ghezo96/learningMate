@@ -928,7 +928,6 @@ MonoBehaviour:
   windowManager: {fileID: 1233016410}
   mainMenuContainer: {fileID: 1786907492}
   homeButton: {fileID: 1367924225}
-  liveInfo: {fileID: 1997516086}
   StartButton: {fileID: 924339323}
   theBox: {fileID: 202706426}
   Reset: {fileID: 1242329385}
@@ -939,6 +938,7 @@ MonoBehaviour:
   BoundingBox: {fileID: 1257177183}
   SpatialMesh: {fileID: 1888008851}
   BoxModel: {fileID: 202706426}
+  SceneLinkScriptForGuide: {fileID: 0}
 --- !u!4 &837539776
 Transform:
   m_ObjectHideFlags: 0
@@ -1229,10 +1229,9 @@ Prefab:
       propertyPath: ViewpointObject
       value: 
       objectReference: {fileID: 1257388057}
-    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
-        type: 2}
-      propertyPath: SceneId
-      value: 134959e9-2b71-460e-9144-3d4d3a445b83
+    - target: {fileID: 1941915913401856, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
@@ -1657,7 +1656,7 @@ GameObject:
   - component: {fileID: 961347274}
   - component: {fileID: 961347273}
   m_Layer: 5
-  m_Name: Remote Assistance
+  m_Name: RemoteAssistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3971,31 +3970,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1403371858}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1406508354 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1941915913401856, guid: 281590aa20ce02f4485fa1ecbc592242,
-    type: 2}
-  m_PrefabInternal: {fileID: 917642467}
---- !u!114 &1406508355 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
-    type: 2}
-  m_PrefabInternal: {fileID: 917642467}
-  m_Script: {fileID: -776688615, guid: b7721917c3244cb4582143166f69b343, type: 3}
---- !u!114 &1406508358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1406508354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ea6911f2ba772a46a4ba0bf41692ecf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLink: {fileID: 1406508355}
-  FuseboxNode: {fileID: 0}
-  handKeyAnimation: {fileID: 0}
 --- !u!1 &1449726032
 GameObject:
   m_ObjectHideFlags: 0
@@ -4654,7 +4628,7 @@ GameObject:
   - component: {fileID: 1926709812}
   - component: {fileID: 1926709811}
   m_Layer: 5
-  m_Name: My Guide
+  m_Name: InteractiveGuide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4924,7 +4898,7 @@ GameObject:
   - component: {fileID: 1997516085}
   - component: {fileID: 1997516084}
   m_Layer: 5
-  m_Name: Live Information
+  m_Name: LiveInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
