@@ -37,7 +37,7 @@ public class VertxEventHandler : MonoBehaviour {
         //
         GameObject keyAnimationObject = CreateNode("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f");
 
-        keyAnimationObject.AddComponent<KeyAnimEventHandler>();
+        keyAnimationObject.AddComponent<AnimationHandler>();
 
         currentGameObject = keyAnimationObject;
     }
@@ -62,7 +62,7 @@ public class VertxEventHandler : MonoBehaviour {
     {
         // Deserialize the message received by IOT
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
-        Debug.Log("OnUpdate: " + _message.name + " status => " + _message.state);
+        Debug.Log("OnUpdate: \nName => " + _message.name + " status => " + _message.state);
         
         // Update component 
         // UpdateComponentStatus(_message);
@@ -101,20 +101,20 @@ public class VertxEventHandler : MonoBehaviour {
 
         //}
 
-        if (message.name == "KEY_ANIMATION" && message.state == 1)
+        if (message.name == "KEY_ANIMATION")
         {
             currentGameObject = (message.state == 0)
                 ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f")
                 : StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a");
         }
-        if (message.name == "SWITCH_ONE" && message.state == 1)
+        if (message.name == "SWITCH_ONE")
         {
             currentGameObject = (message.state == 0)
                 ? StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a")
                 : StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
 
         }
-        if (message.name == "SWITCH_TWO" && message.state == 1)
+        if (message.name == "SWITCH_TWO")
         {
 
             currentGameObject = (message.state == 0)
@@ -129,7 +129,7 @@ public class VertxEventHandler : MonoBehaviour {
     private GameObject StartNextInstruction(string name, string id)
     {
         GameObject vertxObject = CreateNode(name, id);
-        vertxObject.AddComponent<KeyAnimEventHandler>();
+        vertxObject.AddComponent<AnimationHandler>();
         return vertxObject;
     }
 

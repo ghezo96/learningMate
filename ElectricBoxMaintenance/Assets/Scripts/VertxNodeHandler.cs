@@ -25,6 +25,6 @@ public class VertxNodeHandler : MonoBehaviour {
         // UpdateComponentStatus(_message);
 
         //Validate message received from IoT and then Start next set of instruction base on message
-        ValidateUserAction(_message);
+        //ValidateUserAction(_message);
     }
 }
