@@ -29,7 +29,7 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
 
     public void DestroyIt()
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     public void DestroyAnimation()

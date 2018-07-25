@@ -928,7 +928,6 @@ MonoBehaviour:
   windowManager: {fileID: 1233016410}
   mainMenuContainer: {fileID: 1786907492}
   homeButton: {fileID: 1367924225}
-  liveInfo: {fileID: 1997516086}
   StartButton: {fileID: 924339323}
   theBox: {fileID: 202706426}
   Reset: {fileID: 1242329385}
@@ -1232,7 +1231,7 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: b7993275-9930-4f11-a6aa-93ea2cefc4f6
+      value: 682cc41a-84f2-41ce-b9c7-fd4f6e86e85f
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
@@ -1658,7 +1657,7 @@ GameObject:
   - component: {fileID: 961347274}
   - component: {fileID: 961347273}
   m_Layer: 5
-  m_Name: Remote Assistance
+  m_Name: RemoteAssistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2058,7 +2057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1113229466
 Transform:
   m_ObjectHideFlags: 0
@@ -3983,7 +3982,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1406508354}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ea6911f2ba772a46a4ba0bf41692ecf, type: 3}
   m_Name: 
@@ -4647,7 +4646,7 @@ GameObject:
   - component: {fileID: 1926709812}
   - component: {fileID: 1926709811}
   m_Layer: 5
-  m_Name: My Guide
+  m_Name: InteractiveGuide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4917,7 +4916,7 @@ GameObject:
   - component: {fileID: 1997516085}
   - component: {fileID: 1997516084}
   m_Layer: 5
-  m_Name: Live Information
+  m_Name: LiveInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

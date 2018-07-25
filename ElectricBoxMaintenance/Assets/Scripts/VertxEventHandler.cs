@@ -21,6 +21,7 @@ public class VertxEventHandler : MonoBehaviour {
 
         // KEYANIMATION IS STARTING ANIMATION
         currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+        currentGameObject.AddComponent<KeyAnimEventHandler>();
     }
 
     // DICTIONARY WITH ANIMATIONS
@@ -117,16 +118,21 @@ public class VertxEventHandler : MonoBehaviour {
     }
 
     // Start next instruction
-    private GameObject StartNextInstruction(string name, string id, Message message)
+    private void StartNextInstruction(string name, string id, Message message)
     {
 
         Debug.Log(currentGameObject.name);
         DestroyObject(currentGameObject);
         currentGameObject = CreateNode(name, id);
-        return currentGameObject;
+        currentGameObject.AddComponent<KeyAnimEventHandler>();
     }
 
 
+    public void InitKeyAnimation()
+    {
+        currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+        currentGameObject.AddComponent<KeyAnimEventHandler>();
+    }
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
