@@ -11,7 +11,7 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
 
         if(message.state == 1)
         {
-            Debug.Log("Message state: " + message.state);
+            Debug.Log("Destroyed hand animation");
             DestroyObject(gameObject);
         }
        
@@ -29,7 +29,7 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
 
     public void DestroyIt()
     {
-        Destroy(gameObject);
+        Destroy(this);
     }
 
 }

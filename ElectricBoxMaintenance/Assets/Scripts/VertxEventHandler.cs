@@ -7,8 +7,6 @@ using VertexUnityPlayer;
 
 public class VertxEventHandler : MonoBehaviour {
 
-  
-
     public class Component
     {
         public string name { get; set; }
@@ -32,16 +30,15 @@ public class VertxEventHandler : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        Debug.Log("STart");
-        
-
         // Get the components status
         ComponentsStatus componentsStatusObject = JsonConvert.DeserializeObject<ComponentsStatus>(componentsWithStatus);
         componentList = componentsStatusObject.Components;
         InitaliseAnimations();
         //
         GameObject keyAnimationObject = CreateNode("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f");
+
         keyAnimationObject.AddComponent<KeyAnimEventHandler>();
+
         currentGameObject = keyAnimationObject;
     }
 
@@ -58,6 +55,7 @@ public class VertxEventHandler : MonoBehaviour {
 	void Update () {
 		
 	}
+
 
 
     public void OnUpdate(object message)
@@ -80,8 +78,30 @@ public class VertxEventHandler : MonoBehaviour {
         //{
         //    currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
         //}
-        
-        if (message.name == "KEY_ANIMATION")
+
+        //if (message.name == "KEY_ANIMATION")
+        //{
+        //    currentGameObject = (message.state == 0)
+        //        ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f")
+        //        : StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a");
+        //}
+        //if (message.name == "SWITCH_ONE" && message.state == 1)
+        //{
+        //    currentGameObject = (message.state == 0)
+        //        ? StartNextInstruction("SWITCH_ONE", "66d507fc-e459-4ba0-883c-654643d0b28a")
+        //        : StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
+
+        //}
+        //if (message.name == "SWITCH_TWO" && message.state == 1)
+        //{
+
+        //    currentGameObject = (message.state == 0)
+        //        ? StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c")
+        //        : StartNextInstruction("SWITCH_THREE", "a635a8ae-3107-49b0-a103-7340d65e51e4");
+
+        //}
+
+        if (message.name == "KEY_ANIMATION" && message.state == 1)
         {
             currentGameObject = (message.state == 0)
                 ? StartNextInstruction("KEY_ANIMATION", "ac100581-430a-4817-b2c8-9978144b521f")
@@ -101,9 +121,8 @@ public class VertxEventHandler : MonoBehaviour {
                 ? StartNextInstruction("SWITCH_TWO", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c")
                 : StartNextInstruction("SWITCH_THREE", "a635a8ae-3107-49b0-a103-7340d65e51e4");
 
+            currentGameObject.GetComponent<IComponent>().OnNotify(message);
         }
-
-        currentGameObject.GetComponent<IComponent>().OnNotify(message);
     }
 
     // Start next instruction
@@ -112,7 +131,6 @@ public class VertxEventHandler : MonoBehaviour {
         GameObject vertxObject = CreateNode(name, id);
         vertxObject.AddComponent<KeyAnimEventHandler>();
         return vertxObject;
-
     }
 
 
@@ -133,8 +151,6 @@ public class VertxEventHandler : MonoBehaviour {
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
-
-        Debug.Log("Node: " + name + " id : " + id);
         var vertxObject = SceneLink.Instance.transform.Find(name);
         GameObject vertxThing;
 
