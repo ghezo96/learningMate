@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationHandler : MonoBehaviour
+public class AnimationHandler : MonoBehaviour, IComponent
 {
 
     // Use this for initialization
@@ -23,10 +23,10 @@ public class AnimationHandler : MonoBehaviour
             "\nName: " + message.name + 
             " State: " + message.state);
 
-        if (message.state == 1)
+        if(message.state == 1)
         {
-            Debug.Log("Destroyed " + message.name);
-            DestroyObject(this);
+            Debug.Log("Destroy this");
+            DestroyObject(gameObject);
         }
 
     }

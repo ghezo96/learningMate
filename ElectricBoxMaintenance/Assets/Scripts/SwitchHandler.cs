@@ -40,4 +40,9 @@ public class SwitchHandler : MonoBehaviour, IComponent
         //Destroy(gameObject);
         Destroy(this);
     }
+
+    public void DestroyAnimation()
+    {
+        
+    }
 }

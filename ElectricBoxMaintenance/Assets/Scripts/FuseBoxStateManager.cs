@@ -55,7 +55,7 @@ public class FuseBoxStateManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Node: " + name + " \n could not be created");
+            Debug.Log("Node: " + name + " \n already exists");
             vertxThing = vertxObject.gameObject;
 
         }

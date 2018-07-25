@@ -32,4 +32,8 @@ public class KeyAnimEventHandler : MonoBehaviour, IComponent {
         Destroy(this);
     }
 
+    public void DestroyAnimation()
+    {
+        
+    }
 }
