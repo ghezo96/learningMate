@@ -7,50 +7,32 @@ using VertexUnityPlayer;
 
 public class VertxEventHandler : MonoBehaviour {
 
-  
-
-    public class Component
-    {
-        public string name { get; set; }
-        public int status { get; set; }
-        public int completed { get; set; }
-    }
-
-    public class ComponentsStatus
-    {
-        public List<Component> Components { get; set; }
-    }
 
     private Dictionary<string, string> AnimationDictionary = new Dictionary<string, string>();
 
-    string componentsWithStatus = "{\"Components\":[{\"name\":\"switch1\",\"status\":0,\"completed\":0},{\"name\":\"switch2\",\"status\":0,\"completed\":0},{\"name\":\"switch3\",\"status\":0,\"completed\":0},{\"name\":\"door\",\"status\":0,\"completed\":0},{\"name\":\"key\",\"status\":0,\"completed\":0}]}";
-    // List to hold all the component with their sssname and status
-    List<Component> componentList;
+
     GameObject currentGameObject;
 
 
     // Use this for initialization
     void Start()
     {
-        Debug.Log("STart");
-        
-
-        // Get the components status
-        ComponentsStatus componentsStatusObject = JsonConvert.DeserializeObject<ComponentsStatus>(componentsWithStatus);
-        componentList = componentsStatusObject.Components;
         InitaliseAnimations();
-        //
-        GameObject keyAnimationObject = CreateNode("KeyAnimation", "ac100581-430a-4817-b2c8-9978144b521f");
-        keyAnimationObject.AddComponent<KeyAnimEventHandler>();
-        currentGameObject = keyAnimationObject;
+
+        // KEYANIMATION IS STARTING ANIMATION
+        currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
     }
 
+    // DICTIONARY WITH ANIMATIONS
     void InitaliseAnimations()
     {
-        AnimationDictionary.Add("keyAnimation", "ac100581-430a-4817-b2c8-9978144b521f");
-        AnimationDictionary.Add("Anim_Switch1", "36748b64-8251-4b76-8672-d67d5522dfb1");
-        AnimationDictionary.Add("Anim_Switch2", "c74cf1eb-da54-448e-b5c2-a423d16064a4");
-        AnimationDictionary.Add("Anim_Switch3", "ec53c75e-ec10-4014-8d96-f73f2e27ca82");
+        AnimationDictionary.Add("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+        AnimationDictionary.Add("SWITCH_ONE", "59d89c08-85a6-4e17-9edb-a2b648d0503e");
+        AnimationDictionary.Add("SWITCH_TWO", "3fe496cd-7cf7-44d8-8388-74ac49e14986");
+        AnimationDictionary.Add("SWITCH_THREE", "9d0db931-1698-47af-8080-3106cfede727");
+        AnimationDictionary.Add("SWITCH_FOUR", "a3418e0a-a9a3-4ee2-ada9-5eb0da5a0d29");
+        AnimationDictionary.Add("SWITCH_FIVE", "30fc82a8-7b3b-4cab-afb9-c8304a6c756d");
+        AnimationDictionary.Add("SWITCH_SIX", "d81a4656-da1e-44ce-b367-54856aa31127");
     }
 
 
@@ -60,69 +42,94 @@ public class VertxEventHandler : MonoBehaviour {
 	}
 
 
+
     public void OnUpdate(object message)
     {
-        Debug.Log("OnUpdate: " + message);
+        // Deserialize the message received by IOT
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
 
-        Debug.Log("OnUpdate: " + _message.name + " status => " + _message.state);
-
-        string animationName = _message.name;
-
-        // Update component 
-        UpdateComponentStatus(_message);
-
-        currentGameObject.GetComponent<IComponent>().OnNotify(_message);
-
-        // Start next set of instruction base on message received by IOT
-
-        if(_message.name == "keyAnimation" &&  _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch1", "66d507fc-e459-4ba0-883c-654643d0b28a");
-            
-            
-        }
-        if (_message.name == "switchOne" && _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch2", "e5a2f9c6-46fe-4fd4-8e70-d175c8179a7c");
-            
-        }
-        if (_message.name == "switchTwo" && _message.state == 1)
-        {
-            StartNextInstruction("Anim_Switch3", "a635a8ae-3107-49b0-a103-7340d65e51e4");
-            
-        }
-        
-
+        //Validate message received from IoT and then Start next set of instruction base on message
+        ValidateUserAction(_message);
     }
 
-    private void StartNextInstruction(string name, string id)
+    // Validate IoT message and start the next set of instruction
+    private void ValidateUserAction(Message message)
     {
-        currentGameObject.GetComponent<KeyAnimEventHandler>().DestroyIt();
-        GameObject keyAnimationObject = CreateNode(name, id);
-        keyAnimationObject.AddComponent<KeyAnimEventHandler>();
-        currentGameObject = keyAnimationObject;
+
+        string componentNameWithState = message.name + message.state;
+
+        switch (componentNameWithState)
+        {
+            case "KEY_ANIMATION1":
+                {
+                    StartNextInstruction("SWITCH_ONE", AnimationDictionary["SWITCH_ONE"], message);
+                    break;
+                }
+            case "SWITCH_ONE0":
+                {
+                    StartNextInstruction("SWITCH_TWO", AnimationDictionary["SWITCH_TWO"], message);
+                   
+                    break;
+                }
+            case "SWITCH_ONE1":
+                {
+                    StartNextInstruction("KEY_ANIMATION", AnimationDictionary["KEY_ANIMATION"], message);
+                    
+                    break;
+                }
+            case "SWITCH_TWO0":
+                {
+                    StartNextInstruction("SWITCH_ONE", AnimationDictionary["SWITCH_ONE"], message);
+                    break;
+                }
+            case "SWITCH_TWO1":
+                {
+                    StartNextInstruction("SWITCH_THREE", AnimationDictionary["SWITCH_THREE"], message);
+                    break;
+                }
+            case "SWITCH_THREE0":
+                {
+                    StartNextInstruction("SWITCH_TWO", AnimationDictionary["SWITCH_TWO"], message );
+                    break;
+                }
+
+            case "SWITCH_THREE1":
+                {
+                    StartNextInstruction("BATTERY", AnimationDictionary["BATTERY"], message);
+                    break;
+                }
+
+            case "BATTERY0":
+                {
+                    StartNextInstruction("SWITCH_THREE", AnimationDictionary["SWITCH_THREE"], message);
+                    break;
+                }
+
+            case "BATTERY1":
+                {
+                    StartNextInstruction("NEXT", AnimationDictionary["NEXT"], message);
+                    break;
+                }
+
+                // BATTERY
+        }
+
     }
 
-    private void UpdateComponentStatus(Message message)
+    // Start next instruction
+    private GameObject StartNextInstruction(string name, string id, Message message)
     {
-        foreach (Component component in componentList)
-        {
-            if (component.name == name && component.status != message.state)
-            {
-                // Update components status 
-                component.status = message.state;
-                // send message to component to update itself
-                currentGameObject.GetComponent<IComponent>().OnNotify(message);
-            }
-        }
+
+        Debug.Log(currentGameObject.name);
+        DestroyObject(currentGameObject);
+        currentGameObject = CreateNode(name, id);
+        return currentGameObject;
     }
+
 
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
-
-        Debug.Log("Node: " + name + " id : " + id);
         var vertxObject = SceneLink.Instance.transform.Find(name);
         GameObject vertxThing;
 
@@ -138,6 +145,7 @@ public class VertxEventHandler : MonoBehaviour {
         else
         {
             vertxThing = vertxObject.gameObject;
+            Debug.Log("node already exists");
 
         }
         return vertxThing;

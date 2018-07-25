@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IComponent
 {
-    void OnNotify(Message message); 
+    void OnNotify(Message message);
 }

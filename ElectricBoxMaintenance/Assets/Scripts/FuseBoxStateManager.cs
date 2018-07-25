@@ -9,9 +9,6 @@ public class FuseBoxStateManager : MonoBehaviour
 
     public SceneLink sceneLink;
 
-    private GameObject FuseboxNode;
-    private GameObject handKeyAnimation;
-
 
 
     // Use this for initialization
@@ -21,9 +18,9 @@ public class FuseBoxStateManager : MonoBehaviour
         sceneLink.OnStateChange += SceneLink_OnStateChange;
     }
 
+    // On scene connect, Handler is set up
     private void SceneLink_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
     {
-        //Debug.Log("SceneLink_OnStateChange - VERTX connected : newstate " + newState );
         if (newState == SceneLinkStatus.Connected)
         {
             Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
@@ -32,6 +29,7 @@ public class FuseBoxStateManager : MonoBehaviour
 
     }
 
+    // Co-routine instantiated Vertx-Event-Manager if not already in scene 
     IEnumerator SetUpEventHandler()
     {
         yield return new WaitForSeconds(2.0f);
@@ -49,7 +47,7 @@ public class FuseBoxStateManager : MonoBehaviour
 
         if (vertxObject == null)
         {
-            vertxThing = SceneLink.Instance.CreateNode(name,
+            vertxThing = sceneLink.CreateNode(name,
                 new Vector3(0f, 0f, 0f),
                 Quaternion.identity,
                 Vector3.one,
@@ -58,7 +56,7 @@ public class FuseBoxStateManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Node: " + name + " \n could not be created");
+            Debug.Log("Node: " + name + " \n already exists");
             vertxThing = vertxObject.gameObject;
 
         }
