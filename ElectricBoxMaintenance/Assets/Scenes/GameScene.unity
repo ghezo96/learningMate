@@ -161,6 +161,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 100032, guid: 602bf134ae30cbb4f8105ae6603a5201, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 602bf134ae30cbb4f8105ae6603a5201, type: 3}
   m_IsPrefabParent: 0
@@ -1034,7 +1038,6 @@ MonoBehaviour:
   BoundingBox: {fileID: 1021520266}
   SpatialMesh: {fileID: 1888008851}
   BoxModel: {fileID: 129581133}
-  SceneLinkScriptForGuide: {fileID: 1406508354}
 --- !u!4 &837539776
 Transform:
   m_ObjectHideFlags: 0
@@ -1328,7 +1331,7 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: 682cc41a-84f2-41ce-b9c7-fd4f6e86e85f
+      value: 5133bb84-ce3c-4847-99a5-a9e72d1bd9f3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
@@ -2158,7 +2161,7 @@ GameObject:
   - component: {fileID: 1113229467}
   m_Layer: 0
   m_Name: Box
-  m_TagString: Player
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2754,7 +2757,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1233016410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.502, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1302399808}
@@ -3863,7 +3866,7 @@ GameObject:
   m_PrefabParentObject: {fileID: 1941915913401856, guid: 281590aa20ce02f4485fa1ecbc592242,
     type: 2}
   m_PrefabInternal: {fileID: 917642467}
---- !u!114 &1406508356
+--- !u!114 &1406508355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3874,7 +3877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea6911f2ba772a46a4ba0bf41692ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLink: {fileID: 0}
 --- !u!1 &1449726032
 GameObject:
   m_ObjectHideFlags: 0
@@ -4436,13 +4438,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1899369346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.008, y: 0.618, z: 4.155}
+  m_LocalRotation: {x: -0, y: 0.23747638, z: -0, w: 0.9713933}
+  m_LocalPosition: {x: 0.875, y: 0.899, z: 4.453}
   m_LocalScale: {x: 0.4, y: 0.5, z: 0.18}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 27.475, z: 0}
 --- !u!1 &1926709809
 GameObject:
   m_ObjectHideFlags: 0

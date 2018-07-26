@@ -10,14 +10,8 @@ public class Player : MonoBehaviour
 
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
-    PanelWindow[] allWindows;
-    string inputTextName;
-    string inputTitleText;
-    string inputDescriptionText;
     public FloatingButton homeButton;
-    //public FloatingButton liveInfo;
     public FloatingButton StartButton;
-    //public FloatingButton InteractiveGuideButton;
     public GameObject theBox;
     public FloatingButton Reset;
     public GameObject Camera;
@@ -27,7 +21,6 @@ public class Player : MonoBehaviour
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
     public GameObject BoxModel;
-    public GameObject SceneLinkScriptForGuide;
     bool boxStatus = true;
 
 
@@ -47,9 +40,21 @@ public class Player : MonoBehaviour
         {
             homeButton.setActiveStatus(false);
         }
-        SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = false;
+        SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
     }
 
+    // On scene connect, Handler is set up
+    private void SceneLink_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
+    {
+        Debug.Log("SceneLink_OnStateChange - VERTX connected : " + newState);
+        if (newState == SceneLinkStatus.Connected)
+        {
+            Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
+            StartCoroutine(ResetVertxEventHandler());
+        }
+
+    }
+    // Start button click handler
     public void Start_Clicked(GameObject button)
     {
         StartButton.setActiveStatus(false);
@@ -60,7 +65,7 @@ public class Player : MonoBehaviour
         BoundingBox.SetActive(false);
         BoxModel.SetActive(true);
     }
-
+    // Reset button click handler
     public void Reset_Clicked(GameObject button)
     {
         Camera.GetComponent<RaycastPositioningV1>().enabled = true;
@@ -71,32 +76,10 @@ public class Player : MonoBehaviour
         mainMenuContainer.SetActiveStatus(false);
         SpatialMesh.SetActive(true);
         BoxModel.SetActive(false);
-        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
-        {
 
-            if (a.GetComponent<KeyAnimEventHandler>() != null)
-            {
-                Destroy(a.gameObject);
-                Debug.Log("Destroyed: " + a.name);
-            }
-        }
+        SetVertxEventHandlerState(false);
     }
-    //public void liveInfo_Clicked(GameObject button)
-    //{
-    //    boxStatus = true;
 
-    //        MainBoxDoor.SetActive(false);
-    //        MainBoxPanel.SetActive(false);
-
-
-    //    windowManager.SetActive(false);
-    //    mainMenuContainer.SetActiveStatus(false);
-    //    button.SetActive(true);
-    //    BoundingBox.SetActive(false);
-    //    theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
-
-
-    //}
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
@@ -113,22 +96,11 @@ public class Player : MonoBehaviour
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         Reset.setActiveStatus(true);
-        SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = false;
 
-        //NodeLink[] listOfAnimationsInVertx =  SceneLink.Instance.GetComponentsInChildren<NodeLink>();
-
-        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
-        {
-
-            if (a.GetComponent<KeyAnimEventHandler>() != null) 
-            {
-                Destroy(a.gameObject);
-                Debug.Log("Destroyed: " + a.name);
-            }
-        }
-
+        SetVertxEventHandlerState(false);
     }
 
+    // Menu container button click event handler
     private void OnButtonClicked(GameObject button)
     {
 
@@ -148,19 +120,78 @@ public class Player : MonoBehaviour
         }
         else if (button.name == "InteractiveGuide")
         {
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = true;
-           if(SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
-            {
-                SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().InitKeyAnimation();
-            }
-           
+            StartCoroutine(LoadKeyAnimation());
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
         }
+    }
+
+    // Coroutine to load first key animation
+    IEnumerator LoadKeyAnimation()
+    {
+        Debug.Log("Load Key Animation Co routine ");
+
+        yield return new WaitForSeconds(0.5f);
+        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        {
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = true;
+        }
+        yield return new WaitForSeconds(0.5f);
+        if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
+        {
+            SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = true;
+        }
+        if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
+        {
+            SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().InitKeyAnimation();
+        }
+    }
+
+    // Coroutine to reset the vertx event manager
+    IEnumerator ResetVertxEventHandler()
+    {
+        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        {
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = false;
+        }
+        if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
+        {
+            SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = false;
+        }
+        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
+        {
+            if(a.name != "VertxEventManager")
+            {
+                Debug.Log("Destroying object :" + a.name);
+                Destroy(a.gameObject);
+               
+            }
+
+        }
+        yield return null;
+    }
 
 
+    // Enable / Disable VertxEventHandler
+    private void SetVertxEventHandlerState(bool state)
+    {
+        if(SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        {
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = state;
+        }
+        if(SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
+        {
+            SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = state;
+        }
+        if (!state)
+        {
+            foreach (KeyAnimEventHandler a in SceneLink.Instance.GetComponentsInChildren<KeyAnimEventHandler>())
+            {
+                Destroy(a.gameObject);
+            }
+        }
     }
 
     // Update is called once per frame
