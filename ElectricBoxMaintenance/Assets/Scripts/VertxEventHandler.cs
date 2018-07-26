@@ -9,8 +9,6 @@ public class VertxEventHandler : MonoBehaviour {
 
 
     private Dictionary<string, string> AnimationDictionary = new Dictionary<string, string>();
-
-
     GameObject currentGameObject;
 
 
@@ -18,10 +16,6 @@ public class VertxEventHandler : MonoBehaviour {
     void Start()
     {
         InitaliseAnimations();
-
-        // KEYANIMATION IS STARTING ANIMATION
-        currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
-        currentGameObject.AddComponent<KeyAnimEventHandler>();
     }
 
     // DICTIONARY WITH ANIMATIONS
@@ -39,8 +33,13 @@ public class VertxEventHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (currentGameObject)
+        {
+            GameObject box = GameObject.FindGameObjectWithTag("Box");
+            currentGameObject.transform.position = box.transform.position;
+            currentGameObject.transform.rotation = box.transform.rotation;
+        }
+    }
 
 
 
@@ -119,31 +118,33 @@ public class VertxEventHandler : MonoBehaviour {
 
     // Start next instruction
     private void StartNextInstruction(string name, string id, Message message)
-    {
-
-        Debug.Log(currentGameObject.name);
+    { 
         DestroyObject(currentGameObject);
         currentGameObject = CreateNode(name, id);
         currentGameObject.AddComponent<KeyAnimEventHandler>();
+
+        Debug.Log("Found object " + GameObject.FindGameObjectWithTag("Finish"));
     }
 
 
     public void InitKeyAnimation()
     {
+        Debug.Log("Init key animation :");
         currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
         currentGameObject.AddComponent<KeyAnimEventHandler>();
     }
+
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
+        GameObject box = GameObject.FindGameObjectWithTag("Box");
         var vertxObject = SceneLink.Instance.transform.Find(name);
         GameObject vertxThing;
-
         if (vertxObject == null)
         {
             vertxThing = SceneLink.Instance.CreateNode(name,
-                new Vector3(0f, 0f, 0f),
-                Quaternion.identity,
+                box.transform.position,
+                box.transform.rotation,
                 Vector3.one,
                 id
            );
@@ -160,3 +161,23 @@ public class VertxEventHandler : MonoBehaviour {
 
 
 }
+
+
+//
+//GameObject parentCopy = new GameObject();
+//parentCopy.transform.parent = SceneLink.Instance.transform.transform;
+//parentCopy.transform.position = box.transform.position;
+//parentCopy.transform.rotation = box.transform.rotation;
+
+//parentCopy.transform.parent = null;
+
+//Vector3 targetPos = parentCopy.transform.localPosition;
+//Quaternion targetRot = parentCopy.transform.localRotation;
+
+
+
+//vertxThing.transform.parent = parentCopy.transform;
+//vertxThing.transform.localPosition = Vector3.zero;
+//vertxThing.transform.localRotation = Quaternion.identity;
+//vertxThing.transform.parent = SceneLink.Instance.transform;
+//Destroy(parentCopy);

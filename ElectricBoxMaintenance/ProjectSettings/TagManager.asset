@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tip
   - Ignore
+  - Box
   layers:
   - Default
   - TransparentFX

@@ -53,7 +53,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
                     //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
                     Quad.transform.position = pointOfHit + normalAtHitPosition * 0.2f;
-                    Quad.transform.rotation = Quaternion.LookRotation(- normalAtHitPosition, Vector3.up);
+                    Quad.transform.rotation = Quaternion.LookRotation(-normalAtHitPosition, Vector3.up);
                     Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
                 }   
             }
@@ -118,7 +118,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
             //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
             Quad.transform.localPosition = pointOfHit + normalAtHitPosition * 0.2f;
-            Quad.transform.rotation = Quaternion.LookRotation(- normalAtHitPosition, Vector3.up);
+            Quad.transform.rotation = Quaternion.LookRotation(-normalAtHitPosition, Vector3.up);
             Quad.transform.localEulerAngles = new Vector3(0, Quad.transform.localEulerAngles.y, 0);
         }
     }
