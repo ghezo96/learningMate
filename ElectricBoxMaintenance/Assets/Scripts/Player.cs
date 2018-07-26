@@ -71,6 +71,15 @@ public class Player : MonoBehaviour
         mainMenuContainer.SetActiveStatus(false);
         SpatialMesh.SetActive(true);
         BoxModel.SetActive(false);
+        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
+        {
+
+            if (a.GetComponent<KeyAnimEventHandler>() != null)
+            {
+                Destroy(a.gameObject);
+                Debug.Log("Destroyed: " + a.name);
+            }
+        }
     }
     //public void liveInfo_Clicked(GameObject button)
     //{

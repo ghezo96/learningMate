@@ -12,16 +12,14 @@ public class VertxEventHandler : MonoBehaviour {
 
 
     GameObject currentGameObject;
+    GameObject theBox;
 
 
     // Use this for initialization
     void Start()
     {
         InitaliseAnimations();
-
-        // KEYANIMATION IS STARTING ANIMATION
-        currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
-        currentGameObject.AddComponent<KeyAnimEventHandler>();
+        //Debug.Log("Found object " + GameObject.FindGameObjectWithTag("Finish"));
     }
 
     // DICTIONARY WITH ANIMATIONS
@@ -125,6 +123,10 @@ public class VertxEventHandler : MonoBehaviour {
         DestroyObject(currentGameObject);
         currentGameObject = CreateNode(name, id);
         currentGameObject.AddComponent<KeyAnimEventHandler>();
+        currentGameObject.transform.position = theBox.transform.position;
+        //currentGameObject.transform.rotation = theBox.transform.transform.localRotation;
+
+        Debug.Log("Found object " + GameObject.FindGameObjectWithTag("Finish"));
     }
 
 
@@ -133,17 +135,31 @@ public class VertxEventHandler : MonoBehaviour {
         currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
         currentGameObject.AddComponent<KeyAnimEventHandler>();
     }
+
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
-        var vertxObject = SceneLink.Instance.transform.Find(name);
-        GameObject vertxThing;
+        GameObject box = GameObject.Find("Box");
 
+
+        var vertxObject = SceneLink.Instance.transform.Find(name);
+
+        GameObject parentCopy = new GameObject();
+        parentCopy.transform.parent = SceneLink.Instance.transform.transform;
+        parentCopy.transform.position = box.transform.position;
+        parentCopy.transform.rotation = box.transform.rotation;
+
+        //parentCopy.transform.parent = null;
+
+        Vector3 targetPos = parentCopy.transform.localPosition;
+        Quaternion targetRot = parentCopy.transform.localRotation;
+
+        GameObject vertxThing;
         if (vertxObject == null)
         {
             vertxThing = SceneLink.Instance.CreateNode(name,
-                new Vector3(0f, 0f, 0f),
-                Quaternion.identity,
+                targetPos,
+                targetRot,
                 Vector3.one,
                 id
            );
@@ -154,6 +170,13 @@ public class VertxEventHandler : MonoBehaviour {
             Debug.Log("node already exists");
 
         }
+
+        vertxThing.transform.parent = parentCopy.transform;
+        vertxThing.transform.localPosition = Vector3.zero;
+        vertxThing.transform.localRotation = Quaternion.identity;
+        vertxThing.transform.parent = SceneLink.Instance.transform;
+        Destroy(parentCopy);
+
         return vertxThing;
 
     }
