@@ -58,6 +58,8 @@ public class VertxEventHandler : MonoBehaviour {
 
         string componentNameWithState = message.name + message.state;
 
+
+
         switch (componentNameWithState)
         {
             case "KEY_ANIMATION1":
@@ -68,13 +70,13 @@ public class VertxEventHandler : MonoBehaviour {
             case "SWITCH_ONE0":
                 {
                     StartNextInstruction("SWITCH_TWO", AnimationDictionary["SWITCH_TWO"], message);
-                   
+
                     break;
                 }
             case "SWITCH_ONE1":
                 {
                     StartNextInstruction("KEY_ANIMATION", AnimationDictionary["KEY_ANIMATION"], message);
-                    
+
                     break;
                 }
             case "SWITCH_TWO0":
@@ -89,7 +91,7 @@ public class VertxEventHandler : MonoBehaviour {
                 }
             case "SWITCH_THREE0":
                 {
-                    StartNextInstruction("SWITCH_TWO", AnimationDictionary["SWITCH_TWO"], message );
+                    StartNextInstruction("SWITCH_TWO", AnimationDictionary["SWITCH_TWO"], message);
                     break;
                 }
 
@@ -114,13 +116,14 @@ public class VertxEventHandler : MonoBehaviour {
                 // BATTERY
         }
 
+
     }
 
     // Start next instruction
     private GameObject StartNextInstruction(string name, string id, Message message)
     {
 
-        Debug.Log(currentGameObject.name);
+        //Debug.Log(currentGameObject.name);
         DestroyObject(currentGameObject);
         currentGameObject = CreateNode(name, id);
         return currentGameObject;
