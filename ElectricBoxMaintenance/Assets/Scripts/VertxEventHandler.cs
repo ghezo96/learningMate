@@ -100,13 +100,15 @@ public class VertxEventHandler : MonoBehaviour {
                     break;
                 }
 
-            case "BATTERY0":
+                //
+
+            case "FUSE0":
                 {
                     StartNextInstruction("SWITCH_THREE", AnimationDictionary["SWITCH_THREE"], message);
                     break;
                 }
 
-            case "BATTERY1":
+            case "FUSE1":
                 {
                     StartNextInstruction("NEXT", AnimationDictionary["NEXT"], message);
                     break;
@@ -120,7 +122,6 @@ public class VertxEventHandler : MonoBehaviour {
     // Start next instruction
     private void StartNextInstruction(string name, string id, Message message)
     {
-
         Debug.Log(currentGameObject.name);
         DestroyObject(currentGameObject);
         currentGameObject = CreateNode(name, id);
