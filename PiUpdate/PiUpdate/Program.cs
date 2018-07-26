@@ -19,6 +19,8 @@ namespace PiUpdate
             components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
             components.Add(new Component("SWITCH_TWO", "gpio18", "0"));
             components.Add(new Component("SWITCH_THREE", "gpio17", "0"));
+            components.Add(new Component("SWITCH_FOUR", "gpio27", "0"));
+            components.Add(new Component("SWITCH_FIVE", "gpio22", "0"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
@@ -28,6 +30,7 @@ namespace PiUpdate
             foreach(Component component in components)
             {
                 if(!Directory.Exists("/sys/class/gpio/" + component.getGPIO() + "/")) {
+                    //Console.WriteLine(component.getGPIO());
                     File.WriteAllText("/sys/class/gpio/export", component.getPinNumber());
                     File.WriteAllText("/System/class/gpio/" + component.getGPIO() + "/direction", "in");
                 }
@@ -52,8 +55,6 @@ namespace PiUpdate
                         Console.WriteLine("Data sent");
                     }
                 }
-                
-                System.Threading.Thread.Sleep(50);
             }
         }
     }
