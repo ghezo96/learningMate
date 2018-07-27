@@ -71,6 +71,17 @@ public class Component
     {
         this.previousCharge = this.currentCharge;
         this.currentCharge = Regex.Replace(File.ReadAllText("/sys/class/gpio/" + this.GPIO + "/value"), @"\t|\n|\r", "");
+        if(this.name != "SWITCH_TWO")
+        {
+            if (this.currentCharge == "0")
+            {
+                this.currentCharge = "1";
+            }
+            else if(this.currentCharge == "1")
+            {
+                this.currentCharge = "0";
+            }
+        }
 
     }
 }
