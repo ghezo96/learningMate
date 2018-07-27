@@ -14,20 +14,27 @@ public class TheVertxEventHandler : MonoBehaviour {
 
     int currentIndex;
     bool isComplete;
+    int numberOfCompletedSteps;
+    bool flipSwitches;
+
+    int debugCounter = 0;
+    int switchReverseCounter = 0;
 
     // Use this for initialization
     void Start () {
 
         isComplete = false;
+        flipSwitches = false;
 
         AnimationArray = new string[,,]
         {
             {
-                {"KEY_ANIMATION","62fe3789-6dc0-4be8-8de4-daf6be186bed", "1"},
-                {"DOOR_OPEN","fe72fbeb-7341-40ec-91a9-7d4387bf9ff6", "0"},
+                {"KEY_ANIMATION","62fe3789-6dc0-4be8-8de4-daf6be186bed", "0"},
+                {"DOOR_ANIMATION","fe72fbeb-7341-40ec-91a9-7d4387bf9ff6", "0"},
                 {"SWITCH_ONE","59d89c08-85a6-4e17-9edb-a2b648d0503e", "0" },
                 {"SWITCH_TWO","3fe496cd-7cf7-44d8-8388-74ac49e14986", "0"},
                 {"SWITCH_THREE","9d0db931-1698-47af-8080-3106cfede727", "0"},
+                //SAME SWITCHES USED
                 {"SWITCH_FOUR","a3418e0a-a9a3-4ee2-ada9-5eb0da5a0d29", "0"},
                 {"SWITCH_FIVE","30fc82a8-7b3b-4cab-afb9-c8304a6c756d", "0"},
                 {"SWITCH_SIX","3930543b-229a-4f82-804a-90cd09eca5a5", "0"},
@@ -53,6 +60,10 @@ public class TheVertxEventHandler : MonoBehaviour {
 
     public void OnUpdate(object message)
     {
+        debugCounter++;
+
+
+
 
         //Destory previous animation
         DestroyImmediate(PreviousAnimationNode);
@@ -64,26 +75,97 @@ public class TheVertxEventHandler : MonoBehaviour {
         string componentName = _message.name;
         string componentState = _message.state.ToString();
 
+
+
+
+        if (componentName == "SWITCH_ONE" && AnimationArray[0, 2, 2] == "1" && AnimationArray[0, 3, 2] == "1" && AnimationArray[0, 4, 2] == "1")
+        {
+            AnimationArray[0, 2, 2] = "0";
+            AnimationArray[0, 3, 2] = "0";
+            AnimationArray[0, 4, 2] = "0";
+
+            flipSwitches = true;
+        }
+
+        if((componentName == "SWITCH_ONE" || componentName == "SWITCH_TWO" || componentName == "SWITCH_THREE") && flipSwitches)
+        {
+            if(AnimationArray[0, 2, 2] == "1" && AnimationArray[0, 3, 2] == "1" && AnimationArray[0, 4, 2] == "1")
+            {
+                flipSwitches = false;
+            }
+            else
+            {
+                //switch (componentState)
+                //{
+                //    case "0":
+                //        componentState = "1";
+                //        break;
+                //    case "1":
+                //        componentState = "0";
+                //        break;
+                //}
+            }
+        }
+
+
+
+
+
+        // Update array
+        UpdateComponentArray(componentState);
+
+        //if (componentName == "SWITCH_ONE" || componentName == "SWITCH_TWO" || componentName == "SWITCH_THREE"
+        //&& AnimationArray[0, 0, 0] == "1" && AnimationArray[0, 1, 0] == "1" && AnimationArray[0, 2, 0] == "1"
+        //&& AnimationArray[0, 3, 0] == "1" && AnimationArray[0, 4, 0] == "1")
+        //{
+        //    if (switchReverseCounter != 3)
+        //    {
+        //        switch (componentState)
+        //        {
+        //            case "0":
+        //                componentState = "1";
+        //                break;
+        //            case "1":
+        //                componentState = "0";
+        //                break;
+        //        }
+
+        //        switchReverseCounter++;
+        //    }
+        //    else
+        //    {
+        //        switchReverseCounter = 0;
+        //    }
+
+        //}
+
+
         // index for which animation to play
-        currentIndex = FindNewIndex(componentName, componentState, "Status");
+        currentIndex = FindNewIndex(componentName, componentState, "CurrentStep");
 
         CheckLastStepCompleted(componentName, componentState);
 
 
         if(!isComplete)
         {
+
             //Debug.Log("StartStep => " + currentIndex);
 
-            // Update array
-            UpdateComponentArray(componentState);
-        
+            //print table before update
+            Debug.Log("<== BEFORE UPDATE ==>");
+            FindNewIndex(componentName, componentState, "Table");
+
+            //bring table after update
+            Debug.Log("<== AFTER UPDATE ==>");
+            FindNewIndex(componentName, componentState, "Table");
+
             // Play animations
             ExecuteAnimation(componentName, componentState);
             //Debug.Log("FinishStep => " + currentIndex);
         }
         else
         {
-            //intiate exit
+            PreviousAnimationNode = CreateNode("MAINTANENCE_MODEL", "2359e967-bcd4-44ab-b58f-6f7a8ca391e4");
         }
 
     }
@@ -141,13 +223,7 @@ public class TheVertxEventHandler : MonoBehaviour {
         //last step has index of 7
         if (currentIndex == 7 && AnimationArray[0, currentIndex, 2] == "1")
         {
-            for (int i = 0; i < (AnimationArray.Length/3) - 1; i++)
-            {
-                if(AnimationArray[0, i, 2] == "1")
-                {
-                    numberOfCompletedSteps++;
-                }
-            }
+            numberOfCompletedSteps = FindNewIndex(_ComponentName, _ComponentStatus, "State1");
         }
 
         switch(numberOfCompletedSteps)
@@ -156,14 +232,14 @@ public class TheVertxEventHandler : MonoBehaviour {
                 isComplete = true;
                 break;
             default:
-                currentIndex = currentIndex = FindNewIndex(_ComponentName, _ComponentStatus, "Status");
+                currentIndex = FindNewIndex(_ComponentName, _ComponentStatus, "CurrentStep");
                 break;
         }
     }
 
     void UpdateComponentArray(string _ComponentStatus)
     {
-        Debug.Log("CurrentStep => " + currentIndex);
+        //Debug.Log("CurrentStep => " + currentIndex);
         AnimationArray[0, currentIndex, 2] = _ComponentStatus;
     }
 
@@ -171,7 +247,7 @@ public class TheVertxEventHandler : MonoBehaviour {
     //decides what animation to run
     void ExecuteAnimation(string _ComponentName, string _ComponentStatus)
     {
-        Debug.Log("CurrentStep => " + currentIndex);
+        //Debug.Log("CurrentStep => " + currentIndex);
         //if key animation (DOOR ANIMATION) component is not called
         if (_ComponentName != "DOOR_CLOSE")
         {
@@ -231,7 +307,7 @@ public class TheVertxEventHandler : MonoBehaviour {
     {
         int index;
 
-        for (index = 0; index < (AnimationArray.Length / 3) - 1; index++)
+        for (index = 0; index < (AnimationArray.Length / 3); index++)
         {
             switch (searchBy)
             {
@@ -242,16 +318,39 @@ public class TheVertxEventHandler : MonoBehaviour {
                     }
                     break;
 
-                case "Status":
+                case "CurrentStep":
                     if (AnimationArray[0, index, 2] == "0")
                     {
                         return index;
                     }
                     break;
+                case "State1":
+                    if(AnimationArray[0, index, 2] == "1")
+                    {
+                        numberOfCompletedSteps++;
+                    }
+                    break;
+                case "Table":
+                    {
+                        Debug.Log(
+                            debugCounter + " " +
+                            AnimationArray[0, index, 0] + " " + 
+                            AnimationArray[0, index, 1] + " " +
+                            AnimationArray[0, index, 2]
+                            );
+                        break;
+                    }
             }
         }
 
-        return index;
+        if(searchBy == "State1")
+        {
+            return numberOfCompletedSteps;
+        }
+        else
+        {
+            return index;
+        }
     }
 
     private GameObject CreateNode(string name, string id)
@@ -261,7 +360,7 @@ public class TheVertxEventHandler : MonoBehaviour {
 
         if (vertxObject == null)
         {
-            Debug.Log(name + " node created");
+            //Debug.Log(name + " node created");
             vertxThing = SceneLink.Instance.CreateNode(name,
                 new Vector3(0f, 0f, 0f),
                 Quaternion.identity,
@@ -272,7 +371,7 @@ public class TheVertxEventHandler : MonoBehaviour {
         else
         {
             vertxThing = vertxObject.gameObject;
-            Debug.Log(name + " node already exists");
+            //Debug.Log(name + " node already exists");
 
         }
 

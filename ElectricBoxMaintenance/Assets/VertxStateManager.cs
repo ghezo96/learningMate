@@ -33,7 +33,7 @@ public class VertxStateManager : MonoBehaviour
     IEnumerator SetUpEventHandler()
     {
         yield return new WaitForSeconds(2.0f);
-        GameObject HandlerNode = CreateNode("Vertx-Event-Manager", null);
+        GameObject HandlerNode = CreateNode("VertxEventManager", null);
         HandlerNode.AddComponent<TheVertxEventHandler>();
 
     }
