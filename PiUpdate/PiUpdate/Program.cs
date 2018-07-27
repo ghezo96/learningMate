@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace PiUpdate
@@ -10,11 +11,19 @@ namespace PiUpdate
     class Program
     {
         static List<Component> components = new List<Component>();
+        static string sceneId = "585e5033-954b-4288-8f3f-639160786fc7";
+        static string guid;
         
         static void Main(string[] args)
         {
-            string guid = GetGUIDBySceneIDFromVertx();
-            string sceneId = "585e5033-954b-4288-8f3f-639160786fc7";
+            try
+            {
+                guid = GetGUIDBySceneIDFromVertx();
+            }
+            catch(Exception exception)
+            {
+                Console.WriteLine("Exception handled" + exception.Message);
+            }
             components.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
             components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
             components.Add(new Component("SWITCH_TWO", "gpio18", "0"));
@@ -58,7 +67,7 @@ namespace PiUpdate
                         }
                         catch(System.Net.WebException webEcxeption)
                         {
-                            Console.WriteLine("WebException thrown");
+                            Console.WriteLine("WebException thrown => " + webEcxeption.Message);
                         }
                     }
                 }
@@ -67,7 +76,7 @@ namespace PiUpdate
 
         static string GetGUIDBySceneIDFromVertx()
         {
-            WebRequest request = WebRequest.Create("https://staging.vertx.cloud/session/scene/585e5033-954b-4288-8f3f-639160786fc7");
+            WebRequest request = WebRequest.Create("https://staging.vertx.cloud/session/scene/" + sceneId);
             // Get the response.  
             WebResponse response = request.GetResponse();
             Stream dataStream = response.GetResponseStream();
@@ -79,21 +88,14 @@ namespace PiUpdate
             VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
 
             Console.WriteLine(responseObj.rootNode.children.Count);
-            string guid = null;
-            foreach(Child vetxObj in responseObj.rootNode.children)
-            {
-                if(vetxObj.id == "VertxEventManager")
-                {
-                    guid = vetxObj.guid;
-                }
-            }
+            Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
 
-            Console.WriteLine("GUID : " + guid );
+            Console.WriteLine("GUID : " + child.guid );
             // Clean up the streams and the response.  
             reader.Close();
             response.Close();
 
-            return guid;
+            return child.guid;
 
         }
     }
