@@ -10,23 +10,27 @@ public class TheVertxEventHandler : MonoBehaviour {
 
     GameObject PreviousAnimationNode;
 
+    //DOOR_CLOSE ANIMATION : b4f004f9-4f04-4e74-9603-a0a695778f7d
+
     int currentIndex;
+    bool isComplete;
 
     // Use this for initialization
     void Start () {
+
+        isComplete = false;
 
         AnimationArray = new string[,,]
         {
             {
                 {"KEY_ANIMATION","62fe3789-6dc0-4be8-8de4-daf6be186bed", "1"},
-                //{"DOOR_OPEN","fe72fbeb-7341-40ec-91a9-7d4387bf9ff6", "0"},
+                {"DOOR_OPEN","fe72fbeb-7341-40ec-91a9-7d4387bf9ff6", "0"},
                 {"SWITCH_ONE","59d89c08-85a6-4e17-9edb-a2b648d0503e", "0" },
                 {"SWITCH_TWO","3fe496cd-7cf7-44d8-8388-74ac49e14986", "0"},
                 {"SWITCH_THREE","9d0db931-1698-47af-8080-3106cfede727", "0"},
                 {"SWITCH_FOUR","a3418e0a-a9a3-4ee2-ada9-5eb0da5a0d29", "0"},
                 {"SWITCH_FIVE","30fc82a8-7b3b-4cab-afb9-c8304a6c756d", "0"},
                 {"SWITCH_SIX","3930543b-229a-4f82-804a-90cd09eca5a5", "0"},
-                //{"DOOR_CLOSE","b4f004f9-4f04-4e74-9603-a0a695778f7d", "0"}
             }
         };
 
@@ -37,7 +41,7 @@ public class TheVertxEventHandler : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Starting key animation already exists");
+            //Debug.Log("Starting key animation already exists");
             PreviousAnimationNode = SceneLink.Instance.transform.Find("KEY_ANIMATION").gameObject;
         }
     }
@@ -63,14 +67,24 @@ public class TheVertxEventHandler : MonoBehaviour {
         // index for which animation to play
         currentIndex = FindNewIndex(componentName, componentState, "Status");
 
-        Debug.Log("StartStep => " + currentIndex);
+        CheckLastStepCompleted(componentName, componentState);
 
-        // Update array
-        UpdateComponentArray(componentState);
+
+        if(!isComplete)
+        {
+            //Debug.Log("StartStep => " + currentIndex);
+
+            // Update array
+            UpdateComponentArray(componentState);
         
-        // Play animations
-        ExecuteAnimation(componentName, componentState);
-        Debug.Log("FinishStep => " + currentIndex);
+            // Play animations
+            ExecuteAnimation(componentName, componentState);
+            //Debug.Log("FinishStep => " + currentIndex);
+        }
+        else
+        {
+            //intiate exit
+        }
 
     }
 
@@ -120,6 +134,32 @@ public class TheVertxEventHandler : MonoBehaviour {
     //}
 
 
+    void CheckLastStepCompleted(string _ComponentName, string _ComponentStatus)
+    {
+        int numberOfCompletedSteps = 0;
+
+        //last step has index of 7
+        if (currentIndex == 7 && AnimationArray[0, currentIndex, 2] == "1")
+        {
+            for (int i = 0; i < (AnimationArray.Length/3) - 1; i++)
+            {
+                if(AnimationArray[0, i, 2] == "1")
+                {
+                    numberOfCompletedSteps++;
+                }
+            }
+        }
+
+        switch(numberOfCompletedSteps)
+        {
+            case 7:
+                isComplete = true;
+                break;
+            default:
+                currentIndex = currentIndex = FindNewIndex(_ComponentName, _ComponentStatus, "Status");
+                break;
+        }
+    }
 
     void UpdateComponentArray(string _ComponentStatus)
     {
@@ -133,7 +173,7 @@ public class TheVertxEventHandler : MonoBehaviour {
     {
         Debug.Log("CurrentStep => " + currentIndex);
         //if key animation (DOOR ANIMATION) component is not called
-        if (_ComponentName != "KEY_ANIMATION")
+        if (_ComponentName != "DOOR_CLOSE")
         {
             if(_ComponentStatus == "0")
             {
@@ -160,7 +200,7 @@ public class TheVertxEventHandler : MonoBehaviour {
             //DOOR ANIMATION PLAYED ALWAYS IF CLOSED
             if (_ComponentStatus == "0")
             {
-                CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+                CreateNode("DOOR_OPEN", "b4f004f9-4f04-4e74-9603-a0a695778f7d");
             }
             else
             {
