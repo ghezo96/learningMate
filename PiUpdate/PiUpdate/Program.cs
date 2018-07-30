@@ -22,7 +22,7 @@ namespace PiUpdate
             }
             catch(Exception exception)
             {
-                Console.WriteLine("Exception handled" + exception.Message);
+                Console.WriteLine("Exception handled, " + exception.Message);
             }
             components.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
             components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
@@ -39,7 +39,7 @@ namespace PiUpdate
             foreach(Component component in components)
             {
                 if(!Directory.Exists("/sys/class/gpio/" + component.getGPIO() + "/")) {
-                    //Console.WriteLine(component.getGPIO());
+                    //Console.WriteLine(component.getPinNumber());
                     File.WriteAllText("/sys/class/gpio/export", component.getPinNumber());
                     File.WriteAllText("/sys/class/gpio/" + component.getGPIO() + "/direction", "in");
                 }
@@ -86,11 +86,8 @@ namespace PiUpdate
             // Display the content.  
             // Deserialize the repsonse from vertx
             VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
-
-            Console.WriteLine(responseObj.rootNode.children.Count);
+            
             Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
-
-            Console.WriteLine("GUID : " + child.guid );
             // Clean up the streams and the response.  
             reader.Close();
             response.Close();

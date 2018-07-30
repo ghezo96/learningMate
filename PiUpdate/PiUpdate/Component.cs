@@ -62,9 +62,8 @@ public class Component
 
     public string getPinNumber()
     {
-        int index = this.GPIO.Length - 1;
-        char pinNumber = this.GPIO[index];
-        return pinNumber.ToString();
+        
+        return this.GPIO.Remove(0,4);
     }
 
     public void update()
