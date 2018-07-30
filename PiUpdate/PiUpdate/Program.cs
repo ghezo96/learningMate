@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,8 +9,8 @@ namespace PiUpdate
 
     class Program
     {
-        static List<Component> components = new List<Component>();
-        static string sceneId = "585e5033-954b-4288-8f3f-639160786fc7";
+        static ElectricBox box = new ElectricBox();
+        static string sceneId = "ab324e2d-823a-4031-9ad4-34fdf77583c3";
         static string guid;
         
         static void Main(string[] args)
@@ -20,36 +19,58 @@ namespace PiUpdate
             {
                 guid = GetGUIDBySceneIDFromVertx();
             }
-            catch(Exception exception)
+            catch(NullReferenceException exception)
             {
-                Console.WriteLine("Exception handled, " + exception.Message);
+                Console.WriteLine("Null reference exception caught, " + exception.Message);
             }
-            components.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
-            components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
-            components.Add(new Component("SWITCH_TWO", "gpio18", "0"));
-            components.Add(new Component("SWITCH_THREE", "gpio22", "0"));
-            components.Add(new Component("DOOR_ANIMATION", "gpio27", "0"));
-            //components.Add(new Component("BATTERY_ANIMATION", "gpio17", "0"));
+            box.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
+            box.Add(new Component("SWITCH_ONE", "gpio7", "0"));
+            box.Add(new Component("SWITCH_TWO", "gpio18", "0"));
+            box.Add(new Component("SWITCH_THREE", "gpio22", "0"));
+            box.Add(new Component("DOOR_ANIMATION", "gpio27", "0"));
+            //box.Add(new Component("BATTERY_ANIMATION", "gpio17", "0"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
             client.Headers.Add("Content-Type", "application/json");
             
             //Create pin Directories and contents to check its current status
-            foreach(Component component in components)
+            foreach(Component component in box.getComponents())
             {
                 if(!Directory.Exists("/sys/class/gpio/" + component.getGPIO() + "/")) {
-                    //Console.WriteLine(component.getPinNumber());
-                    File.WriteAllText("/sys/class/gpio/export", component.getPinNumber());
-                    File.WriteAllText("/sys/class/gpio/" + component.getGPIO() + "/direction", "in");
+                    component.Export();
                 }
                     component.update();
+            }
+
+            //Send current box status to unity application
+            try
+            {
+                Console.WriteLine(box.getCurrentState());
+                Console.WriteLine("Sending current state to VERTX");
+                client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(box.getCurrentState()));
+                Console.WriteLine("Data sent to VERTX");
+            }
+            catch(WebException webException)
+            {
+                Console.WriteLine("Web exception caught => " + webException.Message);
             }
 
             //Constant service running to check state change
             while (true)
             {
-                foreach(Component component in components)
+                if(guid == null)
+                {
+                    try
+                    {
+                        guid = GetGUIDBySceneIDFromVertx();
+                    }
+                    catch (NullReferenceException exception)
+                    {
+                        Console.WriteLine("Null reference exception caught, " + exception.Message);
+                    }
+                }
+                foreach(Component component in box.getComponents())
                 {
                     component.update();
                     bool changed = component.isChanged();
@@ -83,7 +104,6 @@ namespace PiUpdate
             StreamReader reader = new StreamReader(dataStream);
             // Read the content.  
             string responseFromServer = reader.ReadToEnd();
-            // Display the content.  
             // Deserialize the repsonse from vertx
             VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
             
