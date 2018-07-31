@@ -18,12 +18,15 @@ public class Component
         previousCharge = "0";
 	}
 
-    public Component(string name, string GPIO, string currentCharge)
+    public Component(string name, string GPIO)
     {
         this.name = name;
         this.GPIO = GPIO;
-        this.currentCharge = currentCharge;
-        this.previousCharge = this.currentCharge;
+        if (!Directory.Exists("/sys/class/gpio/" + this.GPIO + "/"))
+        {
+            this.Export();
+        }
+        this.update();
     }
 
     public string getGPIO()

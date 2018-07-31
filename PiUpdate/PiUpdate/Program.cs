@@ -23,25 +23,18 @@ namespace PiUpdate
             {
                 Console.WriteLine("Null reference exception caught, " + exception.Message);
             }
-            box.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
-            box.Add(new Component("SWITCH_ONE", "gpio7", "0"));
-            box.Add(new Component("SWITCH_TWO", "gpio18", "0"));
-            box.Add(new Component("SWITCH_THREE", "gpio22", "0"));
-            box.Add(new Component("DOOR_ANIMATION", "gpio27", "0"));
-            //box.Add(new Component("BATTERY_ANIMATION", "gpio17", "0"));
+            box.Add(new Component("KEY_ANIMATION", "gpio8"));
+            box.Add(new Component("SWITCH_ONE", "gpio7"));
+            box.Add(new Component("SWITCH_TWO", "gpio18"));
+            box.Add(new Component("SWITCH_THREE", "gpio22"));
+            box.Add(new Component("DOOR_ANIMATION", "gpio27"));
+            //box.Add(new Component("BATTERY_ANIMATION", "gpio17"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
             client.Headers.Add("Content-Type", "application/json");
             
-            //Create pin Directories and contents to check its current status
-            foreach(Component component in box.getComponents())
-            {
-                if(!Directory.Exists("/sys/class/gpio/" + component.getGPIO() + "/")) {
-                    component.Export();
-                }
-                    component.update();
-            }
+            Console.WriteLine("Program ready!\n");
 
             //Send current box status to unity application
             /*try
@@ -59,7 +52,7 @@ namespace PiUpdate
             //Constant service running to check state change
             while (true)
             {
-                if(guid == null)
+                /*if(guid == null)
                 {
                     try
                     {
@@ -69,7 +62,7 @@ namespace PiUpdate
                     {
                         Console.WriteLine("Null reference exception caught, " + exception.Message);
                     }
-                }
+                }*/
                 foreach(Component component in box.getComponents())
                 {
                     component.update();
@@ -90,10 +83,10 @@ namespace PiUpdate
                         {
                             Console.WriteLine("WebException thrown => " + webEcxeption.Message);
                         }
-                    }
-                }
-            }
-        }
+                    }//end if
+                }//end foreach
+            }//end while
+        }//end main
 
         static string GetGUIDBySceneIDFromVertx()
         {
@@ -111,7 +104,7 @@ namespace PiUpdate
             // Clean up the streams and the response.  
             reader.Close();
             response.Close();
-
+            Console.WriteLine(child.guid);
             return child.guid;
 
         }
