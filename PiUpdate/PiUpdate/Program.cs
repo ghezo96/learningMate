@@ -44,7 +44,7 @@ namespace PiUpdate
             }
 
             //Send current box status to unity application
-            try
+            /*try
             {
                 Console.WriteLine(box.getCurrentState());
                 Console.WriteLine("Sending current state to VERTX");
@@ -54,7 +54,7 @@ namespace PiUpdate
             catch(WebException webException)
             {
                 Console.WriteLine("Web exception caught => " + webException.Message);
-            }
+            }*/
 
             //Constant service running to check state change
             while (true)
