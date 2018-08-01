@@ -1251,7 +1251,7 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: ab324e2d-823a-4031-9ad4-34fdf77583c3
+      value: b8d865ca-be13-4c3f-a6a4-88e86f31d062
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}

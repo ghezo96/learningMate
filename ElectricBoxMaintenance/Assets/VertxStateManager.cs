@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using VertexUnityPlayer;
 
@@ -8,8 +7,6 @@ public class VertxStateManager : MonoBehaviour
 {
 
     public SceneLink sceneLink;
-
-
 
     // Use this for initialization
     void Start()
@@ -26,7 +23,6 @@ public class VertxStateManager : MonoBehaviour
             Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
             StartCoroutine(SetUpEventHandler());
         }
-
     }
 
     // Co-routine instantiated Vertx-Event-Manager if not already in scene 
@@ -36,6 +32,8 @@ public class VertxStateManager : MonoBehaviour
         GameObject HandlerNode = CreateNode("VertxEventManager", null);
         HandlerNode.AddComponent<TheVertxEventHandler>();
 
+        GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
+        VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
     }
 
     // Method to create and return Vertex Node Link Game object 
@@ -61,13 +59,5 @@ public class VertxStateManager : MonoBehaviour
         }
 
         return vertxThing;
-
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

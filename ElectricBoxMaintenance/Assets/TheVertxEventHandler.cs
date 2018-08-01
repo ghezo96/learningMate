@@ -35,7 +35,7 @@ public class TheVertxEventHandler : MonoBehaviour {
         // Create key animation node if it doesn't exist
         if (!(SceneLink.Instance.transform.Find("KEY_ANIMATION")))
         {
-            CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+            //CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
         }
         else
         {
@@ -143,6 +143,5 @@ public class TheVertxEventHandler : MonoBehaviour {
 
         PreviousAnimationNode = SceneLink.Instance.transform.Find(name).gameObject;
         return vertxThing;
-
     }
 }

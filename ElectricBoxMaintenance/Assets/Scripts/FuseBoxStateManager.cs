@@ -34,7 +34,7 @@ public class FuseBoxStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         GameObject HandlerNode = CreateNode("Vertx-Event-Manager", null);
-        HandlerNode.AddComponent<VertxEventHandler>();
+        HandlerNode.AddComponent<TheVertxEventHandler>();
 
     }
 
