@@ -569,7 +569,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 80dbb4444e3fd501
+  metroCertificateNotAfter: 00e6510d2947d501
   metroApplicationDescription: ElectricBoxMaintenance
   wsaImages: {}
   metroTileShortName: 

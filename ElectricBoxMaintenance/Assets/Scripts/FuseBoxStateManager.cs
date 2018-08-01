@@ -34,7 +34,6 @@ public class FuseBoxStateManager : MonoBehaviour
             vertxThing = vertxObject.gameObject;
 
         }
-
         return vertxThing;
 
     }

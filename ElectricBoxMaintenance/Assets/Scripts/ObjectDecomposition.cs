@@ -20,12 +20,22 @@ public class ObjectDecomposition : MonoBehaviour {
     public void MoveObjectsForwards()
     {
         StopAllCoroutines();
+        StartCoroutine(BoxMovementForward());
+    }
+
+    IEnumerator BoxMovementForward()
+    {
+
+        yield return new WaitForSeconds(0.2f);
+
         for (int i = 0; i < ObjectList.Length; i++)
         {
             float offset = MaxDistance * i / ((float)ObjectList.Length - 1);
             StartCoroutine(MoveObject(ObjectList[i], InitialPositions[i], InitialPositions[i] + Vector3.forward * offset, false));
         }
     }
+
+
     
     public void MoveObjectsBackwards()
     {

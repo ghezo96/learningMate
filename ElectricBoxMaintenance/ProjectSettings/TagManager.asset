@@ -7,6 +7,8 @@ TagManager:
   - Tip
   - Ignore
   - Box
+  - WholeBox
+  - ElectricityFlowAnim
   layers:
   - Default
   - TransparentFX
