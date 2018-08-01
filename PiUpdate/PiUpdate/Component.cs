@@ -13,11 +13,6 @@ public class Component
 
 
     //Default constructor
-    public Component()
-	{
-        previousCharge = "0";
-	}
-
     public Component(string name, string GPIO)
     {
         this.name = name;

@@ -15,20 +15,16 @@ namespace PiUpdate
         
         static void Main(string[] args)
         {
-            try
-            {
-                guid = GetGUIDBySceneIDFromVertx();
-            }
-            catch(NullReferenceException exception)
-            {
-                Console.WriteLine("Null reference exception caught, " + exception.Message);
-            }
+
+            guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
+            Console.WriteLine(guid);
+
             box.Add(new Component("KEY_ANIMATION", "gpio8"));
             box.Add(new Component("SWITCH_ONE", "gpio7"));
             box.Add(new Component("SWITCH_TWO", "gpio18"));
             box.Add(new Component("SWITCH_THREE", "gpio22"));
             box.Add(new Component("DOOR_ANIMATION", "gpio27"));
-            //box.Add(new Component("BATTERY_ANIMATION", "gpio17"));
+            box.Add(new Component("FUSE_ANIMATION", "gpio10"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
@@ -52,17 +48,6 @@ namespace PiUpdate
             //Constant service running to check state change
             while (true)
             {
-                /*if(guid == null)
-                {
-                    try
-                    {
-                        guid = GetGUIDBySceneIDFromVertx();
-                    }
-                    catch (NullReferenceException exception)
-                    {
-                        Console.WriteLine("Null reference exception caught, " + exception.Message);
-                    }
-                }*/
                 foreach(Component component in box.getComponents())
                 {
                     component.update();
@@ -70,6 +55,20 @@ namespace PiUpdate
 
                     if (changed)
                     {
+                        guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
+                        Console.WriteLine(guid);
+                        //if (guid == null)
+                        //{
+                        //    //try
+                        //    //{
+                        //    //    guid = GetGUIDBySceneIDFromVertx();
+                        //    //}
+                        //    //catch (NullReferenceException exception)
+                        //    //{
+                        //    //    Console.WriteLine("Null reference exception caught, " + exception.Message);
+                        //    //}
+                        //}//end if
+
                         try
                         {
                             string json = component.getJson();
@@ -82,6 +81,10 @@ namespace PiUpdate
                         catch(System.Net.WebException webEcxeption)
                         {
                             Console.WriteLine("WebException thrown => " + webEcxeption.Message);
+                            if (webEcxeption.Message.Contains("error: (404) Not Found."))
+                            {
+                                guid = GetGUIDBySceneIDFromVertx();
+                            }
                         }
                     }//end if
                 }//end foreach
@@ -90,23 +93,33 @@ namespace PiUpdate
 
         static string GetGUIDBySceneIDFromVertx()
         {
-            WebRequest request = WebRequest.Create("https://staging.vertx.cloud/session/scene/" + sceneId);
-            // Get the response.  
-            WebResponse response = request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.  
-            string responseFromServer = reader.ReadToEnd();
-            // Deserialize the repsonse from vertx
-            VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
+            string _guid;
+            try
+            {
+                WebRequest request = WebRequest.Create("https://staging.vertx.cloud/session/scene/" + sceneId);
+                // Get the response.  
+                WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.  
+                string responseFromServer = reader.ReadToEnd();
+                // Deserialize the repsonse from vertx
+                VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
             
-            Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
-            // Clean up the streams and the response.  
-            reader.Close();
-            response.Close();
-            Console.WriteLine(child.guid);
-            return child.guid;
+                Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
+                // Clean up the streams and the response.  
+                reader.Close();
+                response.Close();
+                
+                _guid = child.guid;
 
+            } catch(Exception e)
+            {
+                _guid = null;
+                Console.WriteLine(e.Message);
+            }
+
+            return _guid;
         }
     }
 }
