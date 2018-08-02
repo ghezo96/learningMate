@@ -58,23 +58,19 @@ public class VertxEventHandler : MonoBehaviour {
     public void OnUpdate(object message)
     {
         // Deserialize the message received by IOT
+       
+        if (!IoTEnabled)
+        {
+            return;
+        }
+        //Deserialize the message received by IOT
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
 
         string componentName = _message.name;
         string componentState = _message.state.ToString();
         Debug.Log("componentName : " + componentName);
-        if (!IoTEnabled)
-        {
-            return;
-        }
-        // Deserialize the message received by IOT
-        //Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
-
-        //string componentName = _message.name;
-        //string componentState = _message.state.ToString();
-        //Debug.Log("componentName : " + componentName);
         //Destory previous animation
-        if(PreviousAnimationNode)
+        if (PreviousAnimationNode)
         {
             DestroyImmediate(PreviousAnimationNode);
         }
@@ -185,6 +181,23 @@ public class VertxEventHandler : MonoBehaviour {
         PreviousAnimationNode = SceneLink.Instance.transform.Find(name).gameObject;
         return vertxThing;
 
+    }
+
+    // ------------------------ COllaboration funtionality ----------------------------
+
+
+    // Method to create and return Vertex Node Link Game object 
+    private GameObject CreateDefaultNode(string name, string id, Vector3 position)
+    {
+        var vertxThing = SceneLink.Instance.CreateNode
+            (name,
+            position,
+            Quaternion.identity,
+            Vector3.one,
+            id,
+            null,
+            "DefaultNodeLink");
+        return vertxThing.gameObject;
     }
 
 

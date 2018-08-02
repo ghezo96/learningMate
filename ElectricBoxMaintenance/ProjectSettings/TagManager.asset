@@ -9,6 +9,8 @@ TagManager:
   - Box
   - WholeBox
   - ElectricityFlowAnim
+  - TopRail
+  - Switch
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - 
   - 
   - PhysicalBox
-  - 
-  - 
+  - SnapPoints
+  - Component
   - 
   - 
   - 

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
+    public GameObject sceneLink;
     bool boxStatus = true;
     bool inDecomp = false;
 
@@ -101,7 +102,11 @@ public class Player : MonoBehaviour
             Reset.setActiveStatus(true);
 
             SetVertxEventHandlerState(false);
+            // REmove CollabVertxObjectHAndler 
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().RemoveCollabVertxObjectHandler();
+            sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
         }
+
     }
 
     IEnumerator GoToHome()
@@ -123,6 +128,7 @@ public class Player : MonoBehaviour
 
         SetVertxEventHandlerState(false);
         inDecomp = false;
+        sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
     }
 
     // Menu container button click event handler
@@ -164,7 +170,10 @@ public class Player : MonoBehaviour
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
-            StartCoroutine(StartCollaberation());
+            //StartCoroutine(StartCollaberation());
+            // Attach CollabVertxObjectHAndler
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().CreateCollabVertxObjectHandler();
+            sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
         }
     }
 
@@ -208,7 +217,7 @@ public class Player : MonoBehaviour
         EnableIoTListeners(false);
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
-            if(a.name != "VertxEventManager")
+            if(a.name != "IoTVertxEventManager")
             {
                 Debug.Log("Destroying object :" + a.name);
                 Destroy(a.gameObject);
