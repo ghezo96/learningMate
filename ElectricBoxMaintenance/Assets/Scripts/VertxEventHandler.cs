@@ -35,7 +35,6 @@ public class VertxEventHandler : MonoBehaviour {
                 {"KEY_ANIMATION_FINISH","813d6861-2370-419d-951d-9fb71312c492","0"}
             }
         };
-
     }
 
 
