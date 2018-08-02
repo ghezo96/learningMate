@@ -29,11 +29,14 @@ public class VertxStateManager : MonoBehaviour
     IEnumerator SetUpEventHandler()
     {
         yield return new WaitForSeconds(2.0f);
-        GameObject HandlerNode = CreateNode("VertxEventManager", null);
-        HandlerNode.AddComponent<TheVertxEventHandler>();
+        //GameObject HandlerNode = CreateNode("VertxEventManager", null);
+        //HandlerNode.AddComponent<TheVertxEventHandler>();
 
-        GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
-        VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
+        //GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
+        //VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
+
+        GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
+        VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
     }
 
     // Method to create and return Vertex Node Link Game object 
