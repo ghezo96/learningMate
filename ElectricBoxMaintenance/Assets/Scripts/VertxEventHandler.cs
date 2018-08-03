@@ -42,6 +42,8 @@ public class VertxEventHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        
+
         if (currentGameObject)
         {
             GameObject box = GameObject.FindGameObjectWithTag("Box");

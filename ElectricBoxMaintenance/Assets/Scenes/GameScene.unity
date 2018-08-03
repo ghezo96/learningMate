@@ -1686,6 +1686,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4693966552656072, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1727,6 +1732,31 @@ Prefab:
         type: 2}
       propertyPath: SceneId
       value: ab324e2d-823a-4031-9ad4-34fdf77583c3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1930216218}
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: BeginLocationSync
+      objectReference: {fileID: 0}
+    - target: {fileID: 114598098266529332, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: OnAuthenticated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114203067088503562, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
@@ -4549,6 +4579,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea6911f2ba772a46a4ba0bf41692ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1406508356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1406508354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f82a9bc49cb096e4b8eb1fc0b3b30975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1449726032
 GameObject:
   m_ObjectHideFlags: 0
@@ -5719,6 +5760,63 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.12, y: 0.12, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1930216217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1930216219}
+  - component: {fileID: 1930216218}
+  m_Layer: 0
+  m_Name: LocationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1930216218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1930216217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2087882107, guid: b7721917c3244cb4582143166f69b343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoordinateFrame: {fileID: 1406508354}
+  LocationStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLocated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLocationFailed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  LocationProvider: {fileID: 11400000, guid: bf90885928d4b6544a60537cea9cabd7, type: 2}
+--- !u!4 &1930216219
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1930216217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.22779723, y: 0.7023837, z: -0.04261684}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935968486
 GameObject:
   m_ObjectHideFlags: 0
