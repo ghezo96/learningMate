@@ -430,7 +430,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 172727796}
-  m_Mesh: {fileID: 4300000, guid: 26639478017da4141b2d7c1a94854caa, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!114 &276321087 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114629066726774392, guid: 50b0a189e89d6984882f9268ad255f51,
@@ -1521,7 +1521,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 845771250}
-  m_Mesh: {fileID: 4300000, guid: 26639478017da4141b2d7c1a94854caa, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!1 &887754441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,13 +2406,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 979099694}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0076000616}
-  m_LocalScale: {x: 0.12000015, y: 0.0060000094, z: 0.12000009}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.007600062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 924339313}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &979099696
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2455,7 +2455,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 979099694}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!102 &1018071125 stripped
 TextMesh:
   m_PrefabParentObject: {fileID: 102055408007878634, guid: 50b0a189e89d6984882f9268ad255f51,
@@ -2539,7 +2539,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1054308691}
-  m_Mesh: {fileID: 4300000, guid: 26639478017da4141b2d7c1a94854caa, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!1 &1090901067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2631,7 +2631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1113229466
 Transform:
   m_ObjectHideFlags: 0
@@ -2762,13 +2762,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1126283973}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0076000616}
-  m_LocalScale: {x: 0.12000015, y: 0.0060000094, z: 0.12000009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1367924235}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1126283975
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2811,7 +2811,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1126283973}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!1 &1145339266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4681,13 +4681,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1488630072}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0076000616}
-  m_LocalScale: {x: 0.12000015, y: 0.0060000094, z: 0.12000009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1242329375}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1488630074
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4730,7 +4730,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1488630072}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 27390d92b073ca8499c8cc5924ffaea5, type: 3}
 --- !u!114 &1513774866 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114629066726774392, guid: 50b0a189e89d6984882f9268ad255f51,

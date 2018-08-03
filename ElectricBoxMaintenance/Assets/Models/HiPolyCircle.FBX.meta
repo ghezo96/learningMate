@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 26639478017da4141b2d7c1a94854caa
-timeCreated: 1531490715
+guid: 27390d92b073ca8499c8cc5924ffaea5
+timeCreated: 1533298268
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -10,7 +10,8 @@ ModelImporter:
     2100000: No Name
     2300000: //RootNode
     3300000: //RootNode
-    4300000: ThinCylinder
+    4300000: HiPolyCircleButton
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -63,7 +64,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
@@ -85,7 +86,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
