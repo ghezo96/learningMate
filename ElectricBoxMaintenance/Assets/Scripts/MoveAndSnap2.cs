@@ -3,6 +3,10 @@
 
 using UnityEngine;
 using System;
+using HoloToolkit.Unity.InputModule;
+using VertexUnityPlayer;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace HoloToolkit.Unity.InputModule
 {
@@ -18,6 +22,8 @@ namespace HoloToolkit.Unity.InputModule
         /// </summary>
         public event Action StartedDragging;
         GameObject targetObject;
+        bool hasCollided = false;
+        public static bool isNotColiding = false;
 
 
         /// <summary>
@@ -67,13 +73,19 @@ namespace HoloToolkit.Unity.InputModule
         private uint currentInputSourceId;
         private Rigidbody hostRigidbody;
         private bool hostRigidbodyWasKinematic;
-
+        GameObject sceneLink;
+        List<GameObject> switches = new List<GameObject>();
+      
         private void Start()
         {
+
             if (HostTransform == null)
             {
                 HostTransform = transform;
             }
+            
+            
+
 
             hostRigidbody = HostTransform.GetComponent<Rigidbody>();
         }
@@ -93,9 +105,11 @@ namespace HoloToolkit.Unity.InputModule
 
         private void Update()
         {
+            
             if (IsDraggingEnabled && isDragging)
             {
                 UpdateDragging();
+               
             }
         }
 
@@ -104,6 +118,7 @@ namespace HoloToolkit.Unity.InputModule
         /// </summary>
         public void StartDragging(Vector3 initialDraggingPosition)
         {
+           
             if (!IsDraggingEnabled)
             {
                 return;
@@ -294,6 +309,10 @@ namespace HoloToolkit.Unity.InputModule
             {
                 return;
             }
+            if (gameObject.tag == "Do not touch")
+            {
+                gameObject.tag = "Untagged";
+            }
 
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
@@ -340,6 +359,7 @@ namespace HoloToolkit.Unity.InputModule
 
         public void OnInputUp(InputEventData eventData)
         {
+           
             if (currentInputSource != null &&
                 eventData.SourceId == currentInputSourceId)
             {
@@ -347,13 +367,25 @@ namespace HoloToolkit.Unity.InputModule
 
                 StopDragging();
             }
+            
         }
 
         public void OnInputDown(InputEventData eventData)
         {
+            
             if (isDragging)
             {
+                
                 // We're already handling drag input, so we can't start a new drag operation.
+                return;
+            }
+
+            if (gameObject.tag != "Do not touch")
+            {
+                gameObject.tag = "Do not touch";
+            }
+            else
+            {
                 return;
             }
 
@@ -401,75 +433,63 @@ namespace HoloToolkit.Unity.InputModule
             {
                 StopDragging();
             }
+            
         }
 
         public void OnTriggerEnter(Collider col)
         {
 
-            //GameObject targetObject = SceneLink.Instance.transform.Find("Breaker").gameObject;
-
             Debug.Log("OnTriggerEnter " + col.gameObject.name);
+
             if (col.gameObject.name.Contains("SnapSwitch"))
-            //if(col.gameObject == targetObject)
-
             {
-                targetObject = col.gameObject;
+                GameObject hitObject = col.gameObject;
 
-                //float targetHeight = targetObject.GetComponent<MeshRenderer>().bounds.size.y;
-                //float targetLength = targetObject.GetComponent<MeshRenderer>().bounds.size.x;
-                //float targetDepth = targetObject.GetComponent<MeshRenderer>().bounds.size.z;
 
-                //float currentObjHeight = gameObject.GetComponent<MeshRenderer>().bounds.size.y;
-                //float currentObjLength = gameObject.GetComponent<MeshRenderer>().bounds.size.x;
-                //float currentObjDepth = gameObject.GetComponent<MeshRenderer>().bounds.size.z;
 
                 if (gameObject.name == "SWITCH")
                 {
                     StopDragging();
-                    GameObject box = GameObject.FindGameObjectWithTag("Box");
+                    GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
-
-                    transform.position = targetObject.transform.position;
+                    // isNotColiding = false;
+                    transform.position = hitObject.transform.position;
                     transform.rotation = box.transform.rotation;
-                    //targetObject.GetComponent<BoxCollider>().isTrigger = false;
-                    //targetObject.GetComponent<Rigidbody>().isKinematic = false;
-                    targetObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    //Destroy(hitObject.GetComponent<Rigidbody>());
+                    //hitObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    // hitObject.GetComponent<BoxCollider>().isTrigger = false;
+
+
 
                 }
             }
             else if (col.gameObject.name.Contains("SnapConnector"))
             {
-                targetObject = col.gameObject;
-                //float targetHeight = targetObject.GetComponent<MeshRenderer>().bounds.size.y;
-                //float targetLength = targetObject.GetComponent<MeshRenderer>().bounds.size.x;
-                //float targetDepth = targetObject.GetComponent<MeshRenderer>().bounds.size.z;
+                GameObject hitObject = col.gameObject;
 
-                //float currentObjHeight = gameObject.GetComponent<MeshRenderer>().bounds.size.y;
-                //float currentObjLength = gameObject.GetComponent<MeshRenderer>().bounds.size.x;
-                //float currentObjDepth = gameObject.GetComponent<MeshRenderer>().bounds.size.z;
 
                 if (gameObject.name == "CONNECTOR")
                 {
 
 
                     StopDragging();
-                    GameObject box = GameObject.FindGameObjectWithTag("Box");
-                   
-                    
-                    transform.position = targetObject.transform.position;
-                    transform.rotation = box.transform.rotation;
-                    //transform.rotation = targetObject.transform.rotation;
+                    GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
-                    //targetObject.GetComponent<BoxCollider>().isTrigger = false;
-                    //targetObject.GetComponent<Rigidbody>().isKinematic = false;
-                    //targetObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    Debug.Log("SNAPPED!" + targetObject.name);
-                    //Destroy(gameObject.GetComponent<MoveAndSnap>());
+                    //isNotColiding = false;
+                    transform.position = hitObject.transform.position;
+                    transform.rotation = box.transform.rotation;
+                    // hitObject.GetComponent<BoxCollider>().isTrigger = false;
 
                 }
             }
 
         }
+        //public void OnCollisionExit(Collision col)
+        //{
+        //    col.gameObject.AddComponent<Rigidbody>();
+        //    col.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        //    col.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        //}
 
     }
     

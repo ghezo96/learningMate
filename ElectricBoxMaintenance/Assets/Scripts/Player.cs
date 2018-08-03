@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
             // REmove CollabVertxObjectHAndler 
             SceneLink.Instance.GetComponent<FuseBoxStateManager>().RemoveCollabVertxObjectHandler();
             sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
+           MainBox.GetComponent<BoxCollider>().enabled = true;
         }
 
     }
@@ -174,6 +175,7 @@ public class Player : MonoBehaviour
             // Attach CollabVertxObjectHAndler
             SceneLink.Instance.GetComponent<FuseBoxStateManager>().CreateCollabVertxObjectHandler();
             sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
+            MainBox.GetComponent<BoxCollider>().enabled = false;
         }
     }
 

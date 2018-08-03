@@ -41,6 +41,10 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             {
                 VertxBoxComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], new Vector3(0, 0, 0));
                 VertxBoxComponent.AddComponent<ModifiedStart>();
+                GameObject box = GameObject.FindGameObjectWithTag("Box");
+                VertxBoxComponent.transform.position = box.transform.localPosition;
+                VertxBoxComponent.transform.rotation = box.transform.rotation;
+                VertxBoxComponent.tag = "THEBOX";
             }
             if (ComponentArray[i, 0] == "SWITCH")
             {
@@ -53,6 +57,11 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         foreach(GameObject gameObj in vertxGameObjects)
         {
             gameObj.AddComponent<MoveAndSnap2>();
+            gameObj.AddComponent<Rigidbody>();
+            gameObj.GetComponent<Rigidbody>().useGravity = false;
+            gameObj.GetComponent<Rigidbody>().isKinematic = true;
+            //gameObj.GetComponent<BoxCollider>().isTrigger = false;
+            
         }
     }
 
@@ -81,27 +90,32 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             VertxBoxComponent.transform.position = box.transform.position;
             VertxBoxComponent.transform.rotation = box.transform.rotation;
 
-            var xOffset = box.transform.position.x;
-            var offset = box.transform.position.x;
+            var xOffset = 0.4f;
+            var offset = 0.4f;
+            var xPos = box.transform.position.x;
             var zPos = box.transform.position.z;
             var yPos = box.transform.position.y;
 
-            float distance = -0.2f;
+
             if (doItOnce)
             {
+                Debug.Log("Box position: " + box.transform.localPosition);
                 for (int i = 0; i < vertxGameObjects.Count; i++)
                 {
 
-                    vertxGameObjects[i].transform.position = new Vector3(box.transform.position.x - xOffset, yPos, zPos);
+                    vertxGameObjects[i].transform.position = new Vector3(xPos - xOffset, yPos + 0.3f, zPos);
                     xOffset -= 0.1f;
                     vertxGameObjects[i].transform.rotation = box.transform.rotation;
+                    
+                   
+                   
 
                     if (vertxGameObjects[i].name.Contains("CONNECTOR"))
                     {
-                        offset -= 0.1f;
-                        vertxGameObjects[i].transform.position = new Vector3(box.transform.position.x - offset, yPos - 0.1f, zPos);
-                        distance += offset;
+                        vertxGameObjects[i].transform.position = new Vector3(xPos - offset, yPos + 0.2f, zPos);
+                        offset -=0.1f;
                     }
+                    Debug.Log("Switch position: " + vertxGameObjects[i].transform.position);
                 }
                 doItOnce = false;
             }

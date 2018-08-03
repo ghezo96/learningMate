@@ -17,9 +17,16 @@ public class ModifiedStart : MonoBehaviour {
         {
             
             GameObject childObject = gameObject.transform.GetChild(i).gameObject;
-       
 
-            if (gameObject.name.Contains("SnapSwitch") || gameObject.name.Contains("SnapConnector"))
+            if (gameObject.name.Contains("Box") || gameObject.name.Contains("SupportShelf"))
+            {
+                if (childObject.name == "Primitive")
+                {
+                    Destroy(childObject.GetComponent<BoxCollider>());
+                }
+            }
+           
+            else if (gameObject.name.Contains("SnapSwitch") || gameObject.name.Contains("SnapConnector"))
             {
                 if (childObject.name == "Primitive")
                 {
@@ -27,11 +34,13 @@ public class ModifiedStart : MonoBehaviour {
                     var boxColliderSize = boxCollider.size;
                    
                     gameObject.AddComponent<BoxCollider>();
-                    gameObject.GetComponent<BoxCollider>().size = boxCollider.size;
-                    gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                    gameObject.GetComponent<BoxCollider>().size = boxCollider.size*0.1f;
+                    gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                   // gameObject.AddComponent<IsColiding>();
                     gameObject.layer = UnityEngine.LayerMask.NameToLayer("SnapPoints");
                     Destroy(childObject.GetComponent<BoxCollider>());
                 }
+               
                    
                     //childObject.AddComponent<MoveAndSnap>();
                     //MeshCollider meshCollider = childObject.GetComponent<MeshCollider>();
@@ -39,10 +48,12 @@ public class ModifiedStart : MonoBehaviour {
                     //Rigidbody rb = childObject.AddComponent<Rigidbody>();
                     //rb.useGravity = false;
                     //rb.constraints = RigidbodyConstraints.FreezeAll;
-                    gameObject.AddComponent<Rigidbody>();
-                gameObject.GetComponent<Rigidbody>().useGravity = false;
-                gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                
+               //     gameObject.AddComponent<Rigidbody>();
+               //// gameObject.AddComponent<IsColiding>();
+               // gameObject.GetComponent<Rigidbody>().useGravity = false;
+               // gameObject.GetComponent<Rigidbody>().isKinematic = false;
+               // gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
             }
             else
             {

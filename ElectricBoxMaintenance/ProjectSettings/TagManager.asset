@@ -11,6 +11,8 @@ TagManager:
   - ElectricityFlowAnim
   - TopRail
   - Switch
+  - THEBOX
+  - Do not touch
   layers:
   - Default
   - TransparentFX
