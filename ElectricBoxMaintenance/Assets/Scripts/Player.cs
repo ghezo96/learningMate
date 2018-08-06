@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
         WholeBox.SetActive(false);
-        mainMenuContainer.GetComponent<FadeIn>().Fade();
+        
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)

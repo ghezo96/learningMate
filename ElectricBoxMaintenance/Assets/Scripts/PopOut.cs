@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 {
-    Vector3 initialScale;
-    Vector3 targetScale;
+    Vector3 initialScale = Vector3.one;
+    Vector3 targetScale { get { return initialScale * scaleAmount; } }
+    public float scaleAmount = 1.2f;
     bool focused = false;
     Animator anim;
 
@@ -24,7 +25,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
         //Camera.GetComponent<RaycastPositioning>().enabled = false;
         //transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         //initialScale = transform.localScale;
-        targetScale = initialScale*1.2f;
+        //targetScale = initialScale*scaleAmount; 
 
         AudioSource.PlayClipAtPoint(AudioOnFocus, transform.position);
         
@@ -42,7 +43,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 
     // Use this for initialization
     void Start () {
-        initialScale = gameObject.transform.localScale;
+        //initialScale = gameObject.transform.localScale;
         anim = gameObject.GetComponentInChildren<Animator>();
 
 	}

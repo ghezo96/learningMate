@@ -19,23 +19,7 @@ public class FadeIn : MonoBehaviour {
 
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 10, 50, 30), "Fade"))
-        {
-
-            Fade();
-        }
-
-        if (GUI.Button(new Rect(50, 50, 50, 30), "FadeOut"))
-        {
-
-            FadeOut();
-        }
-    }
-
-
-
+   
     public void Fade()
     {
         StartCoroutine(FadeWithWait(0.2f));

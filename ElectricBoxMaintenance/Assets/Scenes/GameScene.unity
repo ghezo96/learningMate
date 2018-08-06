@@ -1811,6 +1811,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 1, y: 1, z: 1}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &924339316
@@ -1995,6 +1997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 0, y: 0, z: 0}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &924431612
@@ -2197,6 +2201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 0, y: 0, z: 0}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &961347274
@@ -3357,7 +3363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1233016411
 Transform:
   m_ObjectHideFlags: 0
@@ -3558,6 +3564,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 0, y: 0, z: 0}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &1242329378
@@ -4190,6 +4198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 0, y: 0, z: 0}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &1367924227
@@ -5399,10 +5409,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786907491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4ea14c9c6a2f3c4d88273c6a588eb4b, type: 3}
+  m_Script: {fileID: 11500000, guid: e02df83bd4aa1294a98273421fae189e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visible: 0
 --- !u!1 &1863962207
 GameObject:
   m_ObjectHideFlags: 0
@@ -5622,6 +5631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 1, y: 1, z: 1}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &1926709812
@@ -5967,6 +5978,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd07699ee10fbf84aa122275ae12a067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialScale: {x: 0, y: 0, z: 0}
+  scaleAmount: 1.2
   AudioOnFocus: {fileID: 8300000, guid: 4a615b37ffd463c49a413af9043e38ee, type: 3}
   AudioOnClick: {fileID: 8300000, guid: 76935e1c8491b3244b633ebe96729cd2, type: 3}
 --- !u!114 &1997516085
