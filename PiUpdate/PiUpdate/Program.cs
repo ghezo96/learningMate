@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace PiUpdate
@@ -8,53 +9,117 @@ namespace PiUpdate
 
     class Program
     {
-       
-        static List<Component> components = new List<Component>();
-
+        static ElectricBox box = new ElectricBox();
+        static string sceneId = "ab324e2d-823a-4031-9ad4-34fdf77583c3";
+        static string guid;
+        
         static void Main(string[] args)
         {
-            string guid = "4789e6e2-45f2-45d1-b2b7-0af7073a4151";
-            string sceneId = "b7993275-9930-4f11-a6aa-93ea2cefc4f6";
-            components.Add(new Component("KEY_ANIMATION", "gpio8", "0"));
-            components.Add(new Component("SWITCH_ONE", "gpio7", "0"));
-            components.Add(new Component("SWITCH_TWO", "gpio18", "0"));
-            components.Add(new Component("SWITCH_THREE", "gpio17", "0"));
+
+            guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
+            Console.WriteLine(guid);
+
+            box.Add(new Component("KEY_ANIMATION", "gpio13"));
+            box.Add(new Component("SWITCH_ONE", "gpio5"));
+            box.Add(new Component("SWITCH_TWO", "gpio4"));
+            box.Add(new Component("SWITCH_THREE", "gpio26"));
+            box.Add(new Component("DOOR_ANIMATION", "gpio6"));
+            box.Add(new Component("FUSE_ANIMATION", "gpio19"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
             client.Headers.Add("Content-Type", "application/json");
             
-            //Create pin Directories and contents to check its current status
-            foreach(Component component in components)
+            Console.WriteLine("Program ready!\n");
+
+            //Send current box status to unity application
+            /*try
             {
-                if(!Directory.Exists("/sys/class/gpio/" + component.getGPIO() + "/")) {
-                    File.WriteAllText("/sys/class/gpio/export", component.getPinNumber());
-                    File.WriteAllText("/System/class/gpio/" + component.getGPIO() + "/direction", "in");
-                }
-                    component.update();
+                Console.WriteLine(box.getCurrentState());
+                Console.WriteLine("Sending current state to VERTX");
+                client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(box.getCurrentState()));
+                Console.WriteLine("Data sent to VERTX");
             }
+            catch(WebException webException)
+            {
+                Console.WriteLine("Web exception caught => " + webException.Message);
+            }*/
 
             //Constant service running to check state change
             while (true)
             {
-                foreach(Component component in components)
+                foreach(Component component in box.getComponents())
                 {
                     component.update();
                     bool changed = component.isChanged();
 
                     if (changed)
                     {
-                        string json = component.getJson();
-                        client.Headers.Add("Content-Type", "application/json");
-                        Console.WriteLine(json);
-                        Console.WriteLine("Client sending to VERTX");
-                        client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
-                        Console.WriteLine("Data sent");
-                    }
-                }
+                        guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
+                        Console.WriteLine(guid);
+                        //if (guid == null)
+                        //{
+                        //    //try
+                        //    //{
+                        //    //    guid = GetGUIDBySceneIDFromVertx();
+                        //    //}
+                        //    //catch (NullReferenceException exception)
+                        //    //{
+                        //    //    Console.WriteLine("Null reference exception caught, " + exception.Message);
+                        //    //}
+                        //}//end if
+
+                        try
+                        {
+                            string json = component.getJson();
+                            client.Headers.Add("Content-Type", "application/json");
+                            Console.WriteLine(json);
+                            Console.WriteLine("Client sending to VERTX");
+                            client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
+                            Console.WriteLine("Data sent");
+                        }
+                        catch(System.Net.WebException webEcxeption)
+                        {
+                            Console.WriteLine("WebException thrown => " + webEcxeption.Message);
+                            if (webEcxeption.Message.Contains("error: (404) Not Found."))
+                            {
+                                guid = GetGUIDBySceneIDFromVertx();
+                            }
+                        }
+                    }//end if
+                }//end foreach
+            }//end while
+        }//end main
+
+        static string GetGUIDBySceneIDFromVertx()
+        {
+            string _guid;
+            try
+            {
+                WebRequest request = WebRequest.Create("https://staging.vertx.cloud/session/scene/" + sceneId);
+                // Get the response.  
+                WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.  
+                string responseFromServer = reader.ReadToEnd();
+                // Deserialize the repsonse from vertx
+                VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
+            
+                Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
+                // Clean up the streams and the response.  
+                reader.Close();
+                response.Close();
                 
-                System.Threading.Thread.Sleep(50);
+                _guid = child.guid;
+
+            } catch(Exception e)
+            {
+                _guid = null;
+                Console.WriteLine(e.Message);
             }
+
+            return _guid;
         }
     }
 }
