@@ -49,11 +49,10 @@ public class FuseBoxStateManager : MonoBehaviour
     {
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
-            if (a.name != "IoTVertxEventManager")
+            if (a.name != "VertxEventManager")
             {
                 Debug.Log("Destroying object :" + a.name);
                 Destroy(a.gameObject);
-
             }
         }
     }

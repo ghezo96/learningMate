@@ -11,7 +11,7 @@ public class SwitchAndConnectorNode : MonoBehaviour
    
     void Start()
     {
-        StartCoroutine(OnStart());
+        //StartCoroutine(OnStart());
     }
 
     IEnumerator OnStart()
@@ -47,7 +47,7 @@ public class SwitchAndConnectorNode : MonoBehaviour
 
     public void AddBoxColliderToConnectors(GameObject go)
     {
-        GameObject childObject = go.transform.FindChild("visual").transform.FindChild("Root Scene").transform.FindChild("RootNode").transform.FindChild("Connectors").transform.FindChild("Primitive").gameObject;
+        GameObject childObject = go.transform.Find("visual").transform.Find("Root Scene").transform.Find("RootNode").transform.Find("Connectors").transform.Find("Primitive").gameObject;
 
         var boxCollider = childObject.GetComponent<BoxCollider>();
         var boxColliderSize = boxCollider.size;
@@ -61,7 +61,7 @@ public class SwitchAndConnectorNode : MonoBehaviour
 
     public void AddBoxColliderToSwitches(GameObject go)
     {
-        GameObject childObject = go.transform.FindChild("visual").transform.FindChild("Root Scene").transform.FindChild("RootNode").transform.FindChild("Switch1").transform.FindChild("Primitive").gameObject;
+        GameObject childObject = go.transform.Find("visual").transform.Find("Root Scene").transform.Find("RootNode").transform.Find("Switch1").transform.Find("Primitive").gameObject;
 
         var boxCollider = childObject.GetComponent<BoxCollider>();
         var boxColliderSize = boxCollider.size;

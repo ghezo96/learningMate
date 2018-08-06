@@ -78,7 +78,8 @@ namespace HoloToolkit.Unity.InputModule
         private bool hostRigidbodyWasKinematic;
         Transform sceneLink;
         List<GameObject> switches = new List<GameObject>();
-        List<string> guidList;
+        // Made Public so can watch it in inspector
+        public List<string> guidList;
         string grabbedGuid;
         bool isAvailable = false;
 
@@ -348,13 +349,14 @@ namespace HoloToolkit.Unity.InputModule
             {
                 //guidList.Add(grabbedGuid);
                 gameObject.GetComponent<NodeLink>().Fire("UnlockItem", grabbedGuid);
+               
             }
 
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
 
             isDragging = false;
-            isAvailable = true;
+            
             currentInputSource = null;
             currentInputSourceId = 0;
             if (hostRigidbody != null)
@@ -459,7 +461,10 @@ namespace HoloToolkit.Unity.InputModule
                 if (guidList[i] == grabbedGuid.ToString())
                 {
                     isAvailable = true;
-                    break;
+                    
+                } else
+                {
+                    isAvailable = false;
                 }
                 
             }
@@ -556,6 +561,7 @@ namespace HoloToolkit.Unity.InputModule
         {
             if (guidList.Contains(guid))
             {
+                Debug.Log("guidList length before lock: " + guidList.Count);
                 guidList.Remove(guid);
                 Debug.Log("Received " + guid);
                 for (int i = 0; i < guidList.Count; i++)
@@ -568,6 +574,7 @@ namespace HoloToolkit.Unity.InputModule
         {
             if (!guidList.Contains(guid))
             {
+                Debug.Log("guidList length after unlock: " + guidList.Count);
                 guidList.Add(guid);
             }
         }
