@@ -347,6 +347,7 @@ namespace HoloToolkit.Unity.InputModule
             if (!guidList.Contains(grabbedGuid))
             {
                 guidList.Add(grabbedGuid);
+                gameObject.GetComponent<NodeLink>().Fire("UnlockItem", grabbedGuid);
             }
 
             // Remove self as a modal input handler
@@ -563,7 +564,13 @@ namespace HoloToolkit.Unity.InputModule
                 }
             }
         }
-        
+        void UnlockItem(string guid)
+        {
+            if (!guidList.Contains(guid))
+            {
+                guidList.Add(guid);
+            }
+        }
 
     }
     
