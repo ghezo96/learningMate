@@ -72,12 +72,6 @@ public class VertxEventHandler : MonoBehaviour
             return;
         }
         // Deserialize the message received by IOT
-        //Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
-
-        //string componentName = _message.name;
-        //string componentState = _message.state.ToString();
-        //Debug.Log("componentName : " + componentName);
-        //Destory previous animation
         if (PreviousAnimationNode)
         {
             DestroyImmediate(PreviousAnimationNode);
@@ -164,6 +158,7 @@ public class VertxEventHandler : MonoBehaviour
         currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
         currentGameObject.AddComponent<AnimEventHandler>();
         PreviousAnimationNode = currentGameObject;
+        currentStep = 0;
     }
 
     // Method to create and return Vertex Node Link Game object 

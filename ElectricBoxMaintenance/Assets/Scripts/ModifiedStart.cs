@@ -35,7 +35,7 @@ public class ModifiedStart : MonoBehaviour {
                    
                     gameObject.AddComponent<BoxCollider>();
                     gameObject.GetComponent<BoxCollider>().size = boxCollider.size*0.1f;
-                    gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                    gameObject.GetComponent<BoxCollider>().isTrigger = true;
                    // gameObject.AddComponent<IsColiding>();
                     gameObject.layer = UnityEngine.LayerMask.NameToLayer("SnapPoints");
                     Destroy(childObject.GetComponent<BoxCollider>());

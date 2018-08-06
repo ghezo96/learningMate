@@ -559,24 +559,24 @@ namespace HoloToolkit.Unity.InputModule
         //}
         void LockItem(string guid)
         {
-            if (guidList.Contains(guid))
-            {
-                Debug.Log("guidList length before lock: " + guidList.Count);
-                guidList.Remove(guid);
-                Debug.Log("Received " + guid);
-                for (int i = 0; i < guidList.Count; i++)
-                {
-                    Debug.Log("In List AFTER Fire: " + guidList[i]);
-                }
-            }
+            //if (guidList.Contains(guid))
+            //{
+            //    Debug.Log("guidList length before lock: " + guidList.Count);
+            //    guidList.Remove(guid);
+            //    Debug.Log("Received " + guid);
+            //    for (int i = 0; i < guidList.Count; i++)
+            //    {
+            //        Debug.Log("In List AFTER Fire: " + guidList[i]);
+            //    }
+            //}
         }
         void UnlockItem(string guid)
         {
-            if (!guidList.Contains(guid))
-            {
-                Debug.Log("guidList length after unlock: " + guidList.Count);
-                guidList.Add(guid);
-            }
+            //if (!guidList.Contains(guid))
+            //{
+            //    Debug.Log("guidList length after unlock: " + guidList.Count);
+            //    guidList.Add(guid);
+            //}
         }
 
     }
