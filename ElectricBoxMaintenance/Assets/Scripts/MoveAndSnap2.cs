@@ -25,6 +25,9 @@ namespace HoloToolkit.Unity.InputModule
         bool hasCollided = false;
         public static bool isNotColiding = false;
 
+        
+        
+
 
         /// <summary>
         /// Event triggered when dragging stops.
@@ -73,18 +76,50 @@ namespace HoloToolkit.Unity.InputModule
         private uint currentInputSourceId;
         private Rigidbody hostRigidbody;
         private bool hostRigidbodyWasKinematic;
-        GameObject sceneLink;
+        Transform sceneLink;
         List<GameObject> switches = new List<GameObject>();
+        List<string> guidList;
+        string grabbedGuid;
+        bool isAvailable = false;
+
+        
+        IEnumerator StartAddingGuids()
+        {
+            yield return new WaitForSeconds(0.5f);
+            for (int i = 0; i < sceneLink.childCount; i++)
+            {
+                Debug.Log("i Is " + i + " Childcount is " + sceneLink.childCount);
+                if (sceneLink.GetChild(i).GetComponent<NodeLink>() && !guidList.Contains(sceneLink.GetChild(i).GetComponent<NodeLink>().Guid.ToString()))
+                {
+                    guidList.Add(sceneLink.GetChild(i).GetComponent<NodeLink>().Guid.ToString());
+                    
+                }
+            }
+        }
       
         private void Start()
         {
-
+            guidList = new List<string>();
+            sceneLink = SceneLink.Instance.transform;
             if (HostTransform == null)
             {
                 HostTransform = transform;
             }
-            
-            
+            StartCoroutine(StartAddingGuids());
+            //for (int i = 0; i <sceneLink.transform.childCount; i++)
+            //{
+            //    Debug.Log("i Is " + i + " Childcount is " + sceneLink.transform.childCount);
+            //    if (sceneLink.transform.GetChild(i).GetComponent<NodeLink>())
+            //    {
+            //        guidList.Add(sceneLink.transform.GetChild(i).GetComponent<NodeLink>().Guid.ToString());
+            //        Debug.Log("GUID: "+guidList[i]);
+            //    }
+            //}
+            //foreach (NodeLink x in SceneLink.Instance.transform)
+            //{
+            //    guidList.Add(x.Guid);
+            //}
+
 
 
             hostRigidbody = HostTransform.GetComponent<Rigidbody>();
@@ -309,15 +344,16 @@ namespace HoloToolkit.Unity.InputModule
             {
                 return;
             }
-            if (gameObject.tag == "Do not touch")
+            if (!guidList.Contains(grabbedGuid))
             {
-                gameObject.tag = "Untagged";
+                guidList.Add(grabbedGuid);
             }
 
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
 
             isDragging = false;
+            isAvailable = true;
             currentInputSource = null;
             currentInputSourceId = 0;
             if (hostRigidbody != null)
@@ -326,7 +362,7 @@ namespace HoloToolkit.Unity.InputModule
             }
             StoppedDragging.RaiseEvent();
         }
-
+        
         public void OnFocusEnter()
         {
             if (!IsDraggingEnabled)
@@ -367,7 +403,12 @@ namespace HoloToolkit.Unity.InputModule
 
                 StopDragging();
             }
-            
+            for (int i = 0; i < guidList.Count; i++)
+            {
+                Debug.Log("In List AFTER InputUP: " + guidList[i]);
+            }
+
+
         }
 
         public void OnInputDown(InputEventData eventData)
@@ -379,15 +420,9 @@ namespace HoloToolkit.Unity.InputModule
                 // We're already handling drag input, so we can't start a new drag operation.
                 return;
             }
-
-            if (gameObject.tag != "Do not touch")
-            {
-                gameObject.tag = "Do not touch";
-            }
-            else
-            {
-                return;
-            }
+            grabbedGuid = gameObject.GetComponent<NodeLink>().Guid.ToString();
+            
+           
 
 #if UNITY_2017_2_OR_NEWER
             InteractionSourceInfo sourceKind;
@@ -418,8 +453,32 @@ namespace HoloToolkit.Unity.InputModule
             Vector3 initialDraggingPosition = (details == null)
                 ? HostTransform.position
                 : details.Value.Point;
+            for (int i = 0; i < guidList.Count; i++)
+            {
+                if (guidList[i] == grabbedGuid.ToString())
+                {
+                    isAvailable = true;
+                   
+                }
+                
+            }
+            if (isAvailable)
+            {
+                for (int i = 0; i < guidList.Count; i++)
+                {
+                    Debug.Log("In List before Fire: " + guidList[i]);
+                }
+                StartDragging(initialDraggingPosition);
+                gameObject.GetComponent<NodeLink>().Fire("LockItem", grabbedGuid);
+                Debug.Log("Message sent " + grabbedGuid);
+               
+            }
+            else
+            {
+                return;
+            }
 
-            StartDragging(initialDraggingPosition);
+
         }
 
         public void OnSourceDetected(SourceStateEventData eventData)
@@ -484,12 +543,27 @@ namespace HoloToolkit.Unity.InputModule
             }
 
         }
+
+        
         //public void OnCollisionExit(Collision col)
         //{
         //    col.gameObject.AddComponent<Rigidbody>();
         //    col.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         //    col.gameObject.GetComponent<Rigidbody>().useGravity = false;
         //}
+        void LockItem(string guid)
+        {
+            if (guidList.Contains(guid))
+            {
+                guidList.Remove(guid);
+                Debug.Log("Received " + guid);
+                for (int i = 0; i < guidList.Count; i++)
+                {
+                    Debug.Log("In List AFTER Fire: " + guidList[i]);
+                }
+            }
+        }
+        
 
     }
     
