@@ -1171,6 +1171,11 @@ Prefab:
         Required:\r (None/Repair/Maintenance)\r\r\n\u2022 Days until Next Service:
         (7 Days - 17/07/2018)"
       objectReference: {fileID: 0}
+    - target: {fileID: 23229222649764760, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b26d37dd442201449bb09494a97bc40, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -1671,6 +1676,11 @@ Prefab:
         on: (17/04/2018 14:57 GMT)\r\n\u2022 Maintenance conducted: \r\n(Fuse replacement
         - 17/04/2018 15:17 GMT)"
       objectReference: {fileID: 0}
+    - target: {fileID: 23229222649764760, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b26d37dd442201449bb09494a97bc40, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -3340,13 +3350,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1233016411}
   - component: {fileID: 1233016412}
+  - component: {fileID: 1233016413}
   m_Layer: 0
   m_Name: WindowManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1233016411
 Transform:
   m_ObjectHideFlags: 0
@@ -3377,6 +3388,18 @@ MonoBehaviour:
   recordWindow: {fileID: 276321087}
   propertyWindow: {fileID: 1513774866}
   statusWindow: {fileID: 1356310632}
+--- !u!114 &1233016413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1233016410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ea14c9c6a2f3c4d88273c6a588eb4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visible: 0
 --- !u!1 &1239752363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3839,6 +3862,15 @@ Prefab:
       value: "\u2022 Fuse Box ID\r: (0001A)\r\n\u2022 IOT Device Software Version
         number\r: (1.0.0.1)\r\n\u2022 IOT Device Model\r: (Raspberry Pi 3.0.2)"
       objectReference: {fileID: 0}
+    - target: {fileID: 4277788630231526, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 23229222649764760, guid: 50b0a189e89d6984882f9268ad255f51,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b26d37dd442201449bb09494a97bc40, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50b0a189e89d6984882f9268ad255f51, type: 2}
   m_IsPrefabParent: 0
@@ -5286,6 +5318,7 @@ GameObject:
   - component: {fileID: 1786907492}
   - component: {fileID: 1786907494}
   - component: {fileID: 1786907493}
+  - component: {fileID: 1786907496}
   m_Layer: 0
   m_Name: MainMenuContainer
   m_TagString: Untagged
@@ -5358,6 +5391,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000030040741}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1786907496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1786907491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ea14c9c6a2f3c4d88273c6a588eb4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visible: 0
 --- !u!1 &1863962207
 GameObject:
   m_ObjectHideFlags: 0

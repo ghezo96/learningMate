@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
         WholeBox.SetActive(false);
+        mainMenuContainer.GetComponent<FadeIn>().Fade();
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
@@ -84,6 +85,8 @@ public class Player : MonoBehaviour
         if(inDecomp)
         {
             StartCoroutine(GoToHome());
+            
+            windowManager.GetComponent<FadeIn>().FadeOut();
         }
         else
         {
@@ -107,7 +110,7 @@ public class Player : MonoBehaviour
     IEnumerator GoToHome()
     {
         WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
 
         if (boxStatus)
         {
@@ -123,6 +126,7 @@ public class Player : MonoBehaviour
 
         SetVertxEventHandlerState(false);
         inDecomp = false;
+
     }
 
     // Menu container button click event handler
@@ -145,6 +149,8 @@ public class Player : MonoBehaviour
 
             WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
+
+            windowManager.GetComponent<FadeIn>().Fade();
         }
         else if (button.name == "InteractiveGuide")
         {
