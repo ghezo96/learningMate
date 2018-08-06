@@ -143,8 +143,12 @@ public class Player : MonoBehaviour
             MainBoxDoor.SetActive(false);
             MainBoxPanel.SetActive(false);
 
-            WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+            //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
+            SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
+
+
+            //StartCoroutine(StartLiveInformation());
         }
         else if (button.name == "InteractiveGuide")
         {
@@ -154,7 +158,7 @@ public class Player : MonoBehaviour
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
-            
+            //
         }
         else if(button.name == "Collab")
         {
@@ -184,9 +188,9 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
         //EnableIoTListeners(true);
-        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        if (SceneLink.Instance.GetComponent<SceneLinkEventManager>() != null)
         {
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = true;
+            SceneLink.Instance.GetComponent<SceneLinkEventManager>().enabled = true;
         }
         yield return new WaitForSeconds(1.0f);
         if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
@@ -235,9 +239,9 @@ public class Player : MonoBehaviour
 
     IEnumerator EnableIoTListeners(bool isEnabled)
     {
-        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        if (SceneLink.Instance.GetComponent<SceneLinkEventManager>() != null)
         {
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = isEnabled;
+            SceneLink.Instance.GetComponent<SceneLinkEventManager>().enabled = isEnabled;
         }
         yield return new WaitForSeconds(1.0f);
         if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
@@ -247,6 +251,14 @@ public class Player : MonoBehaviour
             SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().setIoTEnabled(isEnabled);
             SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = isEnabled;
         }
+
+        //if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
+        //{
+        //    //SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().gameObject.SetActive(isEnabled);
+        //    //VertxEventHandler.IoTEnabled
+        //    SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().setIoTEnabled(isEnabled);
+        //    SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = isEnabled;
+        //}
     }
 
     // Update is called once per frame
