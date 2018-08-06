@@ -19,12 +19,12 @@ namespace PiUpdate
             guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
             Console.WriteLine(guid);
 
-            box.Add(new Component("KEY_ANIMATION", "gpio8"));
-            box.Add(new Component("SWITCH_ONE", "gpio7"));
-            box.Add(new Component("SWITCH_TWO", "gpio18"));
-            box.Add(new Component("SWITCH_THREE", "gpio22"));
-            box.Add(new Component("DOOR_ANIMATION", "gpio27"));
-            box.Add(new Component("FUSE_ANIMATION", "gpio10"));
+            box.Add(new Component("KEY_ANIMATION", "gpio13"));
+            box.Add(new Component("SWITCH_ONE", "gpio5"));
+            box.Add(new Component("SWITCH_TWO", "gpio4"));
+            box.Add(new Component("SWITCH_THREE", "gpio26"));
+            box.Add(new Component("DOOR_ANIMATION", "gpio6"));
+            box.Add(new Component("FUSE_ANIMATION", "gpio19"));
 
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
