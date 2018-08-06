@@ -8,10 +8,15 @@ public class VertxObjectHandler : MonoBehaviour {
 
     public string[,] ComponentArray;
 
+    public static List<GameObject> ObjectComparisonList = new List<GameObject>();
+
+    public static int GameObjectCounter;
+
     GameObject CreatedComponent;
 
     // Use this for initialization
-    void Start () {
+    void Start (){
+
 
         //x-position
         float switchXPosition = -0.08f;
@@ -19,11 +24,11 @@ public class VertxObjectHandler : MonoBehaviour {
 
         ComponentArray = new string[,]
         {
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"CONNECTOR", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
-            {"CONNECTOR", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
+            {"SWITCH_1", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"SWITCH_2", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"SWITCH_3", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"CONNECTOR_1", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
+            {"CONNECTOR_2", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
             {"BOX", "35296c54-8ae5-430a-b6eb-32048c883606" }
         };
 
@@ -31,28 +36,29 @@ public class VertxObjectHandler : MonoBehaviour {
         for (int i = 0; i < (ComponentArray.Length/2); i++)
         {
             //POSITIONAL CHANGES
-            if(ComponentArray[i, 0] == "SWITCH")
+            if(ComponentArray[i, 0].Substring(0,3) == "SWI")
             {
                 CreatedComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], new Vector3(switchXPosition, 0f, 0f));
                 switchXPosition += 0.08f;
+                CreatedComponent.AddComponent<CreateWires>();
+                CreatedComponent.AddComponent<HandDraggable>();
             }
-            if(ComponentArray[i, 0] == "CONNECTOR")
+
+            if(ComponentArray[i, 0].Substring(0,3) == "CON")
             {
                 CreatedComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], new Vector3(connectorXPosition, -0.1f, 0f));
                 connectorXPosition += 0.08f;
+                CreatedComponent.AddComponent<CreateWires>();
+                CreatedComponent.AddComponent<HandDraggable>();
             }
-            CreatedComponent.AddComponent<HandDraggable>();
-            CreatedComponent.AddComponent<Snapping>();
 
-            //CreatedComponent.AddComponent<ObjectGameEvent>();
             if(ComponentArray[i, 0] == "BOX")
             {
                 CreatedComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], new Vector3(0.14f, -0.3f, 0f));
             }
-            CreatedComponent.AddComponent<ModifiedStart>();
+
+            CreatedComponent.AddComponent<VERTXMeshCollider>();
         }
-        CreatedComponent = CreateNode("SNAPPING", "a00e3fa6-babb-498a-a559-e9ae05cf9c31", new Vector3(0f, 0.1f, 0f));
-        CreatedComponent.AddComponent<SnapToThis>();
     }
 
     // Method to create and return Vertex Node Link Game object 

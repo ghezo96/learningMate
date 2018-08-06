@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.UX.Buttons;
+using VertexUnityPlayer;
 
-public class Player : MonoBehaviour {
+public class Player : VertexSingleton<Player> {
 
-    
+
+
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
     PanelWindow[] allWindows;
@@ -25,8 +27,13 @@ public class Player : MonoBehaviour {
     public GameObject SpatialMesh;
     public GameObject BoxModel;
     bool boxStatus = true;
-   
-    
+
+    /////////////////////////////////////////////////////////////
+    public FloatingButton ValidateButton;
+
+
+    public delegate void OnValidateButtonClicked();
+    public event OnValidateButtonClicked OnValidateClicked;
 
     // Use this for initialization
     void Start ()
@@ -38,6 +45,7 @@ public class Player : MonoBehaviour {
         homeButton.Clicked += HomeButton_Clicked;
         liveInfo.Clicked += liveInfo_Clicked;
         StartButton.Clicked += Start_Clicked;
+        ValidateButton.Clicked += Validate_Clicked;
 
         Reset.Clicked += Reset_Clicked;
 
@@ -47,7 +55,93 @@ public class Player : MonoBehaviour {
             homeButton.setActiveStatus(false);
         }
 
+        //Renderer Render = GetComponent<Renderer>();
+        //Render.material
     }
+
+    public void Validate_Clicked(GameObject button)
+    {
+        if(CreateWires.CorrectWireCount == 5 && CreateWires.IncorrectWireCount == 0)
+        {
+            if (boxStatus)
+            {
+                boxStatus = false;
+                MainBoxDoor.SetActive(true);
+                MainBoxPanel.SetActive(true);
+            }
+
+            windowManager.SetActive(false);
+            mainMenuContainer.SetActiveStatus(true);
+            // Hide home button
+            button.SetActive(false);
+            Reset.setActiveStatus(true);
+        }
+        else
+        {
+            if(OnValidateClicked != null)
+            {
+                OnValidateClicked.Invoke();
+                StopCoroutine(ShowBadWires());
+                StartCoroutine(ShowBadWires());
+            }
+        }
+
+    }
+
+    IEnumerator ShowBadWires()
+    {
+        while (true)
+        {
+            for (int i = 5; i < CreateWires.IncorrectWireCount + 5; i++)
+            {
+                if (CreateWires.ConnectionArray[i, 3] == "1")
+                {
+                    GameObject badWire;
+                    string name = CreateWires.ConnectionArray[i, 0] + CreateWires.ConnectionArray[i, 1];
+                    string nameReverse = CreateWires.ConnectionArray[i, 1] + CreateWires.ConnectionArray[i, 0];
+                    if (SceneLink.Instance.transform.Find(name))
+                    {
+                        badWire = SceneLink.Instance.transform.Find(name).gameObject;
+                        RecurrsionSearch(badWire);
+                    }
+                    else if (SceneLink.Instance.transform.Find(nameReverse))
+                    {
+                        badWire = SceneLink.Instance.transform.Find(nameReverse).gameObject;
+                        RecurrsionSearch(badWire);
+                    }
+                    else
+                    {
+                        Debug.Log("bad wire not found");
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
+
+    void RecurrsionSearch(GameObject gameObject)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            GameObject childObject = gameObject.transform.GetChild(i).gameObject;
+            if (childObject.name == "Primitive")
+            {
+                Renderer renderer = childObject.GetComponent<Renderer>();
+                Material mat = renderer.material;
+                float emision = Mathf.PingPong(Time.time * 0.25f, 0.5f);
+                Color baseColour = Color.red;
+                Color finalColour = baseColour * Mathf.LinearToGammaSpace(emision);
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", finalColour);
+            }
+            else
+            {
+                RecurrsionSearch(childObject);
+            }
+        }
+    }
+
+        /////////////////////////////////////////////////////////////
 
     public void Start_Clicked(GameObject button)
     {
@@ -58,6 +152,7 @@ public class Player : MonoBehaviour {
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
         BoxModel.SetActive(true);
+        ValidateButton.setActiveStatus(false);
     }
 
     public void Reset_Clicked (GameObject button)
@@ -70,22 +165,20 @@ public class Player : MonoBehaviour {
         mainMenuContainer.SetActiveStatus(false);
         SpatialMesh.SetActive(true);
         BoxModel.SetActive(false);
+        ValidateButton.setActiveStatus(false);
     }
     public void liveInfo_Clicked(GameObject button)
     {
         boxStatus = true;
-       
-            MainBoxDoor.SetActive(false);
-            MainBoxPanel.SetActive(false);
-      
-        
+        MainBoxDoor.SetActive(false);
+        MainBoxPanel.SetActive(false);
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(false);
         button.SetActive(true);
         BoundingBox.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
-        
-    
+        ValidateButton.setActiveStatus(false);
+
     }
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
@@ -103,6 +196,7 @@ public class Player : MonoBehaviour {
         button.SetActive(false);
         theBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         Reset.setActiveStatus(true);
+        ValidateButton.setActiveStatus(false);
     }
 
     private void OnButtonClicked(GameObject button)
@@ -113,7 +207,7 @@ public class Player : MonoBehaviour {
         homeButton.setActiveStatus(true);
         Reset.setActiveStatus(false);
         BoundingBox.SetActive(false);
-
+        ValidateButton.setActiveStatus(false);
     }
 
     // Update is called once per frame

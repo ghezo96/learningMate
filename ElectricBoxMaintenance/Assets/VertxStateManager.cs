@@ -5,7 +5,6 @@ using VertexUnityPlayer;
 [RequireComponent(typeof(SceneLink))]
 public class VertxStateManager : MonoBehaviour
 {
-
     public SceneLink sceneLink;
 
     // Use this for initialization
@@ -32,11 +31,11 @@ public class VertxStateManager : MonoBehaviour
         //GameObject HandlerNode = CreateNode("VertxEventManager", null);
         //HandlerNode.AddComponent<TheVertxEventHandler>();
 
-        //GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
-        //VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
+        GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
+        VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
 
-        GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
-        VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
+        //GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
+        //VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
     }
 
     // Method to create and return Vertex Node Link Game object 

@@ -4,7 +4,7 @@ using UnityEngine;
 using VertexUnityPlayer;
 using VertexDataTypes;
 
-public class ModifiedStart : MonoBehaviour {
+public class VERTXMeshCollider : MonoBehaviour {
 
     void NodeLink_Loaded()
     {
@@ -20,9 +20,6 @@ public class ModifiedStart : MonoBehaviour {
             {
                 MeshCollider meshCollider = childObject.GetComponent<MeshCollider>();
                 meshCollider.skinWidth = 0.0001f;
-                Rigidbody rb = childObject.AddComponent<Rigidbody>();
-                rb.useGravity = false;
-                rb.constraints = RigidbodyConstraints.FreezeAll;
             }
             else
             {
@@ -30,4 +27,6 @@ public class ModifiedStart : MonoBehaviour {
             }
         }
     }
+
+
 }

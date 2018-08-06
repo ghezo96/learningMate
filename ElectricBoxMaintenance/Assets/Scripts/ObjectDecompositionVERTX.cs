@@ -14,7 +14,7 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
     [Header("Timing variables")]
     public float LerpDuration = 0.5f;
     [Header("Spatial variables")]
-    public float MaxDistance = 1f;
+    public float MaxDistance = 0.3f;
     public AnimationCurve MovementCurve = new AnimationCurve();
 
     private bool ExtendedObjects = false;
@@ -80,12 +80,11 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
 
     void InitialiseArrays()
     {
-        ObjectList = new Transform[boxObject.transform.childCount];
-        InitialPositions = new Vector3[boxObject.transform.childCount];
+        ObjectList = new Transform[transform.childCount];
+        InitialPositions = new Vector3[transform.childCount];
         int i = 0;
-        foreach (Transform child in boxObject.transform)
+        foreach (Transform child in transform)
         {
-            //child.gameObject.AddComponent<NodeLink>().ParentScene = SceneLink.Instance.SceneId;
             ObjectList[i] = child;
             InitialPositions[i] = child.localPosition;
             i++;
@@ -95,6 +94,7 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
     void Start()
     {
         InitialiseArrays();
+        //add movement curve frames
         MovementCurve.AddKey(new Keyframe(0, 0, 0, 0));
         MovementCurve.AddKey(new Keyframe(1, 1, 0, 0));
         StartCoroutine(TestMovement());
