@@ -346,7 +346,7 @@ namespace HoloToolkit.Unity.InputModule
             }
             if (!guidList.Contains(grabbedGuid))
             {
-                guidList.Add(grabbedGuid);
+                //guidList.Add(grabbedGuid);
                 gameObject.GetComponent<NodeLink>().Fire("UnlockItem", grabbedGuid);
             }
 
@@ -459,7 +459,7 @@ namespace HoloToolkit.Unity.InputModule
                 if (guidList[i] == grabbedGuid.ToString())
                 {
                     isAvailable = true;
-                   
+                    break;
                 }
                 
             }
