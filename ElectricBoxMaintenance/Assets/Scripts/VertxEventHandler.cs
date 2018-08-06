@@ -5,7 +5,8 @@ using UnityEngine;
 using VertexUnityPlayer;
 
 
-public class VertxEventHandler : MonoBehaviour {
+public class VertxEventHandler : MonoBehaviour
+{
 
     GameObject currentGameObject;
     public string[,,] AnimationArray;
@@ -28,6 +29,8 @@ public class VertxEventHandler : MonoBehaviour {
                 {"SWITCH_ONE","59d89c08-85a6-4e17-9edb-a2b648d0503e", "0" },
                 {"SWITCH_TWO","3fe496cd-7cf7-44d8-8388-74ac49e14986", "1"},
                 {"SWITCH_THREE","b9ed5bee-0f83-44ad-b9c8-943cfccfbbef", "0"},
+                {"FUSE_ANIMATION","55436d56-7f92-44ad-9d57-4c27d2a60b05", "0" },
+                {"FUSE_ANIMATION_CLOSE","e6b3428a-e40c-402e-adc9-419b459b137c", "1" },
                 {"SWITCH_FOUR","2fa79861-9ec8-423f-a113-e80a2c04739e", "1"},
                 {"SWITCH_FIVE","30fc82a8-7b3b-4cab-afb9-c8304a6c756d", "0"},
                 {"SWITCH_SIX","3930543b-229a-4f82-804a-90cd09eca5a5", "1"},
@@ -40,8 +43,9 @@ public class VertxEventHandler : MonoBehaviour {
 
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         if (currentGameObject)
         {
             GameObject box = GameObject.FindGameObjectWithTag("Box");
@@ -74,7 +78,7 @@ public class VertxEventHandler : MonoBehaviour {
         //string componentState = _message.state.ToString();
         //Debug.Log("componentName : " + componentName);
         //Destory previous animation
-        if(PreviousAnimationNode)
+        if (PreviousAnimationNode)
         {
             DestroyImmediate(PreviousAnimationNode);
         }
@@ -83,7 +87,7 @@ public class VertxEventHandler : MonoBehaviour {
         Debug.Log("Component state => " + componentState);
 
         //SAME SWITCHES USED
-        if (currentStep > 4)
+        if (currentStep > 5)
         {
             switch (componentName)
             {
@@ -102,10 +106,13 @@ public class VertxEventHandler : MonoBehaviour {
                 case "KEY_ANIMATION":
                     componentName = "KEY_ANIMATION_FINISH";
                     break;
+                case "FUSE_ANIMATION":
+                    componentName = "FUSE_ANIMATION_CLOSE";
+                    break;
             }
         }
 
-        if (!isComplete(componentName, componentState))
+        if (!isComplete())
         {
             ExecuteAnimation(componentName, componentState);
         }
@@ -122,10 +129,10 @@ public class VertxEventHandler : MonoBehaviour {
     }
 
     //maintenence completed when all animations have been played
-    bool isComplete(string _componentName, string _componentState)
+    bool isComplete()
     {
         bool maintenenceComplete;
-        if (currentStep == 9)
+        if (currentStep == 11)
         {
             maintenenceComplete = true;
         }
@@ -147,8 +154,8 @@ public class VertxEventHandler : MonoBehaviour {
         {
             CreateNode(AnimationArray[0, currentStep, 0], AnimationArray[0, currentStep, 1]);
         }
-       
-     }
+
+    }
 
 
     public void InitKeyAnimation()

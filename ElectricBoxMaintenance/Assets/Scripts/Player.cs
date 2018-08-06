@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
+    public GameObject sceneLink;
     bool boxStatus = true;
     bool inDecomp = false;
 
@@ -101,7 +102,12 @@ public class Player : MonoBehaviour
             Reset.setActiveStatus(true);
 
             SetVertxEventHandlerState(false);
+            // REmove CollabVertxObjectHAndler 
+            SceneLink.Instance.GetComponent<FuseBoxStateManager>().RemoveCollabVertxObjectHandler();
+            sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
+           MainBox.GetComponent<BoxCollider>().enabled = true;
         }
+
     }
 
     IEnumerator GoToHome()
@@ -123,6 +129,7 @@ public class Player : MonoBehaviour
 
         SetVertxEventHandlerState(false);
         inDecomp = false;
+        //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
     }
 
     // Menu container button click event handler
@@ -165,6 +172,7 @@ public class Player : MonoBehaviour
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
+            
         }
     }
 
@@ -174,7 +182,9 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         // Disable IoT component attached to the SceneLink
-       
+        SceneLink.Instance.GetComponent<FuseBoxStateManager>().CreateCollabVertxObjectHandler();
+        sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
+        MainBox.GetComponent<BoxCollider>().enabled = false;
     }
 
     // Coroutine to load first key animation

@@ -11,6 +11,7 @@ public class FuseBoxStateManager : MonoBehaviour
     {
         GameObject HandlerNode = CreateNode("VertxEventManager", null);
         HandlerNode.AddComponent<VertxEventHandler>();
+
     }
 
     // Method to create and return Vertex Node Link Game object 
@@ -36,6 +37,24 @@ public class FuseBoxStateManager : MonoBehaviour
         }
         return vertxThing;
 
+    }
+
+    public void CreateCollabVertxObjectHandler()
+    {
+        GameObject VertxObjectHandlerNode = CreateNode("CollabVertxObjectHandler", null);
+        VertxObjectHandlerNode.AddComponent<CollabVertxObjectHandler>();
+    }
+
+    public void RemoveCollabVertxObjectHandler()
+    {
+        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
+        {
+            if (a.name != "VertxEventManager")
+            {
+                Debug.Log("Destroying object :" + a.name);
+                Destroy(a.gameObject);
+            }
+        }
     }
 
     // Update is called once per frame
