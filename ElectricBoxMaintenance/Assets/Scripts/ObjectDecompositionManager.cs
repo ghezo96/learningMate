@@ -5,8 +5,12 @@ using VertexUnityPlayer;
 
 public class ObjectDecompositionManager : MonoBehaviour {
 
-    GameObject wholeBox;
+    GameObject UXHandler;
+    GameObject Box;
+    GameObject WholeBox;
     GameObject ElectricBox;
+
+    List<GameObject> objectList = new List<GameObject>();
 
     public string[,] DecompositionComponents = new string[,]
     {
@@ -19,9 +23,22 @@ public class ObjectDecompositionManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        //ElectricBox = CreateNode("ElectricBox", "863b5c9a-7b83-4a88-b4d6-41a33bdba80e");
-        //ElectricBox.AddComponent<LoadElectricBox>();
-	}
+        UXHandler = GameObject.Find("UXHandler");
+        Box = UXHandler.transform.GetChild(0).gameObject;
+        WholeBox = Box.transform.Find("WholeBox").gameObject;
+    }
+
+    private void Update()
+    {
+        if(!ObjectDecompositionVERTX.ExtendedObjects && !ObjectDecompositionVERTX.MovingPhase)
+        {
+            for (int i = 0; i < objectList.Count; i++)
+            {
+                objectList[i].transform.position = Box.transform.position;
+                objectList[i].transform.rotation = Box.transform.rotation;
+            }
+        }
+    }
 
     void LoadComponents()
     {
@@ -40,9 +57,26 @@ public class ObjectDecompositionManager : MonoBehaviour {
 
         if (vertxObject == null)
         {
+            Vector3 spawnPosition;
+
+            Debug.Log(WholeBox.name);
+
+            if (WholeBox == null)
+            {
+                spawnPosition = new Vector3(0f, 0f, 0f);
+                Debug.Log("Box not found");
+            }
+            else
+            {
+                spawnPosition = WholeBox.transform.position;
+            }
+
+
+            // Honestly Siege, I'm making this up at this point, if it works it's a miracle, if it doesn't it's Jamie's fault
+
             vertxThing = SceneLink.Instance.CreateNode(name,
-                new Vector3(0f, 0f, 0f),
-                Quaternion.identity,
+                spawnPosition,
+                Quaternion.Inverse(Box.transform.rotation),
                 Vector3.one,
                 id
            );
@@ -58,30 +92,19 @@ public class ObjectDecompositionManager : MonoBehaviour {
             vertxThing.transform.SetParent(ElectricBox.transform);
         }
 
+        if (!objectList.Contains(vertxThing))
+        {
+            objectList.Add(vertxThing);
+        }
+
         return vertxThing;
     }
 
     public void VertxDecomposeStart()
     {
-
-        // Get the whole box and align electric box with it
-        //GameObject wholeBox = GameObject.FindGameObjectWithTag("WholeBox");
         ElectricBox = CreateNode("ElectricBox", null);
-        //ElectricBox.transform.position = wholeBox.transform.position;
-        //ElectricBox.transform.rotation = wholeBox.transform.rot
         LoadComponents();
-        ElectricBox.transform.rotation *= Quaternion.Euler(wholeBox.transform.rotation.x, 180, wholeBox.transform.rotation.z);
 
     }
 
-    private void Update()
-    {
-        GameObject wholeBox = GameObject.FindGameObjectWithTag("WholeBox");
-        if (ElectricBox)
-        {
-            ElectricBox.transform.position = wholeBox.transform.position;
-            
-
-        }
-    }
 }

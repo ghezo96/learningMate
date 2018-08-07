@@ -146,7 +146,8 @@ public class Player : MonoBehaviour
             //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
             SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
-
+            Debug.Log("fading");
+            StartCoroutine(windowManager.transform.GetChild(0).GetComponentInChildren<UIPanelAnimation>().FadeIn());
 
             //StartCoroutine(StartLiveInformation());
         }

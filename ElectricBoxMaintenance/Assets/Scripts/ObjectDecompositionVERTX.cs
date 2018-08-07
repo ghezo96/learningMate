@@ -17,8 +17,8 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
     public float MaxDistance = 0.3f;
     public AnimationCurve MovementCurve = new AnimationCurve();
 
-    private bool ExtendedObjects = false;
-    private bool MovingPhase = false;
+    public static bool ExtendedObjects = false;
+    public static bool MovingPhase = false;
 
     public void MoveObjectsForwards()
     {
