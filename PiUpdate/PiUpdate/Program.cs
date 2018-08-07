@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Timers;
 
 namespace PiUpdate
 {
@@ -10,14 +11,20 @@ namespace PiUpdate
     class Program
     {
         static ElectricBox box = new ElectricBox();
-        static string sceneId = "ab324e2d-823a-4031-9ad4-34fdf77583c3";
+        //static string sceneId = "df9105d7-3bbd-4a54-b6e6-3c7dd751809b";
+        static string sceneId = "5f9b794c-8410-4f5b-abe5-b7dbdfb84e5b";
         static string guid;
-        
-        static void Main(string[] args)
-        {
 
-            guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
-            Console.WriteLine(guid);
+        static void  Main(string[] args)
+        {
+            Timer aTimer = new Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimerTick);
+            aTimer.Interval = 10000;
+            aTimer.Enabled = true;
+            aTimer.Start();
+            //
+            guid = GetGUIDBySceneIDFromVertxAsync();
+            Console.WriteLine("MAIN : " + guid);
 
             box.Add(new Component("KEY_ANIMATION", "gpio13"));
             box.Add(new Component("SWITCH_ONE", "gpio5"));
@@ -55,19 +62,18 @@ namespace PiUpdate
 
                     if (changed)
                     {
-                        guid = (guid == null) ? GetGUIDBySceneIDFromVertx() : null;
-                        Console.WriteLine(guid);
                         //if (guid == null)
                         //{
-                        //    //try
-                        //    //{
-                        //    //    guid = GetGUIDBySceneIDFromVertx();
-                        //    //}
-                        //    //catch (NullReferenceException exception)
-                        //    //{
-                        //    //    Console.WriteLine("Null reference exception caught, " + exception.Message);
-                        //    //}
+                        //    try
+                        //    {
+                        //        guid = GetGUIDBySceneIDFromVertx();
+                        //    }
+                        //    catch (NullReferenceException exception)
+                        //    {
+                        //        Console.WriteLine("Null reference exception caught, " + exception.Message);
+                        //    }
                         //}//end if
+                        Console.WriteLine(guid);
 
                         try
                         {
@@ -78,20 +84,32 @@ namespace PiUpdate
                             client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
                             Console.WriteLine("Data sent");
                         }
-                        catch(System.Net.WebException webEcxeption)
+                        catch(WebException webEcxeption)
                         {
                             Console.WriteLine("WebException thrown => " + webEcxeption.Message);
-                            if (webEcxeption.Message.Contains("error: (404) Not Found."))
-                            {
-                                guid = GetGUIDBySceneIDFromVertx();
-                            }
+                            //guid = GetGUIDBySceneIDFromVertx();
                         }
                     }//end if
                 }//end foreach
             }//end while
         }//end main
 
-        static string GetGUIDBySceneIDFromVertx()
+        private static void OnTimerTick(object sender, ElapsedEventArgs e)
+        {
+            //Console.WriteLine("OnTimerTick");
+            try
+            {
+                guid = GetGUIDBySceneIDFromVertxAsync();
+
+                Console.WriteLine("GUID : " + guid);
+            }
+            catch (NullReferenceException exception)
+            {
+                Console.WriteLine("Null reference exception caught, " + exception.Message);
+            }
+        }
+
+        static string GetGUIDBySceneIDFromVertxAsync()
         {
             string _guid;
             try
@@ -112,14 +130,17 @@ namespace PiUpdate
                 response.Close();
                 
                 _guid = child.guid;
-
+                Console.WriteLine(_guid);
             } catch(Exception e)
             {
                 _guid = null;
                 Console.WriteLine(e.Message);
             }
 
+            guid = _guid;
+
             return _guid;
         }
+
     }
 }
