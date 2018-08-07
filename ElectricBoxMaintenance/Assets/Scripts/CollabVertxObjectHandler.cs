@@ -56,7 +56,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         // Attach listener to the switches and connections
         foreach (GameObject gameObj in vertxGameObjects)
         {
-            gameObj.AddComponent<MoveAndSnap>();
+            gameObj.AddComponent<MoveAndSnap2>();
             gameObj.AddComponent<Rigidbody>();
             gameObj.GetComponent<Rigidbody>().useGravity = false;
             gameObj.GetComponent<Rigidbody>().isKinematic = true;

@@ -17,8 +17,8 @@ public class ModifiedStart : MonoBehaviour {
         {
             
             GameObject childObject = gameObject.transform.GetChild(i).gameObject;
-
-            if (gameObject.name.Contains("Box") || gameObject.name.Contains("SupportShelf"))
+           
+           if (gameObject.name.Contains("Box") || gameObject.name.Contains("SupportShelf")|| gameObject.name.Contains("SpacerTop")|| gameObject.name.Contains("SpacerBot") || gameObject.name.Contains("FuseBlockThin1") || gameObject.name.Contains("FuseBlockThin2") || gameObject.name.Contains("FuseHolderBlock") || gameObject.name.Contains("BackPlate"))
             {
                 if (childObject.name == "Primitive")
                 {

@@ -5,10 +5,11 @@ using HoloToolkit.Unity;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine.UI;
 
-public class PopOut : MonoBehaviour , IFocusable, IInputHandler
+public class PopOut : MonoBehaviour, IFocusable, IInputHandler
 {
-    Vector3 initialScale;
-    Vector3 targetScale;
+    Vector3 initialScale = Vector3.one;
+    Vector3 targetScale { get { return initialScale * scaleAmount; } }
+    public float scaleAmount = 1.2f;
     bool focused = false;
     Animator anim;
 
@@ -16,7 +17,7 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
     public AudioClip AudioOnClick;
 
 
-   // public GameObject Camera;
+    // public GameObject Camera;
     public void OnFocusEnter()
     {
         if (anim) { anim.SetBool("AnimFocus", true); }
@@ -24,10 +25,10 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
         //Camera.GetComponent<RaycastPositioning>().enabled = false;
         //transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         //initialScale = transform.localScale;
-        targetScale = initialScale*1.2f;
+        //targetScale = initialScale*scaleAmount; 
 
         AudioSource.PlayClipAtPoint(AudioOnFocus, transform.position);
-        
+
     }
 
     public void OnFocusExit()
@@ -38,19 +39,20 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
         //Camera.GetComponent<RaycastPositioning>().enabled = true;
         //transform.localScale = Vector3.one;
 
-    }   
+    }
 
     // Use this for initialization
-    void Start () {
-        initialScale = gameObject.transform.localScale;
+    void Start()
+    {
+        //initialScale = gameObject.transform.localScale;
         anim = gameObject.GetComponentInChildren<Animator>();
 
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
-       if (focused)
+        if (focused)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * 5f);
         }
@@ -62,12 +64,12 @@ public class PopOut : MonoBehaviour , IFocusable, IInputHandler
 
     public void OnInputDown(InputEventData eventData)
     {
-        transform.localScale = transform.localScale*0.8f;
+        transform.localScale = transform.localScale * 0.8f;
         AudioSource.PlayClipAtPoint(AudioOnClick, transform.position);
     }
 
     public void OnInputUp(InputEventData eventData)
     {
-        
+
     }
 }

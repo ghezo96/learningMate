@@ -85,6 +85,9 @@ public class Player : MonoBehaviour
         if(inDecomp)
         {
             StartCoroutine(GoToHome());
+
+
+            windowManager.GetComponent<FadeIn>().FadeOut();
         }
         else
         {
@@ -113,7 +116,7 @@ public class Player : MonoBehaviour
     IEnumerator GoToHome()
     {
         WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.4f);
 
         if (boxStatus)
         {
@@ -152,6 +155,8 @@ public class Player : MonoBehaviour
 
             WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
+
+            windowManager.GetComponent<FadeIn>().Fade();
         }
         else if (button.name == "InteractiveGuide")
         {
