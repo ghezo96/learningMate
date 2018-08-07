@@ -78,10 +78,9 @@ namespace HoloToolkit.Unity.InputModule
         private bool hostRigidbodyWasKinematic;
         Transform sceneLink;
         List<GameObject> switches = new List<GameObject>();
-        // Made Public so can watch it in inspector
         public List<string> guidList;
         string grabbedGuid;
-        bool isAvailable = false;
+        bool isAvailable = true;
 
         
         IEnumerator StartAddingGuids()
@@ -349,14 +348,13 @@ namespace HoloToolkit.Unity.InputModule
             {
                 //guidList.Add(grabbedGuid);
                 gameObject.GetComponent<NodeLink>().Fire("UnlockItem", grabbedGuid);
-               
             }
 
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
 
             isDragging = false;
-            
+            //isAvailable = true;
             currentInputSource = null;
             currentInputSourceId = 0;
             if (hostRigidbody != null)
@@ -368,6 +366,7 @@ namespace HoloToolkit.Unity.InputModule
         
         public void OnFocusEnter()
         {
+            grabbedGuid = gameObject.GetComponent<NodeLink>().Guid.ToString();
             if (!IsDraggingEnabled)
             {
                 return;
@@ -417,13 +416,27 @@ namespace HoloToolkit.Unity.InputModule
         public void OnInputDown(InputEventData eventData)
         {
             
+            for (int i = 0; i < guidList.Count; i++)
+            {
+                if (guidList[i] == grabbedGuid.ToString())
+                {
+                    isAvailable = true;
+                    break;
+                }
+                else
+                {
+                    isAvailable = false;
+                }
+
+            }
+
             if (isDragging)
             {
                 
                 // We're already handling drag input, so we can't start a new drag operation.
                 return;
             }
-            grabbedGuid = gameObject.GetComponent<NodeLink>().Guid.ToString();
+           
             
            
 
@@ -456,18 +469,7 @@ namespace HoloToolkit.Unity.InputModule
             Vector3 initialDraggingPosition = (details == null)
                 ? HostTransform.position
                 : details.Value.Point;
-            for (int i = 0; i < guidList.Count; i++)
-            {
-                if (guidList[i] == grabbedGuid.ToString())
-                {
-                    isAvailable = true;
-                    
-                } else
-                {
-                    isAvailable = false;
-                }
-                
-            }
+            
             if (isAvailable)
             {
                 for (int i = 0; i < guidList.Count; i++)
@@ -561,7 +563,6 @@ namespace HoloToolkit.Unity.InputModule
         {
             if (guidList.Contains(guid))
             {
-                Debug.Log("guidList length before lock: " + guidList.Count);
                 guidList.Remove(guid);
                 Debug.Log("Received " + guid);
                 for (int i = 0; i < guidList.Count; i++)
@@ -574,7 +575,6 @@ namespace HoloToolkit.Unity.InputModule
         {
             if (!guidList.Contains(guid))
             {
-                Debug.Log("guidList length after unlock: " + guidList.Count);
                 guidList.Add(guid);
             }
         }

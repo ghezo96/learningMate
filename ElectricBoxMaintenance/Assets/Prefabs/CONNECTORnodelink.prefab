@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1878749531181464}
+  m_IsPrefabParent: 1
+--- !u!1 &1878749531181464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4439330733594646}
+  - component: {fileID: 65822745642409558}
+  - component: {fileID: 114129603460972516}
+  - component: {fileID: 54102208605253684}
+  m_Layer: 0
+  m_Name: CONNECTORnodelink
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4439330733594646
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1878749531181464}
+  m_LocalRotation: {x: 0.000000056393638, y: -0.0000000047871076, z: -0.000000018192736,
+    w: 1}
+  m_LocalPosition: {x: 0.06334389, y: -2.9699998, z: 1.2879987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54102208605253684
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1878749531181464}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65822745642409558
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1878749531181464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.049779616, y: 0.060000036, z: 0.08}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114129603460972516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1878749531181464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbceabbf6227684d9541dc168e0c643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HostTransform: {fileID: 4439330733594646}
+  DistanceScale: 2
+  RotationMode: 0
+  PositionLerpSpeed: 0.2
+  RotationLerpSpeed: 0.2
+  IsDraggingEnabled: 1
+  guidList:
+  - 8e5a0e15-f015-4c7d-b3bb-5aadb2287a1b
+  - ab911a53-14ba-417a-ab1f-323b61a9c3d1
+  - d2e010f9-69b9-40cb-8cf9-715b82186460
+  - 0c8d7aea-7e4b-43b1-8370-4915adaa78cb
+  - 2e8625de-89b1-4a76-b723-430f9aaaebc2
+  - 8f7f38aa-6def-497d-96c4-53d4b391533b
+  - e0062028-3ef2-4160-9298-a01fd8d38aab

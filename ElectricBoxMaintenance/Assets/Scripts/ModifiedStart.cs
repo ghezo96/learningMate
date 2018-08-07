@@ -31,14 +31,18 @@ public class ModifiedStart : MonoBehaviour {
                 if (childObject.name == "Primitive")
                 {
                     var boxCollider = childObject.GetComponent<BoxCollider>();
-                    var boxColliderSize = boxCollider.size;
-                   
-                    gameObject.AddComponent<BoxCollider>();
-                    gameObject.GetComponent<BoxCollider>().size = boxCollider.size*0.1f;
-                    gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                    if (boxCollider)
+                    {
+                        var boxColliderSize = boxCollider.size;
+                        gameObject.AddComponent<BoxCollider>();
+                        gameObject.GetComponent<BoxCollider>().size = boxCollider.size * 0.1f;
+                        gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                        Destroy(boxCollider);
+                    }
+
                    // gameObject.AddComponent<IsColiding>();
                     gameObject.layer = UnityEngine.LayerMask.NameToLayer("SnapPoints");
-                    Destroy(childObject.GetComponent<BoxCollider>());
+                   
                 }
                
                    
