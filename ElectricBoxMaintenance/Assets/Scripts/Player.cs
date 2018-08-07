@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.UX.Buttons;
 using VertexUnityPlayer;
 
-public class Player : MonoBehaviour
+public class Player : VertexSingleton<Player>
 {
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
@@ -268,6 +268,89 @@ public class Player : MonoBehaviour
     void Update()
     {
 
+    }
+
+    // Wire Integration code 
+    public void Validate_Clicked(GameObject button)
+    {
+        if (CreateWires.CorrectWireCount == 5 && CreateWires.IncorrectWireCount == 0)
+        {
+            if (boxStatus)
+            {
+                boxStatus = false;
+                MainBoxDoor.SetActive(true);
+                MainBoxPanel.SetActive(true);
+            }
+
+            windowManager.SetActive(false);
+            mainMenuContainer.SetActiveStatus(true);
+            // Hide home button
+            button.SetActive(false);
+            Reset.setActiveStatus(true);
+        }
+        else
+        {
+            //if (OnValidateClicked != null)
+            //{
+            //    OnValidateClicked.Invoke();
+            //}
+                StopCoroutine(ShowBadWires());
+                StartCoroutine(ShowBadWires());
+        }
+
+    }
+
+    IEnumerator ShowBadWires()
+    {
+        while (true)
+        {
+            for (int i = 5; i < CreateWires.IncorrectWireCount + 5; i++)
+            {
+                if (CreateWires.ConnectionArray[i, 3] == "1")
+                {
+                    GameObject badWire;
+                    string name = CreateWires.ConnectionArray[i, 0] + CreateWires.ConnectionArray[i, 1];
+                    string nameReverse = CreateWires.ConnectionArray[i, 1] + CreateWires.ConnectionArray[i, 0];
+                    if (SceneLink.Instance.transform.Find(name))
+                    {
+                        badWire = SceneLink.Instance.transform.Find(name).gameObject;
+                        RecurrsionSearch(badWire);
+                    }
+                    else if (SceneLink.Instance.transform.Find(nameReverse))
+                    {
+                        badWire = SceneLink.Instance.transform.Find(nameReverse).gameObject;
+                        RecurrsionSearch(badWire);
+                    }
+                    else
+                    {
+                        Debug.Log("bad wire not found");
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
+
+    void RecurrsionSearch(GameObject gameObject)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            GameObject childObject = gameObject.transform.GetChild(i).gameObject;
+            if (childObject.name == "Primitive")
+            {
+                Renderer renderer = childObject.GetComponent<Renderer>();
+                Material mat = renderer.material;
+                float emision = Mathf.PingPong(Time.time * 0.25f, 0.5f);
+                Color baseColour = Color.red;
+                Color finalColour = baseColour * Mathf.LinearToGammaSpace(emision);
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", finalColour);
+            }
+            else
+            {
+                RecurrsionSearch(childObject);
+            }
+        }
     }
 
 }

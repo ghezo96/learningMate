@@ -11,7 +11,6 @@ public class FuseBoxStateManager : MonoBehaviour
     {
         GameObject HandlerNode = CreateNode("VertxEventManager", null);
         HandlerNode.AddComponent<VertxEventHandler>();
-
     }
 
     // Method to create and return Vertex Node Link Game object 
@@ -41,8 +40,11 @@ public class FuseBoxStateManager : MonoBehaviour
 
     public void CreateCollabVertxObjectHandler()
     {
-        GameObject VertxObjectHandlerNode = CreateNode("CollabVertxObjectHandler", null);
-        VertxObjectHandlerNode.AddComponent<CollabVertxObjectHandler>();
+        //GameObject VertxObjectHandlerNode = CreateNode("CollabVertxObjectHandler", null);
+        //VertxObjectHandlerNode.AddComponent<CollabVertxObjectHandler>();
+
+        GameObject VertxObjectHandlerNode = CreateNode("CollabObjectHandler", null);
+        VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
     }
 
     public void RemoveCollabVertxObjectHandler()
