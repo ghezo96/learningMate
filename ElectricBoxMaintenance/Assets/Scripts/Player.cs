@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.UX.Buttons;
 using VertexUnityPlayer;
 
-public class Player : MonoBehaviour
+public class Player : VertexSingleton<Player>
 {
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
@@ -23,11 +23,26 @@ public class Player : MonoBehaviour
     bool inDecomp = false;
 
 
+    // panels for live information
+    Transform indivCompTransform;
+    GameObject SwitchOnePanel;
+    GameObject SwitchTwoPanel;
+    GameObject SwitchThreePanel;
+    GameObject FusePanel;
+
+
 
     // Use this for initialization
     void Start()
     {
-        Debug.Log("In Start");
+        //Find panels for liveinformation
+        indivCompTransform = windowManager.transform.Find("IndividualComponents");
+        SwitchOnePanel = indivCompTransform.Find("Switch1").gameObject;
+        SwitchTwoPanel = indivCompTransform.Find("Switch2").gameObject;
+        SwitchThreePanel = indivCompTransform.Find("Switch3").gameObject;
+        FusePanel = indivCompTransform.Find("Box001").gameObject;
+
+
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
@@ -144,10 +159,14 @@ public class Player : MonoBehaviour
 
             //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
-            windowManager.SetActive(true);
             homeButton.setActiveStatus(true);
             Reset.setActiveStatus(false);
             BoundingBox.SetActive(false);
+
+            SwitchOnePanel.SetActive(true);
+            SwitchTwoPanel.SetActive(false);
+            SwitchThreePanel.SetActive(false);
+            FusePanel.SetActive(false);
 
             boxStatus = true;
             //MainBoxDoor.SetActive(false);
@@ -155,8 +174,22 @@ public class Player : MonoBehaviour
 
             //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
+
+
+
+
+            windowManager.SetActive(true);
             windowManager.GetComponent<FadeIn>().Fade();
-            //
+
+
+
+
+
+
+
+
+
+
             SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
 
         }
@@ -270,5 +303,52 @@ public class Player : MonoBehaviour
     {
 
     }
+
+    ///////////////////
+    
+    public void ShowSwitch1Panel()
+    {
+        SwitchOnePanel.SetActive(true);
+        SwitchTwoPanel.SetActive(false);
+        SwitchThreePanel.SetActive(false);
+        FusePanel.SetActive(false);
+    }
+
+    public void ShowSwitch2Panel()
+    {
+        SwitchOnePanel.SetActive(false);
+        SwitchTwoPanel.SetActive(true);
+        SwitchThreePanel.SetActive(false);
+        FusePanel.SetActive(false);
+    }
+
+    public void ShowSwitch3Panel()
+    {
+        SwitchOnePanel.SetActive(false);
+        SwitchTwoPanel.SetActive(false);
+        SwitchThreePanel.SetActive(true);
+        FusePanel.SetActive(false);
+    }
+
+    public void ShowFusePanel()
+    {
+        SwitchOnePanel.SetActive(false);
+        SwitchTwoPanel.SetActive(false);
+        SwitchThreePanel.SetActive(false);
+        FusePanel.SetActive(true);
+    }
+
+    public void RedPanel(string panel)
+    {
+        MeshRenderer mesh = indivCompTransform.Find(panel).GetComponentInChildren<MeshRenderer>();
+        mesh.material.SetColor("_Color" , Color.red);
+    }
+
+    public void GreenPanel(string panel)
+    {
+        MeshRenderer mesh = indivCompTransform.Find(panel).GetComponentInChildren<MeshRenderer>();
+        mesh.material.SetColor("_Color", Color.green);
+    }
+
 
 }

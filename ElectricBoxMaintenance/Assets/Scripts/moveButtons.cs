@@ -49,7 +49,6 @@ public class moveButtons : MonoBehaviour
 
             Vector3 tempScale = i.transform.localScale;
             tempScale = Vector3.Lerp(Vector3.zero, Vector3.one, x);
-            Debug.Log(tempScale);
             i.transform.localScale = tempScale;
 
             yield return null;

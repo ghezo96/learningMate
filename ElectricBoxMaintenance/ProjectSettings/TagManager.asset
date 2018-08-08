@@ -13,6 +13,8 @@ TagManager:
   - Switch
   - THEBOX
   - Do not touch
+  - Working
+  - Faulty
   layers:
   - Default
   - TransparentFX

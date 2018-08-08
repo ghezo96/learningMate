@@ -17,7 +17,7 @@ public class ObjectDecompositionManager : MonoBehaviour {
         {"BoxLayer","3ee7a6a3-5d8d-4a17-bd62-5ea6cd790ce6"},
         {"WireLayer","3f9d7ae0-bac4-4f94-9e8f-e3b13435d932"},
         {"FuseLayer","f444f89c-d4aa-428b-91c3-de7ddd5f76e2"},
-        {"SwitchLayer","8bc9bf0b-20c7-4233-9a96-c934e74e2e19"}
+        {"SwitchLayer","088c0839-d2d1-4808-87d4-a33ca223876e"}
     };
 
 	// Use this for initialization
@@ -27,16 +27,16 @@ public class ObjectDecompositionManager : MonoBehaviour {
         Box = UXHandler.transform.Find("Box").gameObject;
     }
 
-    private void Update()
-    {
-    }
-
     void LoadComponents()
     {
         for (int i = 0; i < DecompositionComponents.Length/2; i++)
         {
-            CreateNode(DecompositionComponents[i,0], DecompositionComponents[i, 1]);
+            GameObject currentObject = CreateNode(DecompositionComponents[i,0], DecompositionComponents[i, 1]);
+
+            currentObject.AddComponent<OnFocusInformation>();
+            currentObject.AddComponent<OnNodeLinkLoaded>();
         }
+
         ElectricBox.AddComponent<ObjectDecompositionVERTX>();
     }
 
@@ -50,7 +50,6 @@ public class ObjectDecompositionManager : MonoBehaviour {
         {
             Vector3 spawnPosition;
 
-
             if (Box == null)
             {
                 spawnPosition = new Vector3(0f, 0f, 0f);
@@ -60,7 +59,6 @@ public class ObjectDecompositionManager : MonoBehaviour {
             {
                 spawnPosition = Box.transform.position;
             }
-
 
             // Honestly Siege, I'm making this up at this point, if it works it's a miracle, if it doesn't it's Jamie's fault
 
