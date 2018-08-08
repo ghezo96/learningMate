@@ -24,7 +24,7 @@ public class FadeIn : MonoBehaviour
 
     public void Fade()
     {
-        StartCoroutine(FadeWithWait(0.2f));
+        StartCoroutine(FadeWithWait(1.0f));
     }
 
     public void FadeOut()

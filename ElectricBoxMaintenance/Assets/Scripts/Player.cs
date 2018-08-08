@@ -10,12 +10,12 @@ public class Player : MonoBehaviour
     public MainMenuContainer mainMenuContainer;
     public FloatingButton homeButton;
     public FloatingButton StartButton;
-    public GameObject WholeBox;
+    //public GameObject WholeBox;
     public FloatingButton Reset;
     public GameObject Camera;
-    public GameObject MainBox;
-    public GameObject MainBoxDoor;
-    public GameObject MainBoxPanel;
+    //public GameObject MainBox;
+    //public GameObject MainBoxDoor;
+    //public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
     public GameObject sceneLink;
@@ -60,15 +60,15 @@ public class Player : MonoBehaviour
         Reset.setActiveStatus(true);
         SpatialMesh.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
-        MainBox.GetComponent<Movement>().enabled = false;
+        //MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
-        WholeBox.SetActive(false);
+        //WholeBox.SetActive(false);
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
     {
         Camera.GetComponent<RaycastPositioningV1>().enabled = true;
-        MainBox.SetActive(false);
+        //MainBox.SetActive(false);
         BoundingBox.SetActive(true);
         Reset.setActiveStatus(false);
         StartButton.setActiveStatus(true);
@@ -85,8 +85,6 @@ public class Player : MonoBehaviour
         if(inDecomp)
         {
             StartCoroutine(GoToHome());
-
-
             windowManager.GetComponent<FadeIn>().FadeOut();
         }
         else
@@ -94,45 +92,47 @@ public class Player : MonoBehaviour
             if (boxStatus)
             {
                 boxStatus = false;
-                MainBoxDoor.SetActive(true);
-                MainBoxPanel.SetActive(true);
+                //MainBoxDoor.SetActive(true);
+                //MainBoxPanel.SetActive(true);
             }
             windowManager.SetActive(false);
             mainMenuContainer.SetActiveStatus(true);
             // Hide home button
 
-            WholeBox.SetActive(false);
+            //WholeBox.SetActive(false);
             Reset.setActiveStatus(true);
 
             SetVertxEventHandlerState(false);
             // REmove CollabVertxObjectHAndler 
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().RemoveCollabVertxObjectHandler();
-            sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
-           MainBox.GetComponent<BoxCollider>().enabled = true;
+            //SceneLink.Instance.GetComponent<SceneLinkEventManager>().RemoveCollabVertxObjectHandler();
+            //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
+            //MainBox.GetComponent<BoxCollider>().enabled = true;
         }
 
     }
 
     IEnumerator GoToHome()
     {
-        WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
-        yield return new WaitForSeconds(1.4f);
+        //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
+        SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxComposition();
+        yield return new WaitForSeconds(1.0f);
 
         if (boxStatus)
         {
             boxStatus = false;
-            MainBoxDoor.SetActive(true);
-            MainBoxPanel.SetActive(true);
+            //MainBoxDoor.SetActive(true);
+            //MainBoxPanel.SetActive(true);
         }
         windowManager.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
         // Hide home button
-        WholeBox.SetActive(false);
+        //WholeBox.SetActive(false);
         Reset.setActiveStatus(true);
 
         SetVertxEventHandlerState(false);
         inDecomp = false;
         //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
+        SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().RemoveBox();
     }
 
     // Menu container button click event handler
@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
         if (button.name == "LiveInformation")
         {
 
-            WholeBox.SetActive(true);
+            //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(true);
             homeButton.setActiveStatus(true);
@@ -150,18 +150,20 @@ public class Player : MonoBehaviour
             BoundingBox.SetActive(false);
 
             boxStatus = true;
-            MainBoxDoor.SetActive(false);
-            MainBoxPanel.SetActive(false);
+            //MainBoxDoor.SetActive(false);
+            //MainBoxPanel.SetActive(false);
 
-            WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+            //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
-
             windowManager.GetComponent<FadeIn>().Fade();
+            //
+            SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
+
         }
         else if (button.name == "InteractiveGuide")
         {
-            WholeBox.SetActive(false);
-            StartCoroutine(LoadKeyAnimation());
+            //WholeBox.SetActive(false);
+            LoadKeyAnimation();
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
@@ -171,7 +173,7 @@ public class Player : MonoBehaviour
         else if(button.name == "Collab")
         {
             StartCoroutine(EnableIoTListeners(false));
-            WholeBox.SetActive(false);
+            //WholeBox.SetActive(false);
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
@@ -187,23 +189,22 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         // Disable IoT component attached to the SceneLink
-        SceneLink.Instance.GetComponent<FuseBoxStateManager>().CreateCollabVertxObjectHandler();
+        SceneLink.Instance.GetComponent<SceneLinkEventManager>().CreateCollabVertxObjectHandler();
         sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
-        MainBox.GetComponent<BoxCollider>().enabled = false;
+        //MainBox.GetComponent<BoxCollider>().enabled = false;
     }
 
     // Coroutine to load first key animation
-    IEnumerator LoadKeyAnimation()
+     void LoadKeyAnimation()
     {
         Debug.Log("Load Key Animation Co routine ");
 
-        yield return new WaitForSeconds(1.0f);
         //EnableIoTListeners(true);
-        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        if (SceneLink.Instance.GetComponent<SceneLinkEventManager>() != null)
         {
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = true;
+            SceneLink.Instance.GetComponent<SceneLinkEventManager>().enabled = true;
         }
-        yield return new WaitForSeconds(1.0f);
+      
         if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
         {
 
@@ -250,9 +251,9 @@ public class Player : MonoBehaviour
 
     IEnumerator EnableIoTListeners(bool isEnabled)
     {
-        if (SceneLink.Instance.GetComponent<FuseBoxStateManager>() != null)
+        if (SceneLink.Instance.GetComponent<SceneLinkEventManager>() != null)
         {
-            SceneLink.Instance.GetComponent<FuseBoxStateManager>().enabled = isEnabled;
+            SceneLink.Instance.GetComponent<SceneLinkEventManager>().enabled = isEnabled;
         }
         yield return new WaitForSeconds(1.0f);
         if (SceneLink.Instance.GetComponentInChildren<VertxEventHandler>() != null)
