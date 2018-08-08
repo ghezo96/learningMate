@@ -4,15 +4,30 @@ using UnityEngine;
 using VertexUnityPlayer;
 
 [RequireComponent(typeof(SceneLink))]
-public class FuseBoxS : MonoBehaviour
+public class SceneLinkEventManager : MonoBehaviour
 {
     // Use this for initialization
     void Start()
     {
-        GameObject HandlerNode = CreateNode("VertxEventManager", null);
-        HandlerNode.AddComponent<VertxEventHandler>();
+        StartCoroutine(AttachManagers());
 
     }
+
+    IEnumerator AttachManagers()
+    {
+
+        yield return new WaitForSeconds(3f);
+        LoadVertxEventManager();
+        LoadLiveInformationManager();
+    }
+
+    //private void Instance_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
+    //{
+    //    if (newState == SceneLinkStatus.Connected)
+    //    {
+    //        / dothings
+    //    }
+    //}
 
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
@@ -39,6 +54,12 @@ public class FuseBoxS : MonoBehaviour
 
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
     public void CreateCollabVertxObjectHandler()
     {
         GameObject VertxObjectHandlerNode = CreateNode("CollabVertxObjectHandler", null);
@@ -57,9 +78,22 @@ public class FuseBoxS : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadVertxEventManager()
     {
-
+        GameObject HandlerNode = CreateNode("VertxEventManager", null);
+        HandlerNode.AddComponent<VertxEventHandler>();
     }
+
+    public void LoadLiveInformationManager()
+    {
+        GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
+        VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
+    }
+
+    //void Collaboration()
+    //{
+    //    GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
+    //    VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
+    //}
+
 }
