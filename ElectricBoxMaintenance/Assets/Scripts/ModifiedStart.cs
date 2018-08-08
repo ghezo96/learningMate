@@ -4,29 +4,32 @@ using UnityEngine;
 using VertexUnityPlayer;
 using VertexDataTypes;
 
-public class ModifiedStart : MonoBehaviour {
-
+public class ModifiedStart : MonoBehaviour
+{
+    List<Component> colliders = new List<Component>();
+   // bool hasLoaded = false;
+    
     void NodeLink_Loaded()
     {
-        RecurrsionSearch(gameObject);
+        
+            RecurrsionSearch(gameObject);
+      
     }
 
-    void RecurrsionSearch(GameObject gameObject)
+    void RecurrsionSearch(GameObject toSearch)
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        foreach (UnityEngine.Transform child in toSearch.transform)
         {
-            
-            GameObject childObject = gameObject.transform.GetChild(i).gameObject;
+            GameObject childObject = child.gameObject;
 
-            if (gameObject.name.Contains("Box") || gameObject.name.Contains("SupportShelf"))
+            if (toSearch.name.Contains("Box") || toSearch.name.Contains("SupportShelf"))
             {
                 if (childObject.name == "Primitive")
                 {
                     Destroy(childObject.GetComponent<BoxCollider>());
                 }
             }
-           
-            else if (gameObject.name.Contains("SnapSwitch") || gameObject.name.Contains("SnapConnector"))
+            else if (toSearch.name.Contains("SnapSwitch") || toSearch.name.Contains("SnapConnector"))
             {
                 if (childObject.name == "Primitive")
                 {
@@ -34,30 +37,18 @@ public class ModifiedStart : MonoBehaviour {
                     if (boxCollider)
                     {
                         var boxColliderSize = boxCollider.size;
-                        gameObject.AddComponent<BoxCollider>();
-                        gameObject.GetComponent<BoxCollider>().size = boxCollider.size * 0.1f;
-                        gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                        BoxCollider newBoxCollider = toSearch.AddComponent<BoxCollider>();
+                        newBoxCollider.size = boxCollider.size * 0.1f;
+                        newBoxCollider.isTrigger = false;
+
+                        //boxCollider.enabled = false;
                         Destroy(boxCollider);
+
                     }
-
-                   // gameObject.AddComponent<IsColiding>();
-                    gameObject.layer = UnityEngine.LayerMask.NameToLayer("SnapPoints");
-                   
+                    // gameObject.AddComponent<IsColiding>();
+                    toSearch.layer = UnityEngine.LayerMask.NameToLayer("SnapPoints");
+                    continue;
                 }
-               
-                   
-                    //childObject.AddComponent<MoveAndSnap>();
-                    //MeshCollider meshCollider = childObject.GetComponent<MeshCollider>();
-                    //meshCollider.skinWidth = 0.0001f;
-                    //Rigidbody rb = childObject.AddComponent<Rigidbody>();
-                    //rb.useGravity = false;
-                    //rb.constraints = RigidbodyConstraints.FreezeAll;
-               //     gameObject.AddComponent<Rigidbody>();
-               //// gameObject.AddComponent<IsColiding>();
-               // gameObject.GetComponent<Rigidbody>().useGravity = false;
-               // gameObject.GetComponent<Rigidbody>().isKinematic = false;
-               // gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
             }
             else
             {

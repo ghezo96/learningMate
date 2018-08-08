@@ -105,7 +105,14 @@ public class Player : MonoBehaviour
             // REmove CollabVertxObjectHAndler 
             SceneLink.Instance.GetComponent<FuseBoxStateManager>().RemoveCollabVertxObjectHandler();
             sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
-           MainBox.GetComponent<BoxCollider>().enabled = true;
+            MainBox.GetComponent<BoxCollider>().enabled = true;
+            foreach (Transform x in SceneLink.Instance.transform)
+            {
+                if (x.name == "SWITCH"|| x.name == "CONNECTOR"||x.name == "BOX")
+                {
+                    Destroy(x.gameObject);
+                }
+            }
         }
 
     }

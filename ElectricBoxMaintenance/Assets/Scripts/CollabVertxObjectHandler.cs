@@ -40,7 +40,6 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             if (ComponentArray[i, 0] == "BOX")
             {
                 VertxBoxComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "BOXnodelink");
-                VertxBoxComponent.AddComponent<ModifiedStart>();
                 GameObject box = GameObject.FindGameObjectWithTag("Box");
                 VertxBoxComponent.transform.position = box.transform.localPosition;
                 VertxBoxComponent.transform.rotation = box.transform.rotation;
@@ -58,11 +57,12 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         // Attach listener to the switches and connections
         foreach (GameObject gameObj in vertxGameObjects)
         {
-            gameObj.AddComponent<MoveAndSnap2>();
-            gameObj.AddComponent<Rigidbody>();
-            gameObj.GetComponent<Rigidbody>().useGravity = false;
-            gameObj.GetComponent<Rigidbody>().isKinematic = true;
-            gameObj.GetComponent<BoxCollider>().isTrigger = false;
+            //if (gameObj.GetComponent<BoxCollider>().size.x == 1)
+            //gameObj.AddComponent<MoveAndSnap2>();
+            //gameObj.AddComponent<Rigidbody>();
+            //gameObj.GetComponent<Rigidbody>().useGravity = false;
+            //gameObj.GetComponent<Rigidbody>().isKinematic = true;
+           // Destroy(gameObj.GetComponent<BoxCollider>());
         }
 
         yield break;
@@ -130,5 +130,6 @@ public class CollabVertxObjectHandler : MonoBehaviour {
                 doItOnce = false;
             }
         }
+       
     }
 }
