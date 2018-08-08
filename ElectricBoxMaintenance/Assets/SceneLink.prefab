@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4693966552656072}
   - component: {fileID: 114598098266529332}
   - component: {fileID: 114296273663961542}
+  - component: {fileID: 114416570227184094}
+  - component: {fileID: 114002142956930048}
   m_Layer: 0
   m_Name: SceneLink
   m_TagString: Untagged
@@ -41,6 +43,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114002142956930048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1941915913401856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ced3db58152fba42945d9395997d53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114296273663961542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,17 +65,31 @@ MonoBehaviour:
   m_Script: {fileID: -776688615, guid: b7721917c3244cb4582143166f69b343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneId: 2ebc9ff0-6e89-4813-b870-aecfcb99e17a
+  SceneId: 68a28308-cb01-4d4a-9378-fe2a401d94d7
   SceneIdSet: 0
   ViewpointId: 
   SceneAssets: []
   PrefabBindings:
   - {fileID: 1274452605071820, guid: cd23163a7a0fd014bab28bb55e42e209, type: 2}
+  - {fileID: 1277145177564752, guid: ceafcd1540e44ef4bad8851c1aeccf3c, type: 2}
+  - {fileID: 1409002073248660, guid: 9e79b6d19f9d3a9428538bfb16d0fc00, type: 2}
+  - {fileID: 1971455308687728, guid: 3345a350667d4f74a8e97677bd932b5b, type: 2}
   ViewpointObject: {fileID: 0}
   ViewpointHost: {fileID: 0}
   SceneLinkState: {fileID: 0}
   GltfLoader: {fileID: 11400000, guid: b77230992b3ff3f4fa30ee86408d0d32, type: 2}
   AutoConnect: 0
+--- !u!114 &114416570227184094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1941915913401856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976b78b9d9534d849bcd966dad8eade7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114598098266529332
 MonoBehaviour:
   m_ObjectHideFlags: 1

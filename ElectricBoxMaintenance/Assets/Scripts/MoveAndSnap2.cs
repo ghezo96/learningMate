@@ -308,25 +308,25 @@ namespace HoloToolkit.Unity.InputModule
 
             Vector3 newPosition = Vector3.Lerp(HostTransform.position, draggingPosition + cameraTransform.TransformDirection(objRefGrabPoint), PositionLerpSpeed);
             // Apply Final Position
-            if (hostRigidbody == null)
-            {
+            //if (hostRigidbody == null)
+            //{
                 HostTransform.position = newPosition;
-            }
-            else
-            {
-                hostRigidbody.MovePosition(newPosition);
-            }
+            //}
+            //else
+            //{
+            //    hostRigidbody.MovePosition(newPosition);
+            //}
 
             // Apply Final Rotation
             Quaternion newRotation = Quaternion.Lerp(HostTransform.rotation, draggingRotation, RotationLerpSpeed);
-            if (hostRigidbody == null)
-            {
+            //if (hostRigidbody == null)
+            //{
                 HostTransform.rotation = newRotation;
-            }
-            else
-            {
-                hostRigidbody.MoveRotation(newRotation);
-            }
+            //}
+            //else
+            //{
+            //    hostRigidbody.MoveRotation(newRotation);
+            //}
 
             if (RotationMode == RotationModeEnum.OrientTowardUserAndKeepUpright)
             {

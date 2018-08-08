@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     //public GameObject WholeBox;
     public FloatingButton Reset;
     public GameObject Camera;
-    //public GameObject MainBox;
+    public GameObject MainBox;
     //public GameObject MainBoxDoor;
     //public GameObject MainBoxPanel;
     public GameObject BoundingBox;
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         Reset.setActiveStatus(true);
         SpatialMesh.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
-        //MainBox.GetComponent<Movement>().enabled = false;
+        MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
         //WholeBox.SetActive(false);
     }
@@ -68,7 +68,8 @@ public class Player : MonoBehaviour
     public void Reset_Clicked(GameObject button)
     {
         Camera.GetComponent<RaycastPositioningV1>().enabled = true;
-        //MainBox.SetActive(false);
+
+        MainBox.SetActive(false);
         BoundingBox.SetActive(true);
         Reset.setActiveStatus(false);
         StartButton.setActiveStatus(true);
@@ -106,7 +107,9 @@ public class Player : MonoBehaviour
             // REmove CollabVertxObjectHAndler 
             //SceneLink.Instance.GetComponent<SceneLinkEventManager>().RemoveCollabVertxObjectHandler();
             //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
-            //MainBox.GetComponent<BoxCollider>().enabled = true;
+            MainBox.GetComponent<BoxCollider>().enabled = true;
+
+          
         }
 
     }
@@ -191,7 +194,7 @@ public class Player : MonoBehaviour
         // Disable IoT component attached to the SceneLink
         SceneLink.Instance.GetComponent<SceneLinkEventManager>().CreateCollabVertxObjectHandler();
         sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
-        //MainBox.GetComponent<BoxCollider>().enabled = false;
+        MainBox.GetComponent<BoxCollider>().enabled = false;
     }
 
     // Coroutine to load first key animation
@@ -245,6 +248,14 @@ public class Player : MonoBehaviour
             foreach (AnimEventHandler a in SceneLink.Instance.GetComponentsInChildren<AnimEventHandler>())
             {
                 Destroy(a.gameObject);
+            }
+            // Reset Collaboration objects
+            foreach (Transform x in SceneLink.Instance.transform)
+            {
+                if (x.name == "SWITCH" || x.name == "CONNECTOR" || x.name == "BOX")
+                {
+                    Destroy(x.gameObject);
+                }
             }
         }
     }
