@@ -1,17 +1,27 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VertexUnityPlayer;
 
 [RequireComponent(typeof(SceneLink))]
 public class SceneLinkEventManager : MonoBehaviour
 {
+    //public GameObject Camera;
+    bool isHost = false;
+    bool clientHostSet = false;
+
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(AttachManagers());
 
+        SceneLink.Instance.OnStateChange += Instance_OnStateChange;
+        StartCoroutine(AttachManagers());
+        
     }
+
 
     IEnumerator AttachManagers()
     {
@@ -21,13 +31,20 @@ public class SceneLinkEventManager : MonoBehaviour
         LoadLiveInformationManager();
     }
 
-    //private void Instance_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
-    //{
-    //    if (newState == SceneLinkStatus.Connected)
-    //    {
-    //        / dothings
-    //    }
-    //}
+    private void Instance_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
+    {
+        if (newState == SceneLinkStatus.Connected)
+        {
+            StartCoroutine(CheckIfHost());
+            Debug.Log("viewpoint count => " + SceneLink.Instance.ViewpointObject.transform.childCount);
+            //if (SceneLink.Instance.transform.Find("Viewpoints").childCount > 1)
+            //{
+            //    // Disable the Raycast
+            //    GameObject uxHandler = GameObject.Find("UXHandler");
+            //    uxHandler.GetComponent<Player>().EnableRaycasting(false);
+            //}
+        }
+    }
 
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
@@ -54,9 +71,72 @@ public class SceneLinkEventManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public class SceneViewpointState
     {
+        public string id { get; set; }
+        public string[] clients { get; set; }
+    }
+
+    IEnumerator CheckIfHost()
+    {
+        yield return new WaitForSeconds(5f);
+        //download json file from https://staging.vertx.cloud/session/*SCENE ID*
+        //deserialise into SceneViewpointState object
+        //check all clients, if length == 1 and SceneLink.Instance.ViewpointId is contained in the list, i am the host
+        Debug.Log("Fetching");
+        ResultContainer<SceneViewpointState> result = new ResultContainer<SceneViewpointState>();
+        yield return ServiceRequest.Get<SceneViewpointState>("/session/" + SceneLink.Instance.SceneId, result);
+
+        Debug.Log("Response : " + result.Value.id);
+        List<string> clientList = result.Value.clients.ToList();
+        Debug.Log(" count " + clientList.Count ); 
+        if(clientList.Count == 1) //&& clientList.Contains(SceneLink.Instance.ViewpointId))
+        {
+            isHost = true;
+            // Disable the Raycast
+            GameObject uxHandler = GameObject.Find("UXHandler");
+            uxHandler.GetComponent<Player>().EnableRaycasting(true);
+        }
+        else
+        {
+            isHost = false;
+            // Disable the Raycast
+            GameObject uxHandler = GameObject.Find("UXHandler");
+            uxHandler.GetComponent<Player>().EnableRaycasting(false);
+        }
+
+        Debug.Log("isHost : " + isHost + "  ID : " + SceneLink.Instance.ViewpointId);
+    }
+
+    void CheckViewpointCount()
+    {
+        int numChildren = SceneLink.Instance.ViewpointHost.transform.childCount;
+        if (numChildren == 0)
+            return;
+
+        for (int i = 0; i < numChildren; i++)
+        {
+            Debug.Log("loaded: " + SceneLink.Instance.ViewpointHost.transform.GetChild(i).name);
+        }
+        Debug.Log("Mine: " + SceneLink.Instance.ViewpointId);
+
+        if (numChildren > 0)
+        {
+            GameObject uxHandler = GameObject.Find("UXHandler");
+            uxHandler.GetComponent<Player>().EnableRaycasting(false);
+
+            isHost = true;
+            clientHostSet = true;
+        }
+        else
+        {
+            GameObject uxHandler = GameObject.Find("UXHandler");
+            uxHandler.GetComponent<Player>().EnableRaycasting(true);
+
+            isHost = false;
+            clientHostSet = true;
+        }
 
     }
 

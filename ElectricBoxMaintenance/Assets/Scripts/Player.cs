@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.UX.Buttons;
 using VertexUnityPlayer;
 
-public class Player : MonoBehaviour
+public class Player : VertexSingleton<Player>
 {
     public GameObject windowManager;
     public MainMenuContainer mainMenuContainer;
@@ -280,6 +280,13 @@ public class Player : MonoBehaviour
     void Update()
     {
 
+    }
+
+
+    // Function to enable / disable the raycasting
+    public void EnableRaycasting(bool isEnabled)
+    {
+        Camera.GetComponent<RaycastPositioningV1>().enabled = isEnabled;
     }
 
 }

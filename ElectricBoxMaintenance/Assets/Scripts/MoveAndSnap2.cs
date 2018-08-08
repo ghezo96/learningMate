@@ -514,7 +514,7 @@ namespace HoloToolkit.Unity.InputModule
 
 
 
-                if (gameObject.name == "SWITCH")
+                if (gameObject.name == "SWITCH" && gameObject)
                 {
                     StopDragging();
                     GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
@@ -535,7 +535,7 @@ namespace HoloToolkit.Unity.InputModule
                 GameObject hitObject = col.gameObject;
 
 
-                if (gameObject.name == "CONNECTOR")
+                if (gameObject.name == "CONNECTOR" && gameObject)
                 {
 
 
