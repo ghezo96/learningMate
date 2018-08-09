@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VertexUnityPlayer;
 using HoloToolkit.Unity.InputModule;
+using System.Threading;
 
 public class CollabVertxObjectHandler : MonoBehaviour {
 
@@ -31,14 +32,15 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         for (int i = 0; i < (ComponentArray.Length / 2); i++)
         {
             //POSITIONAL CHANGES
-
             if (ComponentArray[i, 0] == "CONNECTOR")
             {
+                yield return new WaitForSeconds(0.2f);
                 GameObject connectorComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "ConnectorNodeLink");
                 vertxGameObjects.Add(connectorComponent);
             }
             if (ComponentArray[i, 0] == "BOX")
             {
+                yield return new WaitForSeconds(0.2f);
                 VertxBoxComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "BoxNodeLink");
                 GameObject box = GameObject.FindGameObjectWithTag("Box");
                 VertxBoxComponent.transform.position = box.transform.localPosition;
@@ -47,11 +49,10 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             }
             if (ComponentArray[i, 0] == "SWITCH")
             {
+                yield return new WaitForSeconds(0.2f);
                 GameObject switchComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "SwitchNodeLink");
                 vertxGameObjects.Add(switchComponent);
             }
-
-            yield return new WaitForSeconds(0.2f);
         }
 
         // Attach listener to the switches and connections

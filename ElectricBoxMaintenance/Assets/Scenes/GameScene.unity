@@ -840,6 +840,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 678426223}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &686636922 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010302963436, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
+    type: 2}
+  m_PrefabInternal: {fileID: 445009604}
 --- !u!1 &716731957
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,8 +945,9 @@ MonoBehaviour:
   Camera: {fileID: 1257388057}
   MainBox: {fileID: 1113229465}
   BoundingBox: {fileID: 1021520266}
-  SpatialMesh: {fileID: 1888008851}
+  SpatialUnderstanding: {fileID: 1888008851}
   sceneLink: {fileID: 1406508354}
+  SpatialMapping: {fileID: 686636922}
 --- !u!4 &837539776
 Transform:
   m_ObjectHideFlags: 0

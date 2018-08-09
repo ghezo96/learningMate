@@ -97,6 +97,7 @@ public class SceneLinkEventManager : MonoBehaviour
             // Disable the Raycast
             GameObject uxHandler = GameObject.Find("UXHandler");
             uxHandler.GetComponent<Player>().EnableRaycasting(true);
+            uxHandler.GetComponent<Player>().EnabledMeshRendering(true);
         }
         else
         {
@@ -104,6 +105,7 @@ public class SceneLinkEventManager : MonoBehaviour
             // Disable the Raycast
             GameObject uxHandler = GameObject.Find("UXHandler");
             uxHandler.GetComponent<Player>().EnableRaycasting(false);
+            uxHandler.GetComponent<Player>().EnabledMeshRendering(false);
         }
 
         Debug.Log("isHost : " + isHost + "  ID : " + SceneLink.Instance.ViewpointId);

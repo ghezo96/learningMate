@@ -17,8 +17,9 @@ public class Player : VertexSingleton<Player>
     //public GameObject MainBoxDoor;
     //public GameObject MainBoxPanel;
     public GameObject BoundingBox;
-    public GameObject SpatialMesh;
+    public GameObject SpatialUnderstanding;
     public GameObject sceneLink;
+    public GameObject SpatialMapping;
     bool boxStatus = true;
     bool inDecomp = false;
 
@@ -58,7 +59,7 @@ public class Player : VertexSingleton<Player>
     {
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
-        SpatialMesh.SetActive(false);
+        SpatialUnderstanding.SetActive(false);
         mainMenuContainer.SetActiveStatus(true);
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
@@ -74,7 +75,7 @@ public class Player : VertexSingleton<Player>
         Reset.setActiveStatus(false);
         StartButton.setActiveStatus(true);
         mainMenuContainer.SetActiveStatus(false);
-        SpatialMesh.SetActive(true);
+        SpatialUnderstanding.SetActive(true);
 
         SetVertxEventHandlerState(false);
     }
@@ -287,6 +288,12 @@ public class Player : VertexSingleton<Player>
     public void EnableRaycasting(bool isEnabled)
     {
         Camera.GetComponent<RaycastPositioningV1>().enabled = isEnabled;
+    }
+
+    public void EnabledMeshRendering(bool isEnabled)
+    {
+        SpatialUnderstanding.SetActive(isEnabled);
+        SpatialMapping.SetActive(isEnabled);
     }
 
 }
