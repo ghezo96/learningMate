@@ -285,7 +285,10 @@ public class Player : MonoBehaviour
         isRecording = true;
         isUploading = true;
         aud.clip = Microphone.Start(Microphone.devices[0], false, 15, 44100);
-        yield return new WaitForSeconds(15f);
+        while (Microphone.IsRecording(Microphone.devices[0]))
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
         Microphone.End(Microphone.devices[0]);
         yield return null;
 
