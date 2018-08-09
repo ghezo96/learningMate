@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.UX.Buttons;
 using VertexUnityPlayer;
+using UnityEngine.Networking;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Player : MonoBehaviour
     public MainMenuContainer mainMenuContainer;
     public FloatingButton homeButton;
     public FloatingButton StartButton;
+    public FloatingButton RecordMessageButton;
     public GameObject WholeBox;
     public FloatingButton Reset;
     public GameObject Camera;
@@ -18,9 +21,11 @@ public class Player : MonoBehaviour
     public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialMesh;
+    static AudioSource aud;
     bool boxStatus = true;
     bool inDecomp = false;
-
+    bool isRecording = false;
+    static bool isUploading = false; 
 
 
     // Use this for initialization
@@ -28,17 +33,36 @@ public class Player : MonoBehaviour
     {
         Debug.Log("In Start");
 
+        aud = GetComponent<AudioSource>();
+
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
         StartButton.Clicked += Start_Clicked;
         Reset.Clicked += Reset_Clicked;
+        RecordMessageButton.Clicked += RecordMessageButton_Clicked;
 
         if (homeButton.isActiveAndEnabled)
         {
             homeButton.setActiveStatus(false);
         }
+        if (RecordMessageButton.isActiveAndEnabled)
+        {
+            RecordMessageButton.setActiveStatus(false);
+        }
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
+    }
+
+    private void RecordMessageButton_Clicked(GameObject button)
+    {
+        if (isRecording)
+        {
+            GetAndPlayRecording();
+        }
+        else
+        {
+            RecordMessage();
+        }
     }
 
     // On scene connect, Handler is set up
@@ -55,6 +79,7 @@ public class Player : MonoBehaviour
     // Start button click handler
     public void Start_Clicked(GameObject button)
     {
+        RecordMessageButton.setActiveStatus(false);
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
         SpatialMesh.SetActive(false);
@@ -102,6 +127,9 @@ public class Player : MonoBehaviour
 
             SetVertxEventHandlerState(false);
         }
+        if (RecordMessageButton.isActiveAndEnabled) {
+            RecordMessageButton.setActiveStatus(false);
+        }
     }
 
     IEnumerator GoToHome()
@@ -134,6 +162,7 @@ public class Player : MonoBehaviour
 
             WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
+            RecordMessageButton.setActiveStatus(true);
             windowManager.SetActive(true);
             homeButton.setActiveStatus(true);
             Reset.setActiveStatus(false);
@@ -154,7 +183,7 @@ public class Player : MonoBehaviour
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
-            
+
         }
         else if(button.name == "Collab")
         {
@@ -166,6 +195,7 @@ public class Player : MonoBehaviour
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
         }
+      
     }
 
     // Coroutine to start loading assets from vertx
@@ -247,6 +277,84 @@ public class Player : MonoBehaviour
             SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().setIoTEnabled(isEnabled);
             SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().enabled = isEnabled;
         }
+    }
+
+    IEnumerator StartRecording()
+    {
+        
+        isRecording = true;
+        isUploading = true;
+        aud.clip = Microphone.Start(Microphone.devices[0], false, 15, 44100);
+        yield return new WaitForSeconds(15f);
+        Microphone.End(Microphone.devices[0]);
+        yield return null;
+
+        float[] samples = new float[aud.clip.samples * aud.clip.channels];
+        aud.clip.GetData(samples, 0);
+
+        var byteArray = new byte[samples.Length * 4];
+        Buffer.BlockCopy(samples, 0, byteArray, 0, byteArray.Length);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.fbx", ""))
+        {
+            www.SetRequestHeader("Content-Type", "application/octet-stream");
+            www.uploadHandler = new UploadHandlerRaw(byteArray);
+            www.uploadHandler.contentType = "application/octet-stream";
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.AddVertexAuth();
+            yield return www.SendWebRequest();
+            Debug.Log("Audio file Uploaded");
+        }
+        isUploading = false;
+    }
+    IEnumerator StopRecording()
+    {
+        isRecording = false;
+        Microphone.End(Microphone.devices[0]);
+        yield return null;
+    }
+
+    IEnumerator GetRecording()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.fbx"))
+        {
+            www.SetRequestHeader("Content-Type", "application/octet-stream");
+            www.AddVertexAuth();
+            while (isUploading)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return www.SendWebRequest();
+            if(www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                byte[] results = www.downloadHandler.data;
+                float[] downloadArray = new float[results.Length / 4];
+                Buffer.BlockCopy(results,0,downloadArray, 0,results.Length);
+                aud.clip.SetData(downloadArray, 0);
+                Debug.Log("Audio file downloaded");
+                yield return new WaitForSeconds(7f);
+            }
+            aud.Play();
+            Debug.Log("Downloaded Audio Playing");
+        }
+        yield return new WaitForSeconds(7f);
+    }
+
+    public void GetAndPlayRecording()
+    {
+        StartCoroutine(StopRecording());
+        //aud.Play();
+        StartCoroutine(GetRecording());
+    }
+
+    public void RecordMessage()
+    {
+        StopAllCoroutines();
+        StartCoroutine(StartRecording());
     }
 
     // Update is called once per frame
