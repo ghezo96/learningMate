@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.UX.Buttons;
 using VertexUnityPlayer;
 
 public class Player : VertexSingleton<Player>
@@ -10,12 +8,9 @@ public class Player : VertexSingleton<Player>
     public MainMenuContainer mainMenuContainer;
     public FloatingButton homeButton;
     public FloatingButton StartButton;
-    //public GameObject WholeBox;
     public FloatingButton Reset;
     public GameObject Camera;
     public GameObject MainBox;
-    //public GameObject MainBoxDoor;
-    //public GameObject MainBoxPanel;
     public GameObject BoundingBox;
     public GameObject SpatialUnderstanding;
     public GameObject sceneLink;
@@ -28,6 +23,7 @@ public class Player : VertexSingleton<Player>
     // Use this for initialization
     void Start()
     {
+       
         Debug.Log("In Start");
 
         // create holographic buttons to get started with
@@ -83,6 +79,7 @@ public class Player : VertexSingleton<Player>
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
+
         button.SetActive(false);
         if(inDecomp)
         {
@@ -108,6 +105,7 @@ public class Player : VertexSingleton<Player>
             // REmove CollabVertxObjectHAndler 
             //SceneLink.Instance.GetComponent<SceneLinkEventManager>().RemoveCollabVertxObjectHandler();
             //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
+            //MainBox.GetComponent<Movement>().enabled = false;
             MainBox.GetComponent<BoxCollider>().enabled = true;
 
           
@@ -163,6 +161,7 @@ public class Player : VertexSingleton<Player>
             //
             SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
 
+            //windowManager.
         }
         else if (button.name == "InteractiveGuide")
         {

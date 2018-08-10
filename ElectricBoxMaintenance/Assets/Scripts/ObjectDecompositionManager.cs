@@ -25,10 +25,16 @@ public class ObjectDecompositionManager : MonoBehaviour {
 
         UXHandler = GameObject.Find("UXHandler");
         Box = UXHandler.transform.Find("Box").gameObject;
+        
     }
 
     private void Update()
     {
+            foreach (GameObject layer in objectList)
+            {
+                layer.transform.position = Box.transform.position;
+                layer.transform.rotation = Box.transform.rotation;
+            }
     }
 
     void LoadComponents()
