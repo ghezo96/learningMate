@@ -52,7 +52,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
                 {
                     Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
                     normalAtHitPosition = hit.normal;
-                    pointOfHit = hit.point;
+                    pointOfHit = new Vector3(hit.point.x - 0.2f, hit.point.y - 0.3f, hit.point.z);
                     //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
                     Quad.transform.position = pointOfHit + normalAtHitPosition* zOffset;
@@ -117,7 +117,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * hit.distance, Color.red);
             normalAtHitPosition = hit.normal;
-            pointOfHit = hit.point;
+            pointOfHit = new Vector3(hit.point.x-0.2f,hit.point.y-0.3f,hit.point.z);
             //Debug.Log("Normal: " + normalAtHitPosition.ToString());
 
             Quad.transform.localPosition = pointOfHit + normalAtHitPosition * zOffset;

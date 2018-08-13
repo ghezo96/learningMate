@@ -70,9 +70,17 @@ public class ComponentWindow : MonoBehaviour
     // Methods for Recording functionality
     public void GetAndPlayRecording()
     {
-        StartCoroutine(StopRecording());
-        AudioSrc.Play();
-        StartCoroutine(GetRecording());
+        if (AudioSrc && !AudioSrc.isPlaying) {
+            StartCoroutine(StopRecording());
+            StartCoroutine(GetRecording());
+            Debug.Log("Start playing");
+
+        }
+        else
+        {
+            AudioSrc.Stop();
+            Debug.Log("Stop playing ");
+        }
     }
 
     public void RecordMessage()
@@ -124,8 +132,16 @@ public class ComponentWindow : MonoBehaviour
     IEnumerator StopRecording()
     {
         isRecording = false;
-        Microphone.End(Microphone.devices[0]);
-        yield return null;
+        if(Microphone.devices.Length > 0)
+        {
+            Microphone.End(Microphone.devices[0]);
+            yield return null;
+
+        }
+        else
+        {
+            Debug.Log("No Microphone device found. Please connect microphone and try again!!");
+        }
     }
 
     IEnumerator GetRecording()
@@ -145,15 +161,16 @@ public class ComponentWindow : MonoBehaviour
             }
             else
             {
-                byte[] results = www.downloadHandler.data;
-                float[] downloadArray = new float[results.Length / 4];
-                Buffer.BlockCopy(results, 0, downloadArray, 0, results.Length);
-                AudioSrc.clip.SetData(downloadArray, 0);
-                Debug.Log("Audio file downloaded");
-                yield return new WaitForSeconds(7f);
+                    byte[] results = www.downloadHandler.data;
+                    float[] downloadArray = new float[results.Length / 4];
+                    Buffer.BlockCopy(results, 0, downloadArray, 0, results.Length);
+                    AudioSrc.clip.SetData(downloadArray, 0);
+                    Debug.Log("Audio file downloaded");
+                    yield return new WaitForSeconds(7f);
+                    AudioSrc.Play();
+                    Debug.Log("Downloaded Audio Playing");
             }
-            AudioSrc.Play();
-            Debug.Log("Downloaded Audio Playing");
+            
         }
         yield return new WaitForSeconds(7f);
     }

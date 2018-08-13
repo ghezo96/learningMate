@@ -419,6 +419,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180.05399
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e06ff899fcee1474ebb5125ad152cabb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e06ff899fcee1474ebb5125ad152cabb, type: 3}
   m_IsPrefabParent: 0
@@ -2708,7 +2712,7 @@ MonoBehaviour:
   recordWindow: {fileID: 276321087}
   propertyWindow: {fileID: 1513774866}
   statusWindow: {fileID: 1356310632}
-  ComponentWindow: {fileID: 0}
+  ComponentWindow: {fileID: 1642785630}
 --- !u!114 &1233016413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4122,10 +4126,32 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1127983184080344, guid: f5592abcfbfbc2c42a3168292d8271c0, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1559058255263486, guid: f5592abcfbfbc2c42a3168292d8271c0, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114279789254421954, guid: f5592abcfbfbc2c42a3168292d8271c0,
+        type: 2}
+      propertyPath: Profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f221169bb7314a4fb242fc2fd3f53a9,
+        type: 2}
+    - target: {fileID: 114460101733875888, guid: f5592abcfbfbc2c42a3168292d8271c0,
+        type: 2}
+      propertyPath: Profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f221169bb7314a4fb242fc2fd3f53a9,
+        type: 2}
+    - target: {fileID: 114177542523391248, guid: f5592abcfbfbc2c42a3168292d8271c0,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114111356575452392, guid: f5592abcfbfbc2c42a3168292d8271c0,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

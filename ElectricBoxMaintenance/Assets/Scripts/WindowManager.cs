@@ -10,7 +10,7 @@ public class WindowManager : MonoBehaviour {
     public PanelWindow recordWindow;
     public PanelWindow propertyWindow;
     public PanelWindow statusWindow;
-    public PanelWindow ComponentWindow;
+    public ComponentWindow ComponentWindow;
     ResponseObject responseObject;
 
 
