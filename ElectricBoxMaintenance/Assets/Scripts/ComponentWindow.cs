@@ -96,13 +96,21 @@ public class ComponentWindow : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
         }
+        PlayButton.GetComponentInChildren<TextMesh>().text = "Stop Playing";
         AudioSrc.Play();
         Debug.Log("Start playing");
+        while (AudioSrc.isPlaying)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        PlayButton.GetComponentInChildren<TextMesh>().text = "Play Message";
+
     }
 
     public void RecordMessage()
     {
         StopAllCoroutines();
+        RecordButton.GetComponentInChildren<TextMesh>().text = "Stop Recording";
         StartCoroutine(StartRecording());
     }
 
@@ -121,6 +129,7 @@ public class ComponentWindow : MonoBehaviour
         isRecording = false;
         // Start Upload coroutine once recording is finished.
         yield return UploadAudioOnServer();
+        RecordButton.GetComponentInChildren<TextMesh>().text = "Record New Message";
     }
 
     // Coroutine to upload recorded audio on server
