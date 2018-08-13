@@ -6,26 +6,28 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using VertexUnityPlayer;
 
+[RequireComponent(typeof(AudioSource))]
 public class ComponentWindow : MonoBehaviour
 {
 
     public FloatingButton RecordButton;
     public FloatingButton PlayButton;
-
     public TextMesh ComponentName;
     public TextMesh ComponentDescription;
     bool isRecording = false;
-    static bool isUploading = false;
-    static AudioSource AudioSrc;
+    bool isUploading = false;
+    bool isDownloading = false;
+    AudioSource AudioSrc;
+
+    const int AUDIO_SAMPLE_RATE = 44100;
 
     void Start()
     {
         // Get the close button and listen for close events
         RecordButton.Clicked += RecordButton_Clicked;
         PlayButton.Clicked += PlayButton_Clicked;
-
-        AudioSrc = gameObject.GetComponent<AudioSource>();
-
+        AudioSrc = GetComponent<AudioSource>();
+        StartCoroutine(GetRecording());
     }
 
     private void PlayButton_Clicked(GameObject button)
@@ -70,17 +72,32 @@ public class ComponentWindow : MonoBehaviour
     // Methods for Recording functionality
     public void GetAndPlayRecording()
     {
-        if (AudioSrc && !AudioSrc.isPlaying) {
-            StartCoroutine(StopRecording());
-            StartCoroutine(GetRecording());
-            Debug.Log("Start playing");
-
+        StartCoroutine(StopRecording());
+        StartCoroutine(GetRecording());
+        if (AudioSrc && !AudioSrc.isPlaying)
+        {
+            StartCoroutine(PlayAudio());
+            //AudioSrc.Play();
         }
-        else
+        else if (AudioSrc && AudioSrc.isPlaying)
         {
             AudioSrc.Stop();
             Debug.Log("Stop playing ");
         }
+        else
+        {
+            Debug.Log("Audio source is NULL");
+        }
+    }
+
+    IEnumerator PlayAudio()
+    {
+        while (isDownloading)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        AudioSrc.Play();
+        Debug.Log("Start playing");
     }
 
     public void RecordMessage()
@@ -94,7 +111,8 @@ public class ComponentWindow : MonoBehaviour
     {
         isRecording = true;
         isUploading = true;
-        AudioSrc.clip = Microphone.Start(Microphone.devices[0], false, 15, 44100);
+        AudioSrc.clip = Microphone.Start(Microphone.devices[0], false, 15, AUDIO_SAMPLE_RATE);
+        
         while (Microphone.IsRecording(Microphone.devices[0]))
         {
             yield return new WaitForSeconds(0.5f);
@@ -115,7 +133,7 @@ public class ComponentWindow : MonoBehaviour
         Buffer.BlockCopy(samples, 0, byteArray, 0, byteArray.Length);
 
         // Post recorded audio clips on server using UnityWebRequest
-        using (UnityWebRequest WebRequest = UnityWebRequest.Post("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.fbx", ""))
+        using (UnityWebRequest WebRequest = UnityWebRequest.Post("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.wav", ""))
         {
             WebRequest.SetRequestHeader("Content-Type", "application/octet-stream");
             WebRequest.uploadHandler = new UploadHandlerRaw(byteArray);
@@ -132,11 +150,10 @@ public class ComponentWindow : MonoBehaviour
     IEnumerator StopRecording()
     {
         isRecording = false;
-        if(Microphone.devices.Length > 0)
+        if (Microphone.devices.Length > 0)
         {
             Microphone.End(Microphone.devices[0]);
             yield return null;
-
         }
         else
         {
@@ -146,7 +163,8 @@ public class ComponentWindow : MonoBehaviour
 
     IEnumerator GetRecording()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.fbx"))
+        isDownloading = true;
+        using (UnityWebRequest www = UnityWebRequest.Get("https://staging.vertx.cloud/core/v1.0/resource/088c0839-d2d1-4808-87d4-a33ca223876e/audioClip.wav"))
         {
             www.SetRequestHeader("Content-Type", "application/octet-stream");
             www.AddVertexAuth();
@@ -161,18 +179,20 @@ public class ComponentWindow : MonoBehaviour
             }
             else
             {
-                    byte[] results = www.downloadHandler.data;
-                    float[] downloadArray = new float[results.Length / 4];
-                    Buffer.BlockCopy(results, 0, downloadArray, 0, results.Length);
-                    AudioSrc.clip.SetData(downloadArray, 0);
-                    Debug.Log("Audio file downloaded");
-                    yield return new WaitForSeconds(7f);
-                    AudioSrc.Play();
-                    Debug.Log("Downloaded Audio Playing");
+                byte[] results = www.downloadHandler.data;
+                float[] downloadArray = new float[results.Length / 4];
+                Buffer.BlockCopy(results, 0, downloadArray, 0, results.Length);
+
+                AudioClip clip = AudioClip.Create("voice recording", downloadArray.Length, 1, AUDIO_SAMPLE_RATE, false);
+                clip.SetData(downloadArray, 0);
+                AudioSrc.clip = clip;
+
+                Debug.Log("Audio file downloaded");
+                //yield return new WaitForSeconds(7f);
             }
-            
         }
         yield return new WaitForSeconds(7f);
+        isDownloading = false;
     }
 
 }
