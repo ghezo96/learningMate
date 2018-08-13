@@ -30,11 +30,15 @@ public class ObjectDecompositionManager : MonoBehaviour {
 
     private void Update()
     {
+        if(Box)
+        {
             foreach (GameObject layer in objectList)
             {
                 layer.transform.position = Box.transform.position;
                 layer.transform.rotation = Box.transform.rotation;
             }
+        }
+            
     }
 
     void LoadComponents()
