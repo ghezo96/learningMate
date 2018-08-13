@@ -10,6 +10,7 @@ public class WindowManager : MonoBehaviour {
     public PanelWindow recordWindow;
     public PanelWindow propertyWindow;
     public PanelWindow statusWindow;
+    public ComponentWindow ComponentWindow;
     ResponseObject responseObject;
 
 
@@ -61,8 +62,6 @@ public class WindowManager : MonoBehaviour {
                 statusWindow.TitleText = windowText.WindowTitle;
                 statusWindow.DescriptionText = windowText.WindowDescription;
             }
-
-           
         }
     }
 

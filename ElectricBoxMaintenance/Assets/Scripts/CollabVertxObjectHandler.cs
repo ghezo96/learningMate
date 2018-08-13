@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VertexUnityPlayer;
 using HoloToolkit.Unity.InputModule;
+using System.Threading;
 
 public class CollabVertxObjectHandler : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
     GameObject VertxBoxComponent;
     List<GameObject> vertxGameObjects;
 
+    // Use this for initialization
     IEnumerator SpawnShit()
     {
         vertxGameObjects = new List<GameObject>();
@@ -30,16 +32,16 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         for (int i = 0; i < (ComponentArray.Length / 2); i++)
         {
             //POSITIONAL CHANGES
-
             if (ComponentArray[i, 0] == "CONNECTOR")
             {
-                GameObject connectorComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1]);
+                yield return new WaitForSeconds(0.2f);
+                GameObject connectorComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "ConnectorNodeLink");
                 vertxGameObjects.Add(connectorComponent);
             }
             if (ComponentArray[i, 0] == "BOX")
             {
-                VertxBoxComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1]);
-                VertxBoxComponent.AddComponent<ModifiedStart>();
+                yield return new WaitForSeconds(0.2f);
+                VertxBoxComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "BoxNodeLink");
                 GameObject box = GameObject.FindGameObjectWithTag("Box");
                 VertxBoxComponent.transform.position = box.transform.localPosition;
                 VertxBoxComponent.transform.rotation = box.transform.rotation;
@@ -47,34 +49,36 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             }
             if (ComponentArray[i, 0] == "SWITCH")
             {
-                GameObject switchComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1]);
+                yield return new WaitForSeconds(0.2f);
+                GameObject switchComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "SwitchNodeLink");
                 vertxGameObjects.Add(switchComponent);
             }
-            yield return new WaitForSeconds(0.2f);
         }
 
         // Attach listener to the switches and connections
         foreach (GameObject gameObj in vertxGameObjects)
         {
-            gameObj.AddComponent<MoveAndSnap2>();
-            gameObj.AddComponent<Rigidbody>();
-            gameObj.GetComponent<Rigidbody>().useGravity = false;
-            gameObj.GetComponent<Rigidbody>().isKinematic = true;
-            //gameObj.GetComponent<BoxCollider>().isTrigger = false;
-
+            //if (gameObj.GetComponent<BoxCollider>().size.x == 1)
+            //gameObj.AddComponent<MoveAndSnap2>();
+            //gameObj.AddComponent<Rigidbody>();
+            //gameObj.GetComponent<Rigidbody>().useGravity = false;
+            //gameObj.GetComponent<Rigidbody>().isKinematic = true;
+           // Destroy(gameObj.GetComponent<BoxCollider>());
         }
+
         yield break;
     }
-    // Use this for initialization
-    void Start () {
 
+
+    void Start ()
+    {
         StartCoroutine(SpawnShit());
     }
 
 
 
     // Method to create and return Vertex Node Link Game object 
-    private GameObject CreateNode(string name, string id)
+    private GameObject CreateNode(string name, string id, string nodelink)
     {
         GameObject box = GameObject.FindGameObjectWithTag("Box");
         var vertxThing = SceneLink.Instance.CreateNode(name,
@@ -83,7 +87,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             Vector3.one,
             id,
             null,
-            "DefaultNodeLink"
+           nodelink
         );
         return vertxThing.gameObject;
     }
@@ -127,5 +131,6 @@ public class CollabVertxObjectHandler : MonoBehaviour {
                 doItOnce = false;
             }
         }
+       
     }
 }

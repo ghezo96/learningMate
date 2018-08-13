@@ -11,13 +11,13 @@ public class SwitchAndConnectorNode : MonoBehaviour
    
     void Start()
     {
-        //StartCoroutine(OnStart());
+        StartCoroutine(OnStart());
     }
 
     IEnumerator OnStart()
     {
        
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         RecurrsionSearch();
     }
 
@@ -34,7 +34,7 @@ public class SwitchAndConnectorNode : MonoBehaviour
                     connectors.Add(x.gameObject);
                 }
         }
-       
+
         for (int i = 0; i < switches.Count; i++)
         {
             AddBoxColliderToSwitches(switches[i]);
@@ -50,13 +50,18 @@ public class SwitchAndConnectorNode : MonoBehaviour
         GameObject childObject = go.transform.Find("visual").transform.Find("Root Scene").transform.Find("RootNode").transform.Find("Connectors").transform.Find("Primitive").gameObject;
 
         var boxCollider = childObject.GetComponent<BoxCollider>();
-        var boxColliderSize = boxCollider.size;
+        if (boxCollider)
+        {
 
-        go.layer = UnityEngine.LayerMask.NameToLayer("Component");
-        go.AddComponent<BoxCollider>();
-        go.GetComponent<BoxCollider>().size = boxCollider.size;
-        go.GetComponent<BoxCollider>().isTrigger = true;
-        Destroy(childObject.GetComponent<BoxCollider>());
+            //var boxColliderSize = boxCollider.size;
+
+            //go.layer = UnityEngine.LayerMask.NameToLayer("Component");
+            //go.AddComponent<BoxCollider>();
+            //go.GetComponent<BoxCollider>().size = boxCollider.size;
+            //go.GetComponent<BoxCollider>().isTrigger = true;
+            Destroy(childObject.GetComponent<BoxCollider>());
+        }
+
     }
 
     public void AddBoxColliderToSwitches(GameObject go)
@@ -64,13 +69,18 @@ public class SwitchAndConnectorNode : MonoBehaviour
         GameObject childObject = go.transform.Find("visual").transform.Find("Root Scene").transform.Find("RootNode").transform.Find("Switch1").transform.Find("Primitive").gameObject;
 
         var boxCollider = childObject.GetComponent<BoxCollider>();
-        var boxColliderSize = boxCollider.size;
 
-        go.layer = UnityEngine.LayerMask.NameToLayer("Component");
-        go.AddComponent<BoxCollider>();
-        go.GetComponent<BoxCollider>().size = boxCollider.size;
-        go.GetComponent<BoxCollider>().isTrigger = true;
-        Destroy(childObject.GetComponent<BoxCollider>());
+        if (boxCollider)
+        {
+            //var boxColliderSize = boxCollider.size;
+
+            //go.layer = UnityEngine.LayerMask.NameToLayer("Component");
+            //go.AddComponent<BoxCollider>();
+            //go.GetComponent<BoxCollider>().size = boxCollider.size;
+            //go.GetComponent<BoxCollider>().isTrigger = true;
+            Destroy(childObject.GetComponent<BoxCollider>());
+        }
+
     }
 
 }
