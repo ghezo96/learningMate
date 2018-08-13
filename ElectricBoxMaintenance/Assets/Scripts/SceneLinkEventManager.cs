@@ -164,6 +164,7 @@ public class SceneLinkEventManager : MonoBehaviour
     {
         GameObject HandlerNode = CreateNode("VertxEventManager", null);
         HandlerNode.AddComponent<VertxEventHandler>();
+        HandlerNode.AddComponent<AudioSource>();
     }
 
     public void LoadLiveInformationManager()
