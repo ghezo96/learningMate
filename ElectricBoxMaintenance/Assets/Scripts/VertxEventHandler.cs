@@ -34,7 +34,6 @@ public class VertxEventHandler : MonoBehaviour
         AnimationArray = new string[,]
         {
                 {"KEY_ANIMATION","353f92d5-3f34-4bde-859e-f6bda4c51d0d", "1"}, 
-                {"DOOR_ANIMATION","a7e0309a-2196-4827-8ea9-5239c7dce5ab", "1"}, 
                 {"SWITCH_ONE","dba4bf63-f221-4afb-be70-2d4d3a120f0b", "0" },
                 {"SWITCH_TWO","6515834e-e299-4169-a2cf-48bbba3fde9c", "1"},
                 {"SWITCH_THREE","a2f4d458-ee08-479b-963a-a1e92c029ea2", "0"},
@@ -61,8 +60,6 @@ public class VertxEventHandler : MonoBehaviour
 
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
@@ -84,6 +81,7 @@ public class VertxEventHandler : MonoBehaviour
         // Deserialize the message received by IOT
         Message _message = JsonConvert.DeserializeObject<Message>(message.ToString());
 
+
         if (!IoTEnabled)
         {
             return;
@@ -92,12 +90,17 @@ public class VertxEventHandler : MonoBehaviour
         string componentName = _message.name;
         string componentState = _message.state.ToString();
 
+        if(componentName == "DOOR_ANIMATION" && componentState == "1")
+        {
+            return;
+        }
+
         if (PreviousAnimationNode)
         {
             DestroyImmediate(PreviousAnimationNode);
         }
 
-        if (currentStep > 5)
+        if (currentStep > 4)
         {
             switch (componentName)
             {
@@ -121,6 +124,7 @@ public class VertxEventHandler : MonoBehaviour
                     break;
             }
         }
+        ///decremented other values by 1
 
         if (correctStep)
         {
@@ -142,24 +146,22 @@ public class VertxEventHandler : MonoBehaviour
         }
         else
         {
-            if (currentStep < 5)
+            if (currentStep > 4)
             {
                 switch (componentName)
                 {
-                    case "SWITCH_THREE":
-                        componentName = "SWITCH_FOUR";
+                    case "SWITCH_FOUR":
+                        componentName = "SWITCH_THREE";
                         break;
-                    case "SWITCH_TWO":
-                        componentName = "SWITCH_FIVE";
+                    case "SWITCH_FIVE":
+                        componentName = "SWITCH_TWO";
                         break;
-                    case "SWITCH_ONE":
-                        componentName = "SWITCH_SIX";
-                        break;
-                    case "DOOR_ANIMATION":
-                        componentName = "DOOR_FINISH";
+                    case "SWITCH_SIX":
+                        componentName = "SWITCH_ONE";
                         break;
                 }
             }
+
 
             if (componentName == AnimationArray[incorrectStep, 0] && componentState == AnimationArray[incorrectStep, 2])
             {
@@ -189,7 +191,7 @@ public class VertxEventHandler : MonoBehaviour
     bool isComplete()
     {
         bool maintenenceComplete;
-        if (currentStep == 11)
+        if (currentStep == AnimationArray.Length/3 - 1)
         {
             maintenenceComplete = true;
         }
@@ -216,10 +218,6 @@ public class VertxEventHandler : MonoBehaviour
             {
                 if(AnimationArray[i,0] == _ComponentName)
                 {
-
-                    Debug.Log(AnimationArray[i, 0]);
-
-
                     switch (_ComponentStatus)
                     {
                         case "1":
@@ -233,44 +231,98 @@ public class VertxEventHandler : MonoBehaviour
                     switch (_ComponentName)
                     {
                         case "SWITCH_ONE":
-                            incorrectStep = 9;
-                            CreateNode(AnimationArray[9, 0], AnimationArray[9, 1]);
-                            Debug.Log(AnimationArray[9, 0]);
+                            if (currentStep >= 2)
+                            {
+                                incorrectStep = 1;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 8;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
                             break;
                         case "SWITCH_TWO":
-                            incorrectStep = 8;
-                            CreateNode(AnimationArray[8, 0], AnimationArray[8, 1]);
-                            Debug.Log(AnimationArray[8, 0]);
+                            if (currentStep >= 3)
+                            {
+                                incorrectStep = 2;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 7;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+
+                            }
                             break;
                         case "SWITCH_THREE":
-                            incorrectStep = 7;
-                            CreateNode(AnimationArray[7, 0], AnimationArray[7, 1]);
-                            Debug.Log(AnimationArray[7, 0]);
+                            if (currentStep >= 4)
+                            {
+                                incorrectStep = 3;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 6;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
                             break;
                         case "SWITCH_FOUR":
-                            incorrectStep = 4;
-                            CreateNode(AnimationArray[4, 0], AnimationArray[4, 1]);
-                            Debug.Log(AnimationArray[4, 0]);
+                            if (currentStep >= 7)
+                            {
+                                incorrectStep = 6;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 3;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
                             break;
                         case "SWITCH_FIVE":
-                            incorrectStep = 3;
-                            CreateNode(AnimationArray[3, 0], AnimationArray[3, 1]);
-                            Debug.Log(AnimationArray[3, 0]);
+                            if (currentStep >= 8)
+                            {
+                                incorrectStep = 7;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 2;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
                             break;
                         case "SWITCH_SIX":
-                            incorrectStep = 2;
-                            CreateNode(AnimationArray[2, 0], AnimationArray[2, 1]);
-                            Debug.Log(AnimationArray[2, 0]);
+                            if (currentStep >= 9)
+                            {
+                                incorrectStep = 8;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
+                            else
+                            {
+                                incorrectStep = 1;
+                                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
+                                Debug.Log(AnimationArray[incorrectStep, 0]);
+                            }
                             break;
                         default:
-                            incorrectStep = i;
-                            CreateNode(AnimationArray[i, 0], AnimationArray[i, 1]);
                             Debug.Log("not a switch");
                             break;
                     }
-
-
-                    AnimationArray[incorrectStep, 2] = newValue;
+                    if (incorrectStep.ToString() != "")
+                    {
+                        AnimationArray[incorrectStep, 2] = newValue;
+                    }
                     break;
                 }
             }

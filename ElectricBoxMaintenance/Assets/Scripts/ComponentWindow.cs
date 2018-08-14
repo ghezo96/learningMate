@@ -235,12 +235,12 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
         List<Renderer> RenderList = new List<Renderer>();
 
 
+        Color baseColour;
         RenderList.Add(TitleSection.GetComponent<Renderer>());
         RenderList.Add(StatusSection.GetComponent<Renderer>());
 
         foreach (Renderer render in RenderList)
         {
-            Color baseColour;
             Material mat = render.material;
 
             if (selectedComponent.tag == "Working")
@@ -257,6 +257,11 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
             }
 
             mat.color = baseColour;
+        }
+
+        if(selectedComponent.name == "ComponentWindowPanel")
+        {
+            baseColour = Color.white;
         }
         
     }

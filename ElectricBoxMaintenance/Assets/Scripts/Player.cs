@@ -186,6 +186,7 @@ public class Player : VertexSingleton<Player>
             // Set the default values to component panel
 
             ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
+            ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
 
         }
         else if (button.name == "InteractiveGuide")
