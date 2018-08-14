@@ -19,7 +19,7 @@ public class SceneLinkEventManager : MonoBehaviour
 
         SceneLink.Instance.OnStateChange += Instance_OnStateChange;
         StartCoroutine(AttachManagers());
-        
+
     }
 
 
@@ -43,6 +43,8 @@ public class SceneLinkEventManager : MonoBehaviour
             //    GameObject uxHandler = GameObject.Find("UXHandler");
             //    uxHandler.GetComponent<Player>().EnableRaycasting(false);
             //}
+
+            StartCoroutine(CheckIfLocationExists());
         }
     }
 
@@ -81,17 +83,19 @@ public class SceneLinkEventManager : MonoBehaviour
     IEnumerator CheckIfHost()
     {
         yield return new WaitForSeconds(5f);
+
+        //VertexDataTypes.CoreTypes.Models.ViewModels.ResourceViewModel
         //download json file from https://staging.vertx.cloud/session/*SCENE ID*
         //deserialise into SceneViewpointState object
         //check all clients, if length == 1 and SceneLink.Instance.ViewpointId is contained in the list, i am the host
-        Debug.Log("Fetching");
+        //Debug.Log("Fetching");
         ResultContainer<SceneViewpointState> result = new ResultContainer<SceneViewpointState>();
         yield return ServiceRequest.Get<SceneViewpointState>("/session/" + SceneLink.Instance.SceneId, result);
-
-        Debug.Log("Response : " + result.Value.id);
+        //
+        //Debug.Log("Response : " + result.Value.id);
         List<string> clientList = result.Value.clients.ToList();
-        Debug.Log(" count " + clientList.Count ); 
-        if(clientList.Count == 1) //&& clientList.Contains(SceneLink.Instance.ViewpointId))
+        //Debug.Log(" count " + clientList.Count);
+        if (clientList.Count == 1) //&& clientList.Contains(SceneLink.Instance.ViewpointId))
         {
             isHost = true;
             // Disable the Raycast
@@ -108,7 +112,27 @@ public class SceneLinkEventManager : MonoBehaviour
             uxHandler.GetComponent<Player>().EnabledMeshRendering(false);
         }
 
-        Debug.Log("isHost : " + isHost + "  ID : " + SceneLink.Instance.ViewpointId);
+        //Debug.Log("isHost : " + isHost + "  ID : " + SceneLink.Instance.ViewpointId);
+    }
+
+    IEnumerator CheckIfLocationExists()
+    {
+        Debug.Log("Started fetching location...");
+        ResultContainer<VertexDataTypes.CoreTypes.Models.ViewModels.ResourceViewModel> locationResults = new ResultContainer<VertexDataTypes.CoreTypes.Models.ViewModels.ResourceViewModel>();
+        yield return ServiceRequest.Get<VertexDataTypes.CoreTypes.Models.ViewModels.ResourceViewModel>("/core/v1.0/resource/" + SceneLink.Instance.SceneId, locationResults);
+        Debug.Log("Location Result : " + locationResults.Value.ResourceKeys.Count());
+
+        if(locationResults.Value.ResourceKeys.Contains(LocationManager.Instance.LocationProvider.GetIdentifier() + "-anchor.blob"))
+        {
+            Debug.Log("Location exists on vertx");
+            Debug.Log("Location Syncing");
+
+            LocationManager.Instance.BeginLocationSync();
+        } else
+        {
+            Debug.Log("Location does not exist on vertx");
+        }
+
     }
 
     void CheckViewpointCount()
@@ -172,11 +196,5 @@ public class SceneLinkEventManager : MonoBehaviour
         GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
         VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
     }
-
-    //void Collaboration()
-    //{
-    //    GameObject VertxObjectHandlerNode = CreateNode("VertxObjectHandler", null);
-    //    VertxObjectHandlerNode.AddComponent<VertxObjectHandler>();
-    //}
 
 }

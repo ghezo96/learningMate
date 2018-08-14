@@ -12,7 +12,7 @@ public class ModifiedStart : MonoBehaviour
     void NodeLink_Loaded()
     {
         
-            RecurrsionSearch(gameObject);
+        RecurrsionSearch(gameObject);
       
     }
 
@@ -37,12 +37,16 @@ public class ModifiedStart : MonoBehaviour
                     if (boxCollider)
                     {
                         var boxColliderSize = boxCollider.size;
-                        BoxCollider newBoxCollider = toSearch.AddComponent<BoxCollider>();
-                        newBoxCollider.size = boxCollider.size * 0.1f;
-                        newBoxCollider.isTrigger = false;
+                        SphereCollider smallCollider = toSearch.AddComponent<SphereCollider>();
+                        smallCollider.radius = smallCollider.radius * 0.01f;
+                        smallCollider.isTrigger = true;
+                        smallCollider.gameObject.AddComponent<Rigidbody>();
+                        smallCollider.GetComponent<Rigidbody>().isKinematic = true;
 
-                        //boxCollider.enabled = false;
-                        Destroy(boxCollider);
+                        //makes the wire connecting collider shorter, allowing us to grab the component at top and bottom to re-position, but the centre still creates wires.
+                        boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y*0.8f, boxCollider.size.x);
+                        boxCollider.enabled = false;
+                        //Destroy(boxCollider);
 
                     }
                     // gameObject.AddComponent<IsColiding>();

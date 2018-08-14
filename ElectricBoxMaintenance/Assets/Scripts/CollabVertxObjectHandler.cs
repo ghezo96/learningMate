@@ -13,6 +13,9 @@ public class CollabVertxObjectHandler : MonoBehaviour {
     GameObject VertxBoxComponent;
     List<GameObject> vertxGameObjects;
 
+    public static List<GameObject> ObjectComparisonList = new List<GameObject>();
+    public static int GameObjectCounter;
+
     // Use this for initialization
     IEnumerator SpawnShit()
     {
@@ -20,11 +23,11 @@ public class CollabVertxObjectHandler : MonoBehaviour {
 
         ComponentArray = new string[,]
         {
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"CONNECTOR", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
-            {"CONNECTOR", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
+            {"SWITCH_1", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"SWITCH_2", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"SWITCH_3", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
+            {"CONNECTOR_1", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
+            {"CONNECTOR_2", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
             {"BOX", "f75f4a1f-1988-4498-be3a-f8f7a8149625" }
         };
 
@@ -32,11 +35,13 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         for (int i = 0; i < (ComponentArray.Length / 2); i++)
         {
             //POSITIONAL CHANGES
-            if (ComponentArray[i, 0] == "CONNECTOR")
+
+            if (ComponentArray[i, 0].Contains("CONNECTOR"))
             {
                 yield return new WaitForSeconds(0.2f);
                 GameObject connectorComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "ConnectorNodeLink");
                 vertxGameObjects.Add(connectorComponent);
+                connectorComponent.AddComponent<SwitchAndConnectorColliderRemoval>();
             }
             if (ComponentArray[i, 0] == "BOX")
             {
@@ -46,12 +51,15 @@ public class CollabVertxObjectHandler : MonoBehaviour {
                 VertxBoxComponent.transform.position = box.transform.localPosition;
                 VertxBoxComponent.transform.rotation = box.transform.rotation;
                 VertxBoxComponent.tag = "THEBOX";
+                VertxBoxComponent.AddComponent<CreateWires>();
+
             }
-            if (ComponentArray[i, 0] == "SWITCH")
+            if (ComponentArray[i, 0].Contains("SWITCH"))
             {
                 yield return new WaitForSeconds(0.2f);
                 GameObject switchComponent = CreateNode(ComponentArray[i, 0], ComponentArray[i, 1], "SwitchNodeLink");
                 vertxGameObjects.Add(switchComponent);
+                switchComponent.AddComponent<SwitchAndConnectorColliderRemoval>();
             }
         }
 
@@ -107,7 +115,6 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             var zPos = box.transform.position.z;
             var yPos = box.transform.position.y;
 
-
             if (doItOnce)
             {
                 Debug.Log("Box position: " + box.transform.localPosition);
@@ -126,7 +133,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
                         vertxGameObjects[i].transform.position = new Vector3(xPos - offset, yPos + 0.2f, zPos);
                         offset -=0.1f;
                     }
-                    Debug.Log("Switch position: " + vertxGameObjects[i].transform.position);
+                    //Debug.Log("Switch position: " + vertxGameObjects[i].transform.position);
                 }
                 doItOnce = false;
             }

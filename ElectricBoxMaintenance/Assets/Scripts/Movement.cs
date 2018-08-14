@@ -59,7 +59,6 @@ public class Movement : MonoBehaviour, IInputHandler, ISourceStateHandler, IFocu
                 handMovementDirection = transform.TransformDirection(handMovementDirection);
                 previousPosition = pointerPosition;
                 gameObject.transform.position += handMovementDirection*3f;
-                //Debug.Log("aaaaa "+gameObject.name);
 
             }
         }
