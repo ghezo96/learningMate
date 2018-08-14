@@ -77,7 +77,7 @@ public class Player : VertexSingleton<Player>
 
         Camera.GetComponent<RaycastPositioningV1>().enabled = false;
 
-        LocationManager.Instance.BeginLocationSync();
+        //LocationManager.Instance.BeginLocationSync();
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
@@ -286,7 +286,7 @@ public class Player : VertexSingleton<Player>
             // Reset Collaboration objects
             foreach (Transform x in SceneLink.Instance.transform)
             {
-                if (x.name == "SWITCH" || x.name == "CONNECTOR" || x.name == "BOX")
+                if (x.name.Contains("SWITCH") || x.name.Contains("CONNECTOR") || x.name.Contains("BOX"))
                 {
                     Destroy(x.gameObject);
                 }
@@ -329,7 +329,31 @@ public class Player : VertexSingleton<Player>
         SpatialMapping.SetActive(isEnabled);
     }
 
-    // Information popup when decomposed component clicked on
+    // Location manager stuff
+    public void OnPositionLocated()
+    {
+        StartButton.setActiveStatus(false);
+        Reset.setActiveStatus(true);
+        SpatialUnderstanding.SetActive(false);
+        mainMenuContainer.SetActiveStatus(true);
+        MainBox.GetComponent<Movement>().enabled = false;
+        BoundingBox.SetActive(false);
+        //WholeBox.SetActive(false);
+
+        Camera.GetComponent<RaycastPositioningV1>().enabled = false;
+    }
+
+    public void OnLocationFailed()
+    {
+        Debug.Log("OnLocationFailed!!");
+    }
+
+    public void OnLocationChanged()
+    {
+        Debug.Log("OnLocationChanged!!" + LocationManager.Instance.CurrentState);
+
+       // LocationManager.Instance.CurrentState
+    }
 
 
 }

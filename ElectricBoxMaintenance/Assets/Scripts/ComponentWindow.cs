@@ -12,6 +12,12 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
 
     public FloatingButton RecordButton;
     public FloatingButton PlayButton;
+
+    public GameObject RecordIcon;
+    public GameObject RecordStopIcon;
+    public GameObject PlayIcon;
+    public GameObject PlayStopIcon;
+
     bool isRecording = false;
     bool isUploading = false;
     bool isDownloading = false;
@@ -20,13 +26,15 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
     GameObject TitleSection;
     GameObject StatusSection;
     GameObject InformationSection;
-
     GameObject PreviousSelected;
 
     const int AUDIO_SAMPLE_RATE = 44100;
 
     void Start()
     {
+
+
+
         // Get the close button and listen for close events
         RecordButton.Clicked += RecordButton_Clicked;
         PlayButton.Clicked += PlayButton_Clicked;
@@ -54,6 +62,9 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
     private void PlayButton_Clicked(GameObject button)
     {
         Debug.Log("PlayButton_Clicked!");
+
+     
+
         GetAndPlayRecording();
     }
 
@@ -64,6 +75,11 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
         if (!isRecording)
         {
             RecordMessage();
+            
+        }
+        else
+        {
+            StartCoroutine(StopRecording());
         }
     }
 
@@ -82,12 +98,6 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
     public void Show()
     {
         gameObject.SetActive(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // Methods for Recording functionality
@@ -113,6 +123,9 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
 
     IEnumerator PlayAudio()
     {
+        //PlayIcon.SetActive(false);
+        //PlayStopIcon.SetActive(true);
+
         while (isDownloading)
         {
             yield return new WaitForSeconds(0.5f);
@@ -130,6 +143,11 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
     // Coroutine to start recording audio
     IEnumerator StartRecording()
     {
+        Debug.Log("RECORD PRESSED");
+        RecordIcon.SetActive(false);
+        RecordStopIcon.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
         isRecording = true;
         isUploading = true;
         AudioSrc.clip = Microphone.Start(Microphone.devices[0], false, 15, AUDIO_SAMPLE_RATE);
@@ -170,6 +188,13 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
 
     IEnumerator StopRecording()
     {
+        RecordStopIcon.SetActive(false);
+        RecordIcon.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("RECORD STOPPED");
+
         isRecording = false;
         if (Microphone.devices.Length > 0)
         {
