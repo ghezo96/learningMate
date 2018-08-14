@@ -522,10 +522,9 @@ namespace HoloToolkit.Unity.InputModule
                 {
                     GameObject hitObject = col.gameObject;
 
-                    col.GetComponentInParent<CreateWires>().SwitchesSnapped++;
-
                     if ((gameObject.name.Contains("SWITCH") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
                     {
+                        col.GetComponentInParent<CreateWires>().IncrementSwitchCount();
                         StopDragging();
                         GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
@@ -550,12 +549,10 @@ namespace HoloToolkit.Unity.InputModule
                 {
                     GameObject hitObject = col.gameObject;
 
-                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped++;
 
                     if ((gameObject.name.Contains("CONNECTOR") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
                     {
-
-
+                        col.GetComponentInParent<CreateWires>().IncrementConnectorCount();
                         StopDragging();
                         GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
@@ -583,10 +580,10 @@ namespace HoloToolkit.Unity.InputModule
                 GameObject hitObject = col.gameObject;
 
 
-                if (gameObject.name.Contains("SWITCH") && gameObject)
+                if (gameObject.name.Contains("SWITCH") && col.gameObject.tag == "SnapOccupied")
                 {
 
-                    col.GetComponentInParent<CreateWires>().SwitchesSnapped--;
+                    col.GetComponentInParent<CreateWires>().DecrementSwitchCount();
 
                     Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
 
@@ -598,13 +595,10 @@ namespace HoloToolkit.Unity.InputModule
                 GameObject hitObject = col.gameObject;
 
 
-                if (gameObject.name.Contains("CONNECTOR") && gameObject)
+                if (gameObject.name.Contains("CONNECTOR") && col.gameObject.tag == "SnapOccupied")
                 {
-                    
-
-                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped--;
+                    col.GetComponentInParent<CreateWires>().DecrementConnectorCount();
                     Debug.Log(col.GetComponentInParent<CreateWires>().ConnectorsSnapped);
-
                     col.gameObject.tag = "Snappable";
                 }
             }

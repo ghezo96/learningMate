@@ -30,17 +30,17 @@ public class CreateWires : MonoBehaviour, IInputClickHandler, IFocusable
 
     public static string[,] ConnectionArray =
     {
-            {"SnapSwitch1","SnapConnector1","cb5e0335-aebe-4f87-a21e-6629236facb3","0"},
-            {"SnapSwitch1","SnapSwitch3","79a410e6-e927-492f-8e9c-cb5eca15a2e3","0"},
-            {"SnapSwitch2","SnapConnector1","4ad9e691-73d6-4777-af10-8c84db4e0a2d","0"},
-            {"SnapSwitch2","SnapConnector2","c38d2bfb-f735-4cfb-b255-8d5323cbad0b","0"},
-            {"SnapSwitch3","SnapConnector2","dedb4e8c-c51b-49af-af87-536fbde737cc","0"},
+            {"SnapSwitch1","SnapConnector1","5261185c-856e-4124-aa4b-7199244b9863","0"},
+            {"SnapSwitch1","SnapSwitch3","e737f296-4aa9-43a5-88ed-99d7f3ed2403","0"},
+            {"SnapSwitch2","SnapConnector1","1d9dcb06-b3b8-4e7d-9686-97cb5fcf793d","0"},
+            {"SnapSwitch2","SnapConnector2","486df126-051a-4f6e-96dc-6d4d7402e0ca","0"},
+            {"SnapSwitch3","SnapConnector2","ad9c2285-eb11-49e1-acd1-174e705d9591","0"},
             //Incorrect Combinations
-            {"SnapSwitch1","SnapSwitch2","fb443109-c1ce-4aa7-86b1-60f3da772dc8","0"},
-            {"SnapSwitch1","SnapConnector2","34eb3285-30f9-4a51-bfe5-82162a0850d2","0"},
-            {"SnapSwitch2","SnapSwitch3","91b5db76-98da-4246-b68b-10b1c2c2b2af","0"},
-            {"SnapSwitch3","SnapConnector1","64338977-af0f-4a5c-804e-bf2991b5bad8","0"},
-            {"SnapConnector1","SnapConnector2","60468c0f-8f4a-487a-95cc-8481627c8fd7","0"}
+            {"SnapSwitch1","SnapSwitch2","cb169ce9-a400-4ff4-bc4f-0b8a3fd230ff","0"},
+            {"SnapSwitch1","SnapConnector2","1c2a45e6-fcd6-458b-a37a-6fafb784f1fc","0"},
+            {"SnapSwitch2","SnapSwitch3","53f0721d-3ac8-4f3e-8029-26caa52239f6","0"},
+            {"SnapSwitch3","SnapConnector1","b57aaba3-075c-49b0-8712-14eec28f69bd","0"},
+            {"SnapConnector1","SnapConnector2","73973221-46b1-40a7-825a-d43666ff1787","0"}
     };
 
     public void OnFocusEnter()
@@ -55,7 +55,7 @@ public class CreateWires : MonoBehaviour, IInputClickHandler, IFocusable
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        SelectedObject = eventData.selectedObject.transform.parent.gameObject;
+        SelectedObject = eventData.selectedObject.gameObject;
         //SelectedObject = eventData.selectedObject.gameObject;
         Debug.Log(SelectedObject);
 
@@ -95,7 +95,7 @@ public class CreateWires : MonoBehaviour, IInputClickHandler, IFocusable
     {
         NodeLink CurrentNodeLink = GetComponent<NodeLink>();
 
-        bool isInCorrectWireIndex = false;
+        bool isInCorrectWireIndex  = false;
 
         var ComparisonArray = CollabVertxObjectHandler.ObjectComparisonList.ToArray();
         GameObject firstGameObject = ComparisonArray[0];
@@ -209,9 +209,27 @@ public class CreateWires : MonoBehaviour, IInputClickHandler, IFocusable
             {
                 counter--;
             }
-            
         }
+    }
 
+    public void DecrementSwitchCount()
+    {
+        SwitchesSnapped--;
+    }
+
+    public void DecrementConnectorCount()
+    {
+        ConnectorsSnapped--;
+    }
+
+    public void IncrementSwitchCount()
+    {
+        SwitchesSnapped++;
+    }
+
+    public void IncrementConnectorCount()
+    {
+        ConnectorsSnapped++;
     }
 
     void Update()
@@ -256,11 +274,13 @@ public class CreateWires : MonoBehaviour, IInputClickHandler, IFocusable
         if (CorrectWireCount == 5 && IncorrectWireCount == 0)
         {
             Debug.Log("VALID WIRE CONFIGURATION");
+            GameObject wireAnimated = CreateNode("AnimatedWires", "7f20c0bb-82e1-480d-87db-81d60888c03d");
+            wireAnimated.AddComponent<ElectricityAnim>();
         }
         else
         {
             //highlight badwires red
-            StopCoroutine(ShowBadWires());
+            StopAllCoroutines();
             StartCoroutine(ShowBadWires());
         }
     }

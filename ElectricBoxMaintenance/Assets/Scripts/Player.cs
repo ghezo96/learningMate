@@ -61,7 +61,7 @@ public class Player : VertexSingleton<Player>
 
     public void Validate_Clicked(GameObject button)
     {
-        sceneLink.GetComponentInChildren<CreateWires>().ValidateWiring();
+        sceneLink.GetComponentInChildren<CreateWires>().CheckIfValidCircuit();
     }
 
     // Start button click handler
