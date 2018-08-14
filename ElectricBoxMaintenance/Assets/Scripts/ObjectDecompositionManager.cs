@@ -14,10 +14,10 @@ public class ObjectDecompositionManager : MonoBehaviour {
 
     public string[,] DecompositionComponents = new string[,]
     {
-        {"BoxLayer","3ee7a6a3-5d8d-4a17-bd62-5ea6cd790ce6"},
-        {"WireLayer","3f9d7ae0-bac4-4f94-9e8f-e3b13435d932"},
-        {"FuseLayer","f444f89c-d4aa-428b-91c3-de7ddd5f76e2"},
-        {"SwitchLayer","088c0839-d2d1-4808-87d4-a33ca223876e"}
+        {"BoxLayer","09d3673c-af66-4368-a473-497de950a25b"},
+        {"WireLayer","d06fb2ad-49d6-4fab-872e-4ef40d4b6565"},
+        {"FuseLayer","7f752527-4e44-41bc-b0d2-fa1ea0cd67a8"},
+        {"SwitchLayer","35411d42-5559-4dfe-8420-fa3a64a50f26"}
     };
 
 	// Use this for initialization

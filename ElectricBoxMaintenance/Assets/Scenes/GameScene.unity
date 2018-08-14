@@ -2308,7 +2308,7 @@ Prefab:
     - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: SceneId
-      value: bff3294e-f7e1-404b-8bf6-5befc8c2cb15
+      value: 31003dd2-083e-4c90-8cde-e8e80eac969b
       objectReference: {fileID: 0}
     - target: {fileID: 114002142956930048, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
@@ -6613,7 +6613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1899369347
 MeshRenderer:
   m_ObjectHideFlags: 0
