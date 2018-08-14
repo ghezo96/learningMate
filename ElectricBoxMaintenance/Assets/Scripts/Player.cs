@@ -9,6 +9,7 @@ public class Player : VertexSingleton<Player>
     public FloatingButton homeButton;
     public FloatingButton StartButton;
     public FloatingButton Reset;
+    public FloatingButton ValidateButton;
     public GameObject Camera;
     public GameObject MainBox;
     public GameObject BoundingBox;
@@ -17,26 +18,33 @@ public class Player : VertexSingleton<Player>
     public GameObject SpatialMapping;
     bool boxStatus = true;
     bool inDecomp = false;
+    // panels for live information
+    GameObject ComponentWindowPanel;
+
 
 
 
     // Use this for initialization
     void Start()
     {
-       
-        Debug.Log("In Start");
+        ComponentWindowPanel = windowManager.transform.Find("ComponentWindow").gameObject;
+
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
         homeButton.Clicked += HomeButton_Clicked;
         StartButton.Clicked += Start_Clicked;
         Reset.Clicked += Reset_Clicked;
+        ValidateButton.Clicked += Validate_Clicked;
 
         if (homeButton.isActiveAndEnabled)
         {
             homeButton.setActiveStatus(false);
         }
+
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
+
+        
     }
 
     // On scene connect, Handler is set up
@@ -50,6 +58,12 @@ public class Player : VertexSingleton<Player>
         }
 
     }
+
+    public void Validate_Clicked(GameObject button)
+    {
+        sceneLink.GetComponentInChildren<CreateWires>().ValidateWiring();
+    }
+
     // Start button click handler
     public void Start_Clicked(GameObject button)
     {
@@ -60,6 +74,10 @@ public class Player : VertexSingleton<Player>
         MainBox.GetComponent<Movement>().enabled = false;
         BoundingBox.SetActive(false);
         //WholeBox.SetActive(false);
+
+        Camera.GetComponent<RaycastPositioningV1>().enabled = false;
+
+        LocationManager.Instance.BeginLocationSync();
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
@@ -108,7 +126,9 @@ public class Player : VertexSingleton<Player>
             //MainBox.GetComponent<Movement>().enabled = false;
             MainBox.GetComponent<BoxCollider>().enabled = true;
 
-          
+
+            ValidateButton.setActiveStatus(false);
+
         }
 
     }
@@ -143,6 +163,8 @@ public class Player : VertexSingleton<Player>
 
         if (button.name == "LiveInformation")
         {
+            
+
 
             //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
@@ -160,8 +182,11 @@ public class Player : VertexSingleton<Player>
             windowManager.GetComponent<FadeIn>().Fade();
             //
             SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
+            //
+            // Set the default values to component panel
 
-            //windowManager.
+            ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
+
         }
         else if (button.name == "InteractiveGuide")
         {
@@ -175,6 +200,8 @@ public class Player : VertexSingleton<Player>
         }
         else if(button.name == "Collab")
         {
+
+
             StartCoroutine(EnableIoTListeners(false));
             //WholeBox.SetActive(false);
             mainMenuContainer.SetActiveStatus(false);
@@ -182,6 +209,8 @@ public class Player : VertexSingleton<Player>
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
+
+
             
         }
     }
@@ -191,10 +220,15 @@ public class Player : VertexSingleton<Player>
     IEnumerator StartCollaberation()
     {
         yield return new WaitForSeconds(0.5f);
+
+        
+
         // Disable IoT component attached to the SceneLink
         SceneLink.Instance.GetComponent<SceneLinkEventManager>().CreateCollabVertxObjectHandler();
         sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = true;
         MainBox.GetComponent<BoxCollider>().enabled = false;
+
+        ValidateButton.setActiveStatus(true);
     }
 
     // Coroutine to load first key animation
@@ -294,5 +328,8 @@ public class Player : VertexSingleton<Player>
         SpatialUnderstanding.SetActive(isEnabled);
         SpatialMapping.SetActive(isEnabled);
     }
+
+    // Information popup when decomposed component clicked on
+
 
 }

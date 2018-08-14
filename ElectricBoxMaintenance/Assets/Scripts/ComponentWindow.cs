@@ -7,17 +7,21 @@ using UnityEngine.UI;
 using VertexUnityPlayer;
 
 [RequireComponent(typeof(AudioSource))]
-public class ComponentWindow : MonoBehaviour
+public class ComponentWindow : VertexSingleton<ComponentWindow>
 {
 
     public FloatingButton RecordButton;
     public FloatingButton PlayButton;
-    public TextMesh ComponentName;
-    public TextMesh ComponentDescription;
     bool isRecording = false;
     bool isUploading = false;
     bool isDownloading = false;
     AudioSource AudioSrc;
+
+    GameObject TitleSection;
+    GameObject StatusSection;
+    GameObject InformationSection;
+
+    GameObject PreviousSelected;
 
     const int AUDIO_SAMPLE_RATE = 44100;
 
@@ -28,6 +32,23 @@ public class ComponentWindow : MonoBehaviour
         PlayButton.Clicked += PlayButton_Clicked;
         AudioSrc = GetComponent<AudioSource>();
         StartCoroutine(GetRecording());
+        // set default component texts
+
+        //SetPanelText("Tap on components", "to display more information", "");
+
+        TitleSection = transform.Find("TitleText").gameObject;
+        StatusSection = transform.Find("StatusText").gameObject;
+        InformationSection = transform.Find("InformationText").gameObject;
+
+        //ResetColourPanel();
+
+        
+
+        Color baseColour;
+        Renderer render = TitleSection.GetComponent<Renderer>();
+        Material mat = render.material;
+        baseColour = Color.white;
+        mat.color = baseColour;
     }
 
     private void PlayButton_Clicked(GameObject button)
@@ -193,6 +214,51 @@ public class ComponentWindow : MonoBehaviour
         }
         yield return new WaitForSeconds(7f);
         isDownloading = false;
+    }
+
+    public void SetPanelText(string name, string status, string desc)
+    {
+        if(TitleSection)
+        {
+
+        TitleSection.GetComponent<TextMesh>().text = name;
+        }
+        if(StatusSection)
+            StatusSection.GetComponent<TextMesh>().text = status;
+        if (InformationSection)
+            InformationSection.GetComponent<TextMesh>().text = desc;
+    }
+
+    public void SetColourPanel(GameObject selectedComponent)
+    {
+
+        List<Renderer> RenderList = new List<Renderer>();
+
+
+        RenderList.Add(TitleSection.GetComponent<Renderer>());
+        RenderList.Add(StatusSection.GetComponent<Renderer>());
+
+        foreach (Renderer render in RenderList)
+        {
+            Color baseColour;
+            Material mat = render.material;
+
+            if (selectedComponent.tag == "Working")
+            {
+                baseColour = Color.green;
+            }
+            else if (selectedComponent.tag == "Faulty")
+            {
+                baseColour = Color.red;
+            }
+            else
+            {
+                baseColour = Color.white;
+            }
+
+            mat.color = baseColour;
+        }
+        
     }
 
 }

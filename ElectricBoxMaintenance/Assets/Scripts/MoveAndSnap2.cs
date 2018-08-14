@@ -88,7 +88,7 @@ namespace HoloToolkit.Unity.InputModule
             yield return new WaitForSeconds(0.5f);
             for (int i = 0; i < sceneLink.childCount; i++)
             {
-                Debug.Log("i Is " + i + " Childcount is " + sceneLink.childCount);
+                //Debug.Log("i Is " + i + " Childcount is " + sceneLink.childCount);
                 if (sceneLink.GetChild(i).GetComponent<NodeLink>() && !guidList.Contains(sceneLink.GetChild(i).GetComponent<NodeLink>().Guid.ToString()))
                 {
                     guidList.Add(sceneLink.GetChild(i).GetComponent<NodeLink>().Guid.ToString());
@@ -350,8 +350,12 @@ namespace HoloToolkit.Unity.InputModule
                 gameObject.GetComponent<NodeLink>().Fire("UnlockItem", grabbedGuid);
             }
 
+            
+
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
+
+            
 
             isDragging = false;
             //isAvailable = true;
@@ -362,6 +366,15 @@ namespace HoloToolkit.Unity.InputModule
                 hostRigidbody.isKinematic = hostRigidbodyWasKinematic;
             }
             StoppedDragging.RaiseEvent();
+        }
+
+        IEnumerator DeactivateColliderFor(int x, Collider col)
+        {
+            col.enabled = false;
+
+            yield return new WaitForSeconds(x);
+
+            col.enabled = true;
         }
         
         public void OnFocusEnter()
@@ -407,7 +420,7 @@ namespace HoloToolkit.Unity.InputModule
             }
             for (int i = 0; i < guidList.Count; i++)
             {
-                Debug.Log("In List AFTER InputUP: " + guidList[i]);
+                //Debug.Log("In List AFTER InputUP: " + guidList[i]);
             }
 
 
@@ -474,11 +487,11 @@ namespace HoloToolkit.Unity.InputModule
             {
                 for (int i = 0; i < guidList.Count; i++)
                 {
-                    Debug.Log("In List before Fire: " + guidList[i]);
+                    //Debug.Log("In List before Fire: " + guidList[i]);
                 }
                 StartDragging(initialDraggingPosition);
                 gameObject.GetComponent<NodeLink>().Fire("LockItem", grabbedGuid);
-                Debug.Log("Message sent " + grabbedGuid);
+                //Debug.Log("Message sent " + grabbedGuid);
                
             }
             else
@@ -505,29 +518,79 @@ namespace HoloToolkit.Unity.InputModule
 
         public void OnTriggerEnter(Collider col)
         {
+                if (col.gameObject.name.Contains("SnapSwitch"))
+                {
+                    GameObject hitObject = col.gameObject;
 
-            Debug.Log("OnTriggerEnter " + col.gameObject.name);
+                    col.GetComponentInParent<CreateWires>().SwitchesSnapped++;
 
+                    if ((gameObject.name.Contains("SWITCH") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
+                    {
+                        StopDragging();
+                        GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
+
+                        // isNotColiding = false;
+                        transform.position = hitObject.transform.position;
+                        transform.rotation = box.transform.rotation;
+
+                        //Destroy(hitObject.GetComponent<Rigidbody>());
+                        //hitObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                        // hitObject.GetComponent<BoxCollider>().isTrigger = false;
+
+                        //to make sure that it doesnt pick it up again straight after
+                        StartCoroutine(DeactivateColliderFor(1,gameObject.GetComponent<Collider>()));
+
+                    Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
+
+                        col.gameObject.tag = "SnapOccupied";
+
+                    }
+                }
+                else if (col.gameObject.name.Contains("SnapConnector"))
+                {
+                    GameObject hitObject = col.gameObject;
+
+                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped++;
+
+                    if ((gameObject.name.Contains("CONNECTOR") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
+                    {
+
+
+                        StopDragging();
+                        GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
+
+                        //isNotColiding = false;
+                        transform.position = hitObject.transform.position;
+                        transform.rotation = box.transform.rotation;
+                        // hitObject.GetComponent<BoxCollider>().isTrigger = false;
+
+                        Debug.Log(col.GetComponentInParent<CreateWires>().ConnectorsSnapped);
+
+                        col.gameObject.tag = "SnapOccupied";
+                    }
+                }
+        }
+
+        void OnTriggerStay(Collider col)
+        {
+            col.gameObject.tag = "SnapOccupied";
+        }
+
+        public void OnTriggerExit(Collider col)
+        {
             if (col.gameObject.name.Contains("SnapSwitch"))
             {
                 GameObject hitObject = col.gameObject;
 
 
-
-                if (gameObject.name == "SWITCH" && gameObject)
+                if (gameObject.name.Contains("SWITCH") && gameObject)
                 {
-                    StopDragging();
-                    GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
-                    // isNotColiding = false;
-                    transform.position = hitObject.transform.position;
-                    transform.rotation = box.transform.rotation;
-                    //Destroy(hitObject.GetComponent<Rigidbody>());
-                    //hitObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    // hitObject.GetComponent<BoxCollider>().isTrigger = false;
+                    col.GetComponentInParent<CreateWires>().SwitchesSnapped--;
 
+                    Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
 
-
+                    col.gameObject.tag = "Snappable";
                 }
             }
             else if (col.gameObject.name.Contains("SnapConnector"))
@@ -535,21 +598,16 @@ namespace HoloToolkit.Unity.InputModule
                 GameObject hitObject = col.gameObject;
 
 
-                if (gameObject.name == "CONNECTOR" && gameObject)
+                if (gameObject.name.Contains("CONNECTOR") && gameObject)
                 {
+                    
 
+                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped--;
+                    Debug.Log(col.GetComponentInParent<CreateWires>().ConnectorsSnapped);
 
-                    StopDragging();
-                    GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
-
-                    //isNotColiding = false;
-                    transform.position = hitObject.transform.position;
-                    transform.rotation = box.transform.rotation;
-                    // hitObject.GetComponent<BoxCollider>().isTrigger = false;
-
+                    col.gameObject.tag = "Snappable";
                 }
             }
-
         }
 
         
@@ -564,10 +622,10 @@ namespace HoloToolkit.Unity.InputModule
             if (guidList.Contains(guid))
             {
                 guidList.Remove(guid);
-                Debug.Log("Received " + guid);
+                //Debug.Log("Received " + guid);
                 for (int i = 0; i < guidList.Count; i++)
                 {
-                    Debug.Log("In List AFTER Fire: " + guidList[i]);
+                    //Debug.Log("In List AFTER Fire: " + guidList[i]);
                 }
             }
         }

@@ -19,6 +19,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
     Vector3 offset = new Vector3(0,0,0.2f);
     private float zOffset = 0.23f;
     public GameObject spatialMesh;
+    public GameObject SystemScanMessage;
 
     
     public void OnInputDown(InputEventData eventData)
@@ -46,6 +47,8 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
             //if (hit.transform.gameObject.layer == LayerMask.NameToLayer("PhysicalBox"))
             {
                 Quad.SetActive(true);
+                SystemScanMessage.SetActive(false);
+
                 //BoxModel.SetActive(false);
                 
                 if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer) || Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20f, layer2)) && raycast)
@@ -102,7 +105,7 @@ public class RaycastPositioningV1 : MonoBehaviour, IInputHandler
     {
         if (raycast)
         {
-            Raycast();
+            //Raycast();
         }     
     }
 

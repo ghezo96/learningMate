@@ -13,6 +13,10 @@ TagManager:
   - Switch
   - THEBOX
   - Do not touch
+  - Faulty
+  - Working
+  - SnapOccupied
+  - Snappable
   layers:
   - Default
   - TransparentFX
