@@ -23,12 +23,12 @@ public class CollabVertxObjectHandler : MonoBehaviour {
 
         ComponentArray = new string[,]
         {
-            {"SWITCH_1", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH_2", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"SWITCH_3", "a00e3fa6-babb-498a-a559-e9ae05cf9c31"},
-            {"CONNECTOR_1", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
-            {"CONNECTOR_2", "65257fc0-b39a-459d-93d3-25bce8d6bfd7"},
-            {"BOX", "f75f4a1f-1988-4498-be3a-f8f7a8149625" }
+            {"SWITCH_1", "27a9c182-675a-4f53-b344-d50a1c874839"},
+            {"SWITCH_2", "27a9c182-675a-4f53-b344-d50a1c874839"},
+            {"SWITCH_3", "27a9c182-675a-4f53-b344-d50a1c874839"},
+            {"CONNECTOR_1", "bf2610b2-9f65-4017-beda-0f7dc1ec57a8"},
+            {"CONNECTOR_2", "bf2610b2-9f65-4017-beda-0f7dc1ec57a8"},
+            {"BOX", "aaad70db-a138-467e-94af-b73c5888bd38" }
         };
 
         //spawn vertx objects

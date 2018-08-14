@@ -33,18 +33,18 @@ public class VertxEventHandler : MonoBehaviour
         currentStep = 0;
         AnimationArray = new string[,]
         {
-                {"KEY_ANIMATION","62fe3789-6dc0-4be8-8de4-daf6be186bed", "1"},
-                {"DOOR_ANIMATION","fe72fbeb-7341-40ec-91a9-7d4387bf9ff6", "1"},
-                {"SWITCH_ONE","c85807c4-867d-41f8-8d11-09715c52d349", "0" },
-                {"SWITCH_TWO","1b6364fb-fb42-4d4a-9427-91bf8ca35c91", "1"},
-                {"SWITCH_THREE","f8501707-987c-4a18-ba1c-ffc6e99dd58f", "0"},
-                {"FUSE_ANIMATION","55436d56-7f92-44ad-9d57-4c27d2a60b05", "0" },
-                {"FUSE_ANIMATION_CLOSE","e6b3428a-e40c-402e-adc9-419b459b137c", "1" },
-                {"SWITCH_FOUR","311eab37-eec5-4caa-880c-00b511fb26a5", "1"},
-                {"SWITCH_FIVE","ec08686a-4d1e-49a1-ad7c-0c994a366929", "0"},
-                {"SWITCH_SIX","8c0daae5-5c91-49d6-a479-711a82d1bbe2", "1"},
-                {"DOOR_FINISH","b4f004f9-4f04-4e74-9603-a0a695778f7d", "0"},
-                {"KEY_ANIMATION_FINISH","813d6861-2370-419d-951d-9fb71312c492","0"}
+                {"KEY_ANIMATION","353f92d5-3f34-4bde-859e-f6bda4c51d0d", "1"}, 
+                {"DOOR_ANIMATION","a7e0309a-2196-4827-8ea9-5239c7dce5ab", "1"}, 
+                {"SWITCH_ONE","dba4bf63-f221-4afb-be70-2d4d3a120f0b", "0" },
+                {"SWITCH_TWO","6515834e-e299-4169-a2cf-48bbba3fde9c", "1"},
+                {"SWITCH_THREE","a2f4d458-ee08-479b-963a-a1e92c029ea2", "0"},
+                {"FUSE_ANIMATION","61399449-de19-4183-ab35-48eb4b3e6c98", "0" },
+                {"FUSE_ANIMATION_CLOSE","33a4426a-cb3d-4618-9f5e-cd0fb4314c2e", "1" },
+                {"SWITCH_FOUR","407a5f53-5f75-4689-8370-fba5d317c212", "1"},
+                {"SWITCH_FIVE","4935b63e-3f0d-4614-bd5d-eb4560bad25e", "0"}, 
+                {"SWITCH_SIX","7a62effa-ef7b-47fb-a21e-9a5bab0b10b0", "1"}, 
+                {"DOOR_FINISH","a60d4de1-5ab4-4b61-9865-e6bfbf426c63", "0"},
+                {"KEY_ANIMATION_FINISH","41dbd084-6dd4-4f24-af2d-0ce3c2dccfc0","0"} 
         };
 
         VoiceOverDictionary.Add("DOOR_ANIMATION", "03");
@@ -137,7 +137,7 @@ public class VertxEventHandler : MonoBehaviour
             }
             else
             {
-                PreviousAnimationNode = CreateNode("MAINTANENCE_MODEL", "2359e967-bcd4-44ab-b58f-6f7a8ca391e4");
+                PreviousAnimationNode = CreateNode("MAINTANENCE_MODEL", "b7617179-cf1f-45b1-90be-e6d05369de7a");
             } 
         }
         else
@@ -299,7 +299,7 @@ public class VertxEventHandler : MonoBehaviour
 
         StartCoroutine(PlayInitialVoiceOver());
         Debug.Log("Init key animation :");
-        currentGameObject = CreateNode("KEY_ANIMATION", "62fe3789-6dc0-4be8-8de4-daf6be186bed");
+        currentGameObject = CreateNode("KEY_ANIMATION", "353f92d5-3f34-4bde-859e-f6bda4c51d0d");
         currentGameObject.AddComponent<AnimEventHandler>();
         PreviousAnimationNode = currentGameObject;
         currentStep = 0;
