@@ -32,7 +32,7 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
 
     public IEnumerator DecomposeVERTX()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2f);
         MoveObjectsForwards();
     }
 

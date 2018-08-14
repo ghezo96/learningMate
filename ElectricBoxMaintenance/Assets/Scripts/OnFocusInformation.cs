@@ -25,15 +25,15 @@ public class OnFocusInformation : MonoBehaviour, IFocusable, IInputClickHandler 
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if(PreviousComponent)
+
+
+        if (PreviousComponent)
         {
             ChangeEmissive(PreviousComponent, 0.0f);
         }
 
         GameObject selectedComponent = eventData.selectedObject.transform.parent.gameObject;;
         PreviousComponent = selectedComponent;
-
-        Debug.Log(selectedComponent.name);
 
         switch (selectedComponent.name)
         {
@@ -51,7 +51,7 @@ public class OnFocusInformation : MonoBehaviour, IFocusable, IInputClickHandler 
                 break;
         }
 
-        ChangeEmissive(selectedComponent, 0.2f);
+        ChangeEmissive(selectedComponent, 0.1f);
 
         eventData.Use();
     }

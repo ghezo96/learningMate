@@ -25,6 +25,7 @@ public class Player : VertexSingleton<Player>
 
     // panels for live information
     Transform indivCompTransform;
+    GameObject InstructionPanel;
     GameObject SwitchOnePanel;
     GameObject SwitchTwoPanel;
     GameObject SwitchThreePanel;
@@ -37,6 +38,7 @@ public class Player : VertexSingleton<Player>
     {
         //Find panels for liveinformation
         indivCompTransform = windowManager.transform.Find("IndividualComponents");
+        InstructionPanel = indivCompTransform.Find("Instructions").gameObject;
         SwitchOnePanel = indivCompTransform.Find("Switch1").gameObject;
         SwitchTwoPanel = indivCompTransform.Find("Switch2").gameObject;
         SwitchThreePanel = indivCompTransform.Find("Switch3").gameObject;
@@ -163,7 +165,8 @@ public class Player : VertexSingleton<Player>
             Reset.setActiveStatus(false);
             BoundingBox.SetActive(false);
 
-            SwitchOnePanel.SetActive(true);
+            InstructionPanel.SetActive(true);
+            SwitchOnePanel.SetActive(false);
             SwitchTwoPanel.SetActive(false);
             SwitchThreePanel.SetActive(false);
             FusePanel.SetActive(false);
@@ -175,20 +178,8 @@ public class Player : VertexSingleton<Player>
             //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
             inDecomp = true;
 
-
-
-
             windowManager.SetActive(true);
             windowManager.GetComponent<FadeIn>().Fade();
-
-
-
-
-
-
-
-
-
 
             SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
 
@@ -305,9 +296,19 @@ public class Player : VertexSingleton<Player>
     }
 
     ///////////////////
-    
+
+    public void ShowInstructionPanel()
+    {
+        InstructionPanel.SetActive(true);
+        SwitchOnePanel.SetActive(false);
+        SwitchTwoPanel.SetActive(false);
+        SwitchThreePanel.SetActive(false);
+        FusePanel.SetActive(false);
+    }
+
     public void ShowSwitch1Panel()
     {
+        InstructionPanel.SetActive(false);
         SwitchOnePanel.SetActive(true);
         SwitchTwoPanel.SetActive(false);
         SwitchThreePanel.SetActive(false);
@@ -316,6 +317,7 @@ public class Player : VertexSingleton<Player>
 
     public void ShowSwitch2Panel()
     {
+        InstructionPanel.SetActive(false);
         SwitchOnePanel.SetActive(false);
         SwitchTwoPanel.SetActive(true);
         SwitchThreePanel.SetActive(false);
@@ -324,6 +326,7 @@ public class Player : VertexSingleton<Player>
 
     public void ShowSwitch3Panel()
     {
+        InstructionPanel.SetActive(false);
         SwitchOnePanel.SetActive(false);
         SwitchTwoPanel.SetActive(false);
         SwitchThreePanel.SetActive(true);
@@ -332,6 +335,7 @@ public class Player : VertexSingleton<Player>
 
     public void ShowFusePanel()
     {
+        InstructionPanel.SetActive(false);
         SwitchOnePanel.SetActive(false);
         SwitchTwoPanel.SetActive(false);
         SwitchThreePanel.SetActive(false);

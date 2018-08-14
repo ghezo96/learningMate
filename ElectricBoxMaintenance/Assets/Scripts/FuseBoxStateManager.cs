@@ -10,7 +10,7 @@ public class FuseBoxS : MonoBehaviour
     void Start()
     {
         GameObject HandlerNode = CreateNode("VertxEventManager", null);
-        HandlerNode.AddComponent<VertxEventHandler>();
+        HandlerNode.AddComponent<VertxEventHandlerV2>();
 
     }
 

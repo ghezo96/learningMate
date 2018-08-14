@@ -23,8 +23,17 @@ public class ObjectDecompositionManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        UXHandler = GameObject.Find("UXHandler");
-        Box = UXHandler.transform.Find("Box").gameObject;
+    }
+
+    void Update()
+    {
+
+        if(ElectricBox)
+        {
+                ElectricBox.transform.position = Box.transform.position;
+                ElectricBox.transform.rotation = Box.transform.rotation;
+        }
+
     }
 
     void LoadComponents()
@@ -43,6 +52,11 @@ public class ObjectDecompositionManager : MonoBehaviour {
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id)
     {
+
+        UXHandler = GameObject.Find("UXHandler");
+        Box = UXHandler.transform.Find("Box").gameObject;
+
+
         var vertxObject = SceneLink.Instance.transform.Find(name);
         GameObject vertxThing;
 
