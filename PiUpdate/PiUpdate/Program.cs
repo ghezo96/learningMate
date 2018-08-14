@@ -11,11 +11,10 @@ namespace PiUpdate
     class Program
     {
         static ElectricBox box = new ElectricBox();
-        //static string sceneId = "df9105d7-3bbd-4a54-b6e6-3c7dd751809b";
-        static string sceneId = "5f9b794c-8410-4f5b-abe5-b7dbdfb84e5b";
+        static string sceneId = "31003dd2-083e-4c90-8cde-e8e80eac969b";
         static string guid;
 
-        static void  Main(string[] args)
+        static void Main(string[] args)
         {
             Timer aTimer = new Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimerTick);
@@ -36,7 +35,7 @@ namespace PiUpdate
             WebClient client = new WebClient();
             client.BaseAddress = "https://staging.vertx.cloud";
             client.Headers.Add("Content-Type", "application/json");
-            
+
             Console.WriteLine("Program ready!\n");
 
             //Send current box status to unity application
@@ -55,7 +54,7 @@ namespace PiUpdate
             //Constant service running to check state change
             while (true)
             {
-                foreach(Component component in box.getComponents())
+                foreach (Component component in box.getComponents())
                 {
                     component.update();
                     bool changed = component.isChanged();
@@ -84,7 +83,7 @@ namespace PiUpdate
                             client.UploadData("/session/fire/" + sceneId + "/" + guid + "/OnUpdate", System.Text.UTF8Encoding.UTF8.GetBytes(json));
                             Console.WriteLine("Data sent");
                         }
-                        catch(WebException webEcxeption)
+                        catch (WebException webEcxeption)
                         {
                             Console.WriteLine("WebException thrown => " + webEcxeption.Message);
                             //guid = GetGUIDBySceneIDFromVertx();
@@ -123,15 +122,16 @@ namespace PiUpdate
                 string responseFromServer = reader.ReadToEnd();
                 // Deserialize the repsonse from vertx
                 VertxObject responseObj = JsonConvert.DeserializeObject<VertxObject>(responseFromServer);
-            
-                Child child =  responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
+
+                Child child = responseObj.rootNode.children.FirstOrDefault(vetxObj => vetxObj.id == "VertxEventManager");
                 // Clean up the streams and the response.  
                 reader.Close();
                 response.Close();
-                
+
                 _guid = child.guid;
                 Console.WriteLine(_guid);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 _guid = null;
                 Console.WriteLine(e.Message);
