@@ -26,7 +26,6 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
     GameObject TitleSection;
     GameObject StatusSection;
     GameObject InformationSection;
-    GameObject PreviousSelected;
 
     const int AUDIO_SAMPLE_RATE = 44100;
 
@@ -259,13 +258,13 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
 
         List<Renderer> RenderList = new List<Renderer>();
 
+        Color baseColour;
+        if(TitleSection) RenderList.Add(TitleSection.GetComponent<Renderer>());
+        if(StatusSection) RenderList.Add(StatusSection.GetComponent<Renderer>());
 
-        RenderList.Add(TitleSection.GetComponent<Renderer>());
-        RenderList.Add(StatusSection.GetComponent<Renderer>());
 
         foreach (Renderer render in RenderList)
         {
-            Color baseColour;
             Material mat = render.material;
 
             if (selectedComponent.tag == "Working")
@@ -278,12 +277,14 @@ public class ComponentWindow : VertexSingleton<ComponentWindow>
             }
             else
             {
-                baseColour = Color.white;
+                baseColour = new Color(1,1,1,0);
             }
 
             mat.color = baseColour;
+            
+
         }
-        
+
     }
 
 }

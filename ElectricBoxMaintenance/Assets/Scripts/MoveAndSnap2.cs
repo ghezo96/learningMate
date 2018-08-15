@@ -521,11 +521,12 @@ namespace HoloToolkit.Unity.InputModule
                 if (col.gameObject.name.Contains("SnapSwitch"))
                 {
                     GameObject hitObject = col.gameObject;
-
-                    col.GetComponentInParent<CreateWires>().SwitchesSnapped++;
-
-                    if ((gameObject.name.Contains("SWITCH") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
+                
+                    if ((gameObject.name.Contains("SWITCH")) && !(col.gameObject.tag == "SnapOccupied") && !(gameObject.tag == "Snapped"))
                     {
+                        col.GetComponentInParent<CreateWires>().IncrementSwitchCount();
+                        
+
                         StopDragging();
                         GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
 
@@ -533,28 +534,24 @@ namespace HoloToolkit.Unity.InputModule
                         transform.position = hitObject.transform.position;
                         transform.rotation = box.transform.rotation;
 
-                        //Destroy(hitObject.GetComponent<Rigidbody>());
-                        //hitObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                        // hitObject.GetComponent<BoxCollider>().isTrigger = false;
-
                         //to make sure that it doesnt pick it up again straight after
                         StartCoroutine(DeactivateColliderFor(1,gameObject.GetComponent<Collider>()));
 
-                    Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
+                        Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
 
                         col.gameObject.tag = "SnapOccupied";
-
+                        gameObject.tag = "Snapped";
                     }
                 }
                 else if (col.gameObject.name.Contains("SnapConnector"))
                 {
                     GameObject hitObject = col.gameObject;
 
-                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped++;
-
-                    if ((gameObject.name.Contains("CONNECTOR") && gameObject) && !(col.gameObject.tag == "SnapOccupied"))
+                    if ((gameObject.name.Contains("CONNECTOR")) && !(col.gameObject.tag == "SnapOccupied")&& !(gameObject.tag == "Snapped"))
                     {
+                        col.GetComponentInParent<CreateWires>().IncrementConnectorCount();
 
+                        
 
                         StopDragging();
                         GameObject box = GameObject.FindGameObjectWithTag("THEBOX");
@@ -567,13 +564,17 @@ namespace HoloToolkit.Unity.InputModule
                         Debug.Log(col.GetComponentInParent<CreateWires>().ConnectorsSnapped);
 
                         col.gameObject.tag = "SnapOccupied";
+                        gameObject.tag = "Snapped";
                     }
                 }
         }
 
         void OnTriggerStay(Collider col)
         {
-            col.gameObject.tag = "SnapOccupied";
+            if (col.gameObject.name.Contains("SnapSwitch") || col.gameObject.name.Contains("SnapConnector"))
+            {
+                col.gameObject.tag = "SnapOccupied";
+            }
         }
 
         public void OnTriggerExit(Collider col)
@@ -581,15 +582,15 @@ namespace HoloToolkit.Unity.InputModule
             if (col.gameObject.name.Contains("SnapSwitch"))
             {
                 GameObject hitObject = col.gameObject;
+                
 
-
-                if (gameObject.name.Contains("SWITCH") && gameObject)
+                if (gameObject.name.Contains("SWITCH") && col.gameObject.tag == "SnapOccupied" && (gameObject.tag == "Snapped"))
                 {
-
-                    col.GetComponentInParent<CreateWires>().SwitchesSnapped--;
+                    
+                    col.GetComponentInParent<CreateWires>().DecrementSwitchCount();
 
                     Debug.Log(col.GetComponentInParent<CreateWires>().SwitchesSnapped);
-
+                    gameObject.tag = "Free";
                     col.gameObject.tag = "Snappable";
                 }
             }
@@ -598,13 +599,12 @@ namespace HoloToolkit.Unity.InputModule
                 GameObject hitObject = col.gameObject;
 
 
-                if (gameObject.name.Contains("CONNECTOR") && gameObject)
+                if (gameObject.name.Contains("CONNECTOR") && col.gameObject.tag == "SnapOccupied" && (gameObject.tag == "Snapped"))
                 {
-                    
 
-                    col.GetComponentInParent<CreateWires>().ConnectorsSnapped--;
+                    col.GetComponentInParent<CreateWires>().DecrementConnectorCount();
                     Debug.Log(col.GetComponentInParent<CreateWires>().ConnectorsSnapped);
-
+                    gameObject.tag = "Free";
                     col.gameObject.tag = "Snappable";
                 }
             }

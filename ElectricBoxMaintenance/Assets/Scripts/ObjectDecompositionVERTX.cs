@@ -12,7 +12,7 @@ public class ObjectDecompositionVERTX : MonoBehaviour {
     public Vector3[] InitialPositions;
 
     [Header("Timing variables")]
-    public float LerpDuration = 0.5f;
+    public float LerpDuration = 1.0f;
     [Header("Spatial variables")]
     public float MaxDistance = 0.3f;
     public AnimationCurve MovementCurve = new AnimationCurve();

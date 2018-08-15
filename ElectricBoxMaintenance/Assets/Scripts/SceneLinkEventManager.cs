@@ -16,7 +16,6 @@ public class SceneLinkEventManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         SceneLink.Instance.OnStateChange += Instance_OnStateChange;
         StartCoroutine(AttachManagers());
 
@@ -25,7 +24,6 @@ public class SceneLinkEventManager : MonoBehaviour
 
     IEnumerator AttachManagers()
     {
-
         yield return new WaitForSeconds(3f);
         LoadVertxEventManager();
         LoadLiveInformationManager();
@@ -44,7 +42,7 @@ public class SceneLinkEventManager : MonoBehaviour
             //    uxHandler.GetComponent<Player>().EnableRaycasting(false);
             //}
 
-            StartCoroutine(CheckIfLocationExists());
+           // StartCoroutine(CheckIfLocationExists());
         }
     }
 

@@ -18,7 +18,8 @@ public class FloatingButton : MonoBehaviour, IInputClickHandler {
     public void OnInputClicked(InputClickedEventData eventData)
     {
         //Debug.Log("OnInputClicked" + eventData.selectedObject);
-        Clicked(eventData.selectedObject);
+        Clicked(gameObject);
+        eventData.Use();
     }
 
     public void setActiveStatus(bool status)

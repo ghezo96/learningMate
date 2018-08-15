@@ -11,7 +11,7 @@ namespace PiUpdate
     class Program
     {
         static ElectricBox box = new ElectricBox();
-        static string sceneId = "083c1f61-97af-4d88-bacf-6664a9690257";
+        static string sceneId = "8e864c95-8424-4233-8d71-7457167ec1bb";
         static string guid;
 
         static void Main(string[] args)
