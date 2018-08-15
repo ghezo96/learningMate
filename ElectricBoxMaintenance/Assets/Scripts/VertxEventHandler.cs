@@ -146,7 +146,22 @@ public class VertxEventHandler : MonoBehaviour
         }
         else
         {
-            if (currentStep > 4)
+            if (currentStep < 4)
+            {
+                switch (componentName)
+                {
+                    case "SWITCH_THREE":
+                        componentName = "SWITCH_FOUR";
+                        break;
+                    case "SWITCH_TWO":
+                        componentName = "SWITCH_FIVE";
+                        break;
+                    case "SWITCH_ONE":
+                        componentName = "SWITCH_s";
+                        break;
+                }
+            }
+            else
             {
                 switch (componentName)
                 {
