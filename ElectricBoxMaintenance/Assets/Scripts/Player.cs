@@ -61,7 +61,7 @@ public class Player : VertexSingleton<Player>
 
     public void Validate_Clicked(GameObject button)
     {
-        sceneLink.GetComponentInChildren<CreateWires>().ValidateWiring();
+        sceneLink.GetComponentInChildren<CreateWires>().CheckIfValidCircuit();
     }
 
     // Start button click handler
@@ -77,7 +77,7 @@ public class Player : VertexSingleton<Player>
 
         Camera.GetComponent<RaycastPositioningV1>().enabled = false;
 
-        LocationManager.Instance.BeginLocationSync();
+        //LocationManager.Instance.BeginLocationSync();
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
@@ -97,6 +97,11 @@ public class Player : VertexSingleton<Player>
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
+        if(SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
+        {
+            SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
+            Debug.Log("Values reset");
+        }
 
         button.SetActive(false);
         if(inDecomp)
@@ -128,7 +133,6 @@ public class Player : VertexSingleton<Player>
 
 
             ValidateButton.setActiveStatus(false);
-
         }
 
     }
@@ -137,7 +141,7 @@ public class Player : VertexSingleton<Player>
     {
         //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsBackwards();
         SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxComposition();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
 
         if (boxStatus)
         {
@@ -186,7 +190,7 @@ public class Player : VertexSingleton<Player>
             // Set the default values to component panel
 
             ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
-
+            ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
         }
         else if (button.name == "InteractiveGuide")
         {
@@ -286,7 +290,7 @@ public class Player : VertexSingleton<Player>
             // Reset Collaboration objects
             foreach (Transform x in SceneLink.Instance.transform)
             {
-                if (x.name == "SWITCH" || x.name == "CONNECTOR" || x.name == "BOX")
+                if (x.name.Contains("SWITCH") || x.name.Contains("CONNECTOR") || x.name.Contains("BOX") || x.name.Contains("SnapSwitch1Snap") || x.name.Contains("SnapSwitch2Snap") || x.name.Contains("SnapSwitch3Snap") || x.name.Contains("AnimatedWires"))
                 {
                     Destroy(x.gameObject);
                 }
@@ -329,7 +333,31 @@ public class Player : VertexSingleton<Player>
         SpatialMapping.SetActive(isEnabled);
     }
 
-    // Information popup when decomposed component clicked on
+    // Location manager stuff
+    public void OnPositionLocated()
+    {
+        //StartButton.setActiveStatus(false);
+        //Reset.setActiveStatus(true);
+        //SpatialUnderstanding.SetActive(false);
+        //mainMenuContainer.SetActiveStatus(true);
+        //MainBox.GetComponent<Movement>().enabled = false;
+        //BoundingBox.SetActive(false);
+        //WholeBox.SetActive(false);
+
+        //Camera.GetComponent<RaycastPositioningV1>().enabled = false;
+    }
+
+    public void OnLocationFailed()
+    {
+        Debug.Log("OnLocationFailed!!");
+    }
+
+    public void OnLocationChanged()
+    {
+        Debug.Log("OnLocationChanged!!" + LocationManager.Instance.CurrentState);
+
+       // LocationManager.Instance.CurrentState
+    }
 
 
 }

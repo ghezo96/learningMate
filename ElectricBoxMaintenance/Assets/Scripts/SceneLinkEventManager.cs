@@ -16,7 +16,6 @@ public class SceneLinkEventManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         SceneLink.Instance.OnStateChange += Instance_OnStateChange;
         StartCoroutine(AttachManagers());
 
@@ -25,7 +24,6 @@ public class SceneLinkEventManager : MonoBehaviour
 
     IEnumerator AttachManagers()
     {
-
         yield return new WaitForSeconds(3f);
         LoadVertxEventManager();
         LoadLiveInformationManager();
@@ -35,8 +33,8 @@ public class SceneLinkEventManager : MonoBehaviour
     {
         if (newState == SceneLinkStatus.Connected)
         {
-            StartCoroutine(CheckIfHost());
-            Debug.Log("viewpoint count => " + SceneLink.Instance.ViewpointObject.transform.childCount);
+            //StartCoroutine(CheckIfHost());
+            //Debug.Log("viewpoint count => " + SceneLink.Instance.ViewpointObject.transform.childCount);
             //if (SceneLink.Instance.transform.Find("Viewpoints").childCount > 1)
             //{
             //    // Disable the Raycast
@@ -44,7 +42,7 @@ public class SceneLinkEventManager : MonoBehaviour
             //    uxHandler.GetComponent<Player>().EnableRaycasting(false);
             //}
 
-            StartCoroutine(CheckIfLocationExists());
+           // StartCoroutine(CheckIfLocationExists());
         }
     }
 
@@ -127,7 +125,7 @@ public class SceneLinkEventManager : MonoBehaviour
             Debug.Log("Location exists on vertx");
             Debug.Log("Location Syncing");
 
-            LocationManager.Instance.BeginLocationSync();
+           LocationManager.Instance.BeginLocationSync();
         } else
         {
             Debug.Log("Location does not exist on vertx");

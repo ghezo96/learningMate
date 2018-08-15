@@ -14,5 +14,6 @@ public class SetSceneLinkPosition : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         transform.position = Box.transform.position;
-	}
+        transform.rotation = Box.transform.rotation;
+    }
 }

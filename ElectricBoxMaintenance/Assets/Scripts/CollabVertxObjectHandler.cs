@@ -10,6 +10,8 @@ public class CollabVertxObjectHandler : MonoBehaviour {
     public string[,] ComponentArray;
     bool doItOnce = true;
 
+    float xPosition;
+
     GameObject VertxBoxComponent;
     List<GameObject> vertxGameObjects;
 
@@ -110,10 +112,10 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             VertxBoxComponent.transform.rotation = box.transform.rotation;
 
             var xOffset = 0.4f;
-            var offset = 0.4f;
-            var xPos = box.transform.position.x;
-            var zPos = box.transform.position.z;
-            var yPos = box.transform.position.y;
+            var offset = 0.2f;
+            var xPos = VertxBoxComponent.transform.position.x;
+            var zPos = VertxBoxComponent.transform.position.z;
+            var yPos = VertxBoxComponent.transform.position.y;
 
             if (doItOnce)
             {
@@ -121,23 +123,27 @@ public class CollabVertxObjectHandler : MonoBehaviour {
                 for (int i = 0; i < vertxGameObjects.Count; i++)
                 {
 
-                    vertxGameObjects[i].transform.position = new Vector3(xPos - xOffset, yPos + 0.3f, zPos);
-                    xOffset -= 0.1f;
-                    vertxGameObjects[i].transform.rotation = box.transform.rotation;
+                    //vertxGameObjects[i].transform.parent = VertxBoxComponent.transform;
                     
-                   
-                   
+                    xOffset -= 0.1f;
+                    vertxGameObjects[i].transform.rotation = VertxBoxComponent.transform.rotation;
+
+                    vertxGameObjects[i].transform.position = new Vector3 (VertxBoxComponent.transform.position.x , VertxBoxComponent.transform.position.y , VertxBoxComponent.transform.position.z);
+                    vertxGameObjects[i].transform.Translate(-xOffset,0.3f,0);
+
+
 
                     if (vertxGameObjects[i].name.Contains("CONNECTOR"))
                     {
-                        vertxGameObjects[i].transform.position = new Vector3(xPos - offset, yPos + 0.2f, zPos);
-                        offset -=0.1f;
+                        vertxGameObjects[i].transform.position = new Vector3(VertxBoxComponent.transform.position.x, VertxBoxComponent.transform.position.y, VertxBoxComponent.transform.position.z);
+                        vertxGameObjects[i].transform.Translate(-offset, 0.2f, 0);
+                        offset -= 0.1f;
                     }
                     //Debug.Log("Switch position: " + vertxGameObjects[i].transform.position);
                 }
                 doItOnce = false;
             }
         }
-       
+
     }
 }

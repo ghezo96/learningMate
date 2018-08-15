@@ -35,6 +35,7 @@ public class FadeIn : MonoBehaviour
     public void Fade()
     {
         StartCoroutine(FadeWithWait(1.0f));
+        StartCoroutine(ImgFadeWithWait(1.0f));
     }
 
     public void FadeOut()
@@ -42,6 +43,7 @@ public class FadeIn : MonoBehaviour
         StartCoroutine(FadeOutWithWait(0.2f));
         StartCoroutine(ImgFadeOutWithWait(0.2f));
     }
+
 
     IEnumerator FadeWithWait(float x)
     {

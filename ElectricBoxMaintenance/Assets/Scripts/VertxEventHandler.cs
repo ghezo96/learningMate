@@ -34,17 +34,17 @@ public class VertxEventHandler : MonoBehaviour
         AnimationArray = new string[,]
         {
                 {"KEY_ANIMATION","353f92d5-3f34-4bde-859e-f6bda4c51d0d", "1"}, 
-                {"DOOR_ANIMATION","a7e0309a-2196-4827-8ea9-5239c7dce5ab", "1"}, 
+                //{"DOOR_ANIMATION","a7e0309a-2196-4827-8ea9-5239c7dce5ab", "1"}, 
                 {"SWITCH_ONE","dba4bf63-f221-4afb-be70-2d4d3a120f0b", "0" },
                 {"SWITCH_TWO","6515834e-e299-4169-a2cf-48bbba3fde9c", "1"},
                 {"SWITCH_THREE","a2f4d458-ee08-479b-963a-a1e92c029ea2", "0"},
                 {"FUSE_ANIMATION","61399449-de19-4183-ab35-48eb4b3e6c98", "0" },
                 {"FUSE_ANIMATION_CLOSE","33a4426a-cb3d-4618-9f5e-cd0fb4314c2e", "1" },
                 {"SWITCH_FOUR","407a5f53-5f75-4689-8370-fba5d317c212", "1"},
-                {"SWITCH_FIVE","4935b63e-3f0d-4614-bd5d-eb4560bad25e", "0"}, 
-                {"SWITCH_SIX","7a62effa-ef7b-47fb-a21e-9a5bab0b10b0", "1"}, 
+                {"SWITCH_FIVE","4935b63e-3f0d-4614-bd5d-eb4560bad25e", "0"},
+                {"SWITCH_SIX","7a62effa-ef7b-47fb-a21e-9a5bab0b10b0", "1"},
                 {"DOOR_FINISH","a60d4de1-5ab4-4b61-9865-e6bfbf426c63", "0"},
-                {"KEY_ANIMATION_FINISH","41dbd084-6dd4-4f24-af2d-0ce3c2dccfc0","0"} 
+                {"KEY_ANIMATION_FINISH","41dbd084-6dd4-4f24-af2d-0ce3c2dccfc0","0"}
         };
 
         VoiceOverDictionary.Add("DOOR_ANIMATION", "03");
@@ -92,12 +92,18 @@ public class VertxEventHandler : MonoBehaviour
         string componentName = _message.name;
         string componentState = _message.state.ToString();
 
+        if (componentName == "DOOR_ANIMATION" && componentState == "1")
+        {
+            return;
+        }
+
+
         if (PreviousAnimationNode)
         {
             DestroyImmediate(PreviousAnimationNode);
         }
 
-        if (currentStep > 5)
+        if (currentStep > 4)
         {
             switch (componentName)
             {
@@ -122,74 +128,29 @@ public class VertxEventHandler : MonoBehaviour
             }
         }
 
-        if (correctStep)
+
+        // Deserialize the message received by IOT
+
+        //Debug.Log("Component name => " + componentName);
+        //Debug.Log("Component state => " + componentState);
+
+        //SAME SWITCHES USED
+
+        if (!isComplete())
         {
-            // Deserialize the message received by IOT
-
-            //Debug.Log("Component name => " + componentName);
-            //Debug.Log("Component state => " + componentState);
-
-            //SAME SWITCHES USED
-
-            if (!isComplete())
-            {
-                ExecuteAnimation(componentName, componentState);
-            }
-            else
-            {
-                PreviousAnimationNode = CreateNode("MAINTANENCE_MODEL", "b7617179-cf1f-45b1-90be-e6d05369de7a");
-            } 
+            ExecuteAnimation(componentName, componentState);
         }
         else
         {
-            if (currentStep < 5)
-            {
-                switch (componentName)
-                {
-                    case "SWITCH_THREE":
-                        componentName = "SWITCH_FOUR";
-                        break;
-                    case "SWITCH_TWO":
-                        componentName = "SWITCH_FIVE";
-                        break;
-                    case "SWITCH_ONE":
-                        componentName = "SWITCH_SIX";
-                        break;
-                    case "DOOR_ANIMATION":
-                        componentName = "DOOR_FINISH";
-                        break;
-                }
-            }
-
-            if (componentName == AnimationArray[incorrectStep, 0] && componentState == AnimationArray[incorrectStep, 2])
-            {
-                switch (componentState)
-                {
-                    case "1":
-                        newValue = "0";
-                        break;
-                    case "0":
-                        newValue = "1";
-                        break;
-                }
-
-                AnimationArray[incorrectStep, 2] = newValue;
-                CreateNode(AnimationArray[currentStep, 0], AnimationArray[currentStep, 1]);
-                correctStep = true;
-            }
-            else
-            {
-                CreateNode(AnimationArray[incorrectStep, 0], AnimationArray[incorrectStep, 1]);
-            }
-        }
-
+            PreviousAnimationNode = CreateNode("MAINTANENCE_MODEL", "b7617179-cf1f-45b1-90be-e6d05369de7a");
+        } 
     }
 
     //maintenence completed when all animations have been played
     bool isComplete()
     {
         bool maintenenceComplete;
-        if (currentStep == 11)
+        if (currentStep == AnimationArray.Length / 3 - 1)
         {
             maintenenceComplete = true;
         }
@@ -210,70 +171,7 @@ public class VertxEventHandler : MonoBehaviour
         }
         else
         {
-            correctStep = false;
-
-            for (int i = 0; i < AnimationArray.Length/3; i++)
-            {
-                if(AnimationArray[i,0] == _ComponentName)
-                {
-
-                    Debug.Log(AnimationArray[i, 0]);
-
-
-                    switch (_ComponentStatus)
-                    {
-                        case "1":
-                            newValue = "0";
-                            break;
-                        case "0":
-                            newValue = "1";
-                            break;
-                    }
-
-                    switch (_ComponentName)
-                    {
-                        case "SWITCH_ONE":
-                            incorrectStep = 9;
-                            CreateNode(AnimationArray[9, 0], AnimationArray[9, 1]);
-                            Debug.Log(AnimationArray[9, 0]);
-                            break;
-                        case "SWITCH_TWO":
-                            incorrectStep = 8;
-                            CreateNode(AnimationArray[8, 0], AnimationArray[8, 1]);
-                            Debug.Log(AnimationArray[8, 0]);
-                            break;
-                        case "SWITCH_THREE":
-                            incorrectStep = 7;
-                            CreateNode(AnimationArray[7, 0], AnimationArray[7, 1]);
-                            Debug.Log(AnimationArray[7, 0]);
-                            break;
-                        case "SWITCH_FOUR":
-                            incorrectStep = 4;
-                            CreateNode(AnimationArray[4, 0], AnimationArray[4, 1]);
-                            Debug.Log(AnimationArray[4, 0]);
-                            break;
-                        case "SWITCH_FIVE":
-                            incorrectStep = 3;
-                            CreateNode(AnimationArray[3, 0], AnimationArray[3, 1]);
-                            Debug.Log(AnimationArray[3, 0]);
-                            break;
-                        case "SWITCH_SIX":
-                            incorrectStep = 2;
-                            CreateNode(AnimationArray[2, 0], AnimationArray[2, 1]);
-                            Debug.Log(AnimationArray[2, 0]);
-                            break;
-                        default:
-                            incorrectStep = i;
-                            CreateNode(AnimationArray[i, 0], AnimationArray[i, 1]);
-                            Debug.Log("not a switch");
-                            break;
-                    }
-
-
-                    AnimationArray[incorrectStep, 2] = newValue;
-                    break;
-                }
-            }
+            CreateNode(AnimationArray[currentStep, 0], AnimationArray[currentStep, 1]);
         }
     }
 
@@ -303,15 +201,13 @@ public class VertxEventHandler : MonoBehaviour
         currentGameObject.AddComponent<AnimEventHandler>();
         PreviousAnimationNode = currentGameObject;
         currentStep = 0;
-
-        
     }
 
     private void PlayVoiceOver(string componentName)
     {
         Debug.Log("Playing Audio => " + componentName);
         string voiceOverName = null;
-        if(VoiceOverDictionary.TryGetValue(componentName, out voiceOverName))
+        if (VoiceOverDictionary.TryGetValue(componentName, out voiceOverName))
         {
             AudioSource src = SceneLink.Instance.GetComponentInChildren<VertxEventHandler>().GetComponent<AudioSource>();
             Debug.Log("Playing Audio");
