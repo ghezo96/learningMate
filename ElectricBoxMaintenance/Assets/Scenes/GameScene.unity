@@ -3006,16 +3006,11 @@ Prefab:
       propertyPath: ViewpointObject
       value: 
       objectReference: {fileID: 1543860087}
-    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
+    - target: {fileID: 114604668224061156, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
-      propertyPath: SceneId
-      value: 8e864c95-8424-4233-8d71-7457167ec1bb
-      objectReference: {fileID: 0}
-    - target: {fileID: 114002142956930048, guid: 281590aa20ce02f4485fa1ecbc592242,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: Box
+      value: 
+      objectReference: {fileID: 1113229465}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_IsPrefabParent: 0
@@ -6198,18 +6193,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1941915913401856, guid: 281590aa20ce02f4485fa1ecbc592242,
     type: 2}
   m_PrefabInternal: {fileID: 917642467}
---- !u!114 &1406508361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1406508354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38adf44bdee00a8488987546c5239c2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Box: {fileID: 1113229465}
 --- !u!1 &1440015308
 GameObject:
   m_ObjectHideFlags: 0
@@ -7647,7 +7630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1899369347
 MeshRenderer:
   m_ObjectHideFlags: 0

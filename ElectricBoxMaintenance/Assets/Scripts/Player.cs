@@ -23,12 +23,6 @@ public class Player : VertexSingleton<Player>
     GameObject ComponentWindowPanel;
     NodeLink CurrentNodeLink;
 
-    public class ButtonObject
-    {
-        public name;
-
-    }
-
 
 
 
@@ -56,14 +50,7 @@ public class Player : VertexSingleton<Player>
 
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
 
-        if (SceneLink.Instance.transform.Find("VertxMessageHandler"))
-        {
-            CurrentNodeLink = SceneLink.Instance.transform.Find("VertxMessageHandler").GetComponent<NodeLink>();
-        }
-        else
-        {
-            Debug.Log("Messanger node not found");
-        }
+       
     }
 
     // On scene connect, Handler is set up
@@ -74,20 +61,40 @@ public class Player : VertexSingleton<Player>
         {
             Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
             StartCoroutine(ResetVertxEventHandler());
+           // StartCoroutine(GetMessageHandler());
+
         }
 
+    }
+
+    IEnumerator GetMessageHandler()
+    {
+        yield return new WaitForSeconds(10f);
+
+        GameObject messageObj = SceneLink.Instance.transform.Find("VertxMessageHandler").gameObject;
+        if (messageObj)
+        {
+            CurrentNodeLink = messageObj.GetComponent<NodeLink>();
+        }
+        //CurrentNodeLink = SceneLink.Instance.transform.Find("VertxMessageHandler").GetComponent<NodeLink>();
+        if (CurrentNodeLink)
+        {
+            Debug.Log("Messanger found");
+        }
+        else
+        {
+            Debug.Log("Messanger node not found");
+        }
     }
 
     public void Validate_Clicked(GameObject button)
     {
         sceneLink.GetComponentInChildren<CreateWires>().CheckIfValidCircuit();
-        CurrentNodeLink.Fire("Validate_Clicked", button);
     }
 
     // Start button click handler
     public void Start_Clicked(GameObject button)
     {
-        CurrentNodeLink.Fire("Start_Clicked", button);
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
         SpatialUnderstanding.SetActive(false);
@@ -99,6 +106,7 @@ public class Player : VertexSingleton<Player>
         Camera.GetComponent<RaycastPositioningV1>().enabled = false;
 
         //LocationManager.Instance.BeginLocationSync();
+        //CurrentNodeLink = SceneLink.Instance.transform.Find("VertxMessageHandler").GetComponent<NodeLink>();
     }
     // Reset button click handler
     public void Reset_Clicked(GameObject button)
@@ -118,7 +126,6 @@ public class Player : VertexSingleton<Player>
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
-        CurrentNodeLink.Fire("HomeButton_Clicked", button);
         if (SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
         {
             SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
@@ -183,7 +190,7 @@ public class Player : VertexSingleton<Player>
         SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().RemoveBox();
     }
 
-    void LiveInfo()
+    public void LiveInfo()
     {
 
         //WholeBox.SetActive(true);
@@ -209,17 +216,44 @@ public class Player : VertexSingleton<Player>
         ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
     }
 
+    public void InteractiveGuide()
+    {
+        //WholeBox.SetActive(false);
+        LoadKeyAnimation();
+        mainMenuContainer.SetActiveStatus(false);
+        windowManager.SetActive(false);
+        Reset.setActiveStatus(false);
+        homeButton.setActiveStatus(true);
+    }
+
+    public void Collaboration()
+    {
+        StartCoroutine(EnableIoTListeners(false));
+        //WholeBox.SetActive(false);
+        mainMenuContainer.SetActiveStatus(false);
+        windowManager.SetActive(false);
+        Reset.setActiveStatus(false);
+        homeButton.setActiveStatus(true);
+        StartCoroutine(StartCollaberation());
+    }
+
+    public class MessagePacket
+    {
+        public string name;
+    }
+
     // Menu container button click event handler
     private void OnButtonClicked(GameObject button)
     {
-        CurrentNodeLink.Fire("ButtonEventHandler", button);
+        SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
+        //CurrentNodeLink.Fire("ButtonEventHandler", button.name);
+        //ButtonEventHandler(button);
     }
 
-    private void ButtonEventHandler(GameObject button)
+    private void ButtonEventHandler(string button)
     {
-        if (button.name == "LiveInformation")
+        if (button == "LiveInformation")
         {
-
             //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(true);
@@ -242,7 +276,7 @@ public class Player : VertexSingleton<Player>
             ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
             ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
         }
-        else if (button.name == "InteractiveGuide")
+        else if (button == "InteractiveGuide")
         {
             //WholeBox.SetActive(false);
             LoadKeyAnimation();
@@ -252,7 +286,7 @@ public class Player : VertexSingleton<Player>
             homeButton.setActiveStatus(true);
 
         }
-        else if (button.name == "Collab")
+        else if (button == "Collab")
         {
 
 
@@ -264,7 +298,7 @@ public class Player : VertexSingleton<Player>
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
         }
-        else if (button.name == "RemoteAssistance")
+        else if (button == "RemoteAssistance")
         {
             RemoteAssistance.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
@@ -372,7 +406,7 @@ public class Player : VertexSingleton<Player>
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
 
