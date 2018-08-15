@@ -7,21 +7,32 @@ public class Component
 {
     private string name;
     private string GPIO;
-    private string currentCharge;
-    public string previousCharge;
+    private string currentCharge = "0";
+    public string previousCharge = "0";
 
 
 
     //Default constructor
-    public Component(string name, string GPIO)
+    public Component(string name, string GPIO, bool isRunningOnPi)
     {
         this.name = name;
         this.GPIO = GPIO;
-        if (!Directory.Exists("/sys/class/gpio/" + this.GPIO + "/"))
+        if (!Directory.Exists("/sys/class/gpio/" + this.GPIO + "/") && isRunningOnPi)
         {
             this.Export();
         }
-        this.update();
+        if (isRunningOnPi)
+            this.update();
+        if((name == "KEY_ANIMATION" || name == "DOOR_ANIMATION" || name == "SWITCH_TWO") && !isRunningOnPi)
+        {
+            this.currentCharge = "0";
+            this.previousCharge = this.currentCharge;
+        }
+        else if (!isRunningOnPi)
+        {
+            this.currentCharge = "1";
+            this.previousCharge = this.currentCharge;
+        }
     }
 
     public string getGPIO()
@@ -49,9 +60,9 @@ public class Component
     //Method for checked whether a components state has changed or not
     public bool isChanged()
     {
-        if(this.currentCharge != this.previousCharge)
+        if (this.currentCharge != this.previousCharge)
         {
-           return true;
+            return true;
         }
         return false;
     }
@@ -65,8 +76,8 @@ public class Component
     //Returns the Pin specific number for exporting
     public string getPinNumber()
     {
-        
-        return this.GPIO.Remove(0,4);
+
+        return this.GPIO.Remove(0, 4);
     }
 
     //Updates the current state of the switch
@@ -74,18 +85,31 @@ public class Component
     {
         this.previousCharge = this.currentCharge;
         this.currentCharge = Regex.Replace(File.ReadAllText("/sys/class/gpio/" + this.GPIO + "/value"), @"\t|\n|\r", "");
-        if(this.name.Contains("DOOR") || this.name.Contains("KEY"))
+        if (this.name.Contains("DOOR") || this.name.Contains("KEY"))
         {
             if (this.currentCharge == "0")
             {
                 this.currentCharge = "1";
             }
-            else if(this.currentCharge == "1")
+            else if (this.currentCharge == "1")
             {
                 this.currentCharge = "0";
             }
         }
 
+    }
+
+    public void UpdateFromKeyboard(bool changeValue)
+    {
+        this.previousCharge = this.currentCharge;
+
+        if(changeValue)
+        {
+            if (this.currentCharge == "0")
+                this.currentCharge = "1";
+            else
+                this.currentCharge = "0";
+        }
     }
 
     public void Export()
@@ -125,13 +149,13 @@ public class ElectricBox
     public string getCurrentState()
     {
         string currentStateJson = "[";
-        foreach(Component component in components)
+        foreach (Component component in components)
         {
-            if(currentStateJson.Length > 1)
+            if (currentStateJson.Length > 1)
             {
                 currentStateJson += ", " + component.getJson();
             }
-            else if(currentStateJson.Length == 1)
+            else if (currentStateJson.Length == 1)
             {
                 currentStateJson += component.getJson();
             }
