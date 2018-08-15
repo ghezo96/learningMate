@@ -7,32 +7,21 @@ public class Component
 {
     private string name;
     private string GPIO;
-    private string currentCharge = "0";
-    public string previousCharge = "0";
+    private string currentCharge;
+    public string previousCharge;
 
 
 
     //Default constructor
-    public Component(string name, string GPIO, bool isRunningOnPi)
+    public Component(string name, string GPIO)
     {
         this.name = name;
         this.GPIO = GPIO;
-        if (!Directory.Exists("/sys/class/gpio/" + this.GPIO + "/") && isRunningOnPi)
+        if (!Directory.Exists("/sys/class/gpio/" + this.GPIO + "/"))
         {
             this.Export();
         }
-        if (isRunningOnPi)
-            this.update();
-        if((name == "KEY_ANIMATION" || name == "DOOR_ANIMATION" || name == "SWITCH_TWO") && !isRunningOnPi)
-        {
-            this.currentCharge = "0";
-            this.previousCharge = this.currentCharge;
-        }
-        else if (!isRunningOnPi)
-        {
-            this.currentCharge = "1";
-            this.previousCharge = this.currentCharge;
-        }
+        this.update();
     }
 
     public string getGPIO()
@@ -97,19 +86,6 @@ public class Component
             }
         }
 
-    }
-
-    public void UpdateFromKeyboard(bool changeValue)
-    {
-        this.previousCharge = this.currentCharge;
-
-        if(changeValue)
-        {
-            if (this.currentCharge == "0")
-                this.currentCharge = "1";
-            else
-                this.currentCharge = "0";
-        }
     }
 
     public void Export()
