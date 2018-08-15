@@ -16,6 +16,7 @@ public class Player : VertexSingleton<Player>
     public GameObject SpatialUnderstanding;
     public GameObject sceneLink;
     public GameObject SpatialMapping;
+    public GameObject RemoteAssistance;
     bool boxStatus = true;
     bool inDecomp = false;
     // panels for live information
@@ -40,6 +41,10 @@ public class Player : VertexSingleton<Player>
         if (homeButton.isActiveAndEnabled)
         {
             homeButton.setActiveStatus(false);
+        }
+        if (RemoteAssistance)
+        {
+            RemoteAssistance.SetActive(false);
         }
 
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
@@ -102,7 +107,7 @@ public class Player : VertexSingleton<Player>
             SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
             Debug.Log("Values reset");
         }
-
+        RemoteAssistance.SetActive(false);
         button.SetActive(false);
         if(inDecomp)
         {
@@ -168,8 +173,6 @@ public class Player : VertexSingleton<Player>
         if (button.name == "LiveInformation")
         {
             
-
-
             //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(true);
@@ -213,9 +216,14 @@ public class Player : VertexSingleton<Player>
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
-
-
-            
+        }
+        else if(button.name == "RemoteAssistance")
+        {
+            RemoteAssistance.SetActive(true);
+            mainMenuContainer.SetActiveStatus(false);
+            windowManager.SetActive(false);
+            homeButton.setActiveStatus(true);
+            Reset.setActiveStatus(false);
         }
     }
 
