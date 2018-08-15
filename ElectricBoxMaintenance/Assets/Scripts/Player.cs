@@ -21,6 +21,13 @@ public class Player : VertexSingleton<Player>
     bool inDecomp = false;
     // panels for live information
     GameObject ComponentWindowPanel;
+    NodeLink CurrentNodeLink;
+
+    public class ButtonObject
+    {
+        public name;
+
+    }
 
 
 
@@ -49,7 +56,14 @@ public class Player : VertexSingleton<Player>
 
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
 
-        
+        if (SceneLink.Instance.transform.Find("VertxMessageHandler"))
+        {
+            CurrentNodeLink = SceneLink.Instance.transform.Find("VertxMessageHandler").GetComponent<NodeLink>();
+        }
+        else
+        {
+            Debug.Log("Messanger node not found");
+        }
     }
 
     // On scene connect, Handler is set up
@@ -67,11 +81,13 @@ public class Player : VertexSingleton<Player>
     public void Validate_Clicked(GameObject button)
     {
         sceneLink.GetComponentInChildren<CreateWires>().CheckIfValidCircuit();
+        CurrentNodeLink.Fire("Validate_Clicked", button);
     }
 
     // Start button click handler
     public void Start_Clicked(GameObject button)
     {
+        CurrentNodeLink.Fire("Start_Clicked", button);
         StartButton.setActiveStatus(false);
         Reset.setActiveStatus(true);
         SpatialUnderstanding.SetActive(false);
@@ -102,7 +118,8 @@ public class Player : VertexSingleton<Player>
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
-        if(SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
+        CurrentNodeLink.Fire("HomeButton_Clicked", button);
+        if (SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
         {
             SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
             Debug.Log("Values reset");
@@ -166,13 +183,43 @@ public class Player : VertexSingleton<Player>
         SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().RemoveBox();
     }
 
+    void LiveInfo()
+    {
+
+        //WholeBox.SetActive(true);
+        mainMenuContainer.SetActiveStatus(false);
+        windowManager.SetActive(true);
+        homeButton.setActiveStatus(true);
+        Reset.setActiveStatus(false);
+        BoundingBox.SetActive(false);
+
+        boxStatus = true;
+        //MainBoxDoor.SetActive(false);
+        //MainBoxPanel.SetActive(false);
+
+        //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+        inDecomp = true;
+        windowManager.GetComponent<FadeIn>().Fade();
+        //
+        SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
+        //
+        // Set the default values to component panel
+
+        ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
+        ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
+    }
+
     // Menu container button click event handler
     private void OnButtonClicked(GameObject button)
     {
+        CurrentNodeLink.Fire("ButtonEventHandler", button);
+    }
 
+    private void ButtonEventHandler(GameObject button)
+    {
         if (button.name == "LiveInformation")
         {
-            
+
             //WholeBox.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
             windowManager.SetActive(true);
@@ -203,9 +250,9 @@ public class Player : VertexSingleton<Player>
             windowManager.SetActive(false);
             Reset.setActiveStatus(false);
             homeButton.setActiveStatus(true);
-            
+
         }
-        else if(button.name == "Collab")
+        else if (button.name == "Collab")
         {
 
 
@@ -217,7 +264,7 @@ public class Player : VertexSingleton<Player>
             homeButton.setActiveStatus(true);
             StartCoroutine(StartCollaberation());
         }
-        else if(button.name == "RemoteAssistance")
+        else if (button.name == "RemoteAssistance")
         {
             RemoteAssistance.SetActive(true);
             mainMenuContainer.SetActiveStatus(false);
@@ -366,6 +413,9 @@ public class Player : VertexSingleton<Player>
 
        // LocationManager.Instance.CurrentState
     }
+
+
+    
 
 
 }

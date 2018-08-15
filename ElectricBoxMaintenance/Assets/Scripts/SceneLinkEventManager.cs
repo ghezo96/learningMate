@@ -27,6 +27,7 @@ public class SceneLinkEventManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         LoadVertxEventManager();
         LoadLiveInformationManager();
+        LoadMessengerNode();
     }
 
     private void Instance_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
@@ -193,6 +194,11 @@ public class SceneLinkEventManager : MonoBehaviour
     {
         GameObject VERTXobjectDecompositionHandlerNode = CreateNode("VertxObjectDecompositionHandler", null);
         VERTXobjectDecompositionHandlerNode.AddComponent<ObjectDecompositionManager>();
+    }
+
+    void LoadMessengerNode()
+    {
+        GameObject MessageHandler = CreateNode("VertxMessageHandler", null);
     }
 
 }
