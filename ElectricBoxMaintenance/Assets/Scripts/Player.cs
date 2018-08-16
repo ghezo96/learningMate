@@ -313,8 +313,9 @@ public class Player : VertexSingleton<Player>
 
     public void InteractiveGuide()
     {
+
         //WholeBox.SetActive(false);
-        LoadKeyAnimation();
+        //LoadKeyAnimation();
         mainMenuContainer.SetActiveStatus(false);
         windowManager.SetActive(false);
         Reset.setActiveStatus(false);
@@ -344,6 +345,22 @@ public class Player : VertexSingleton<Player>
     // Menu container button click event handler
     private void OnButtonClicked(GameObject button)
     {
+
+        if(button.name == "InteractiveGuide")
+        {
+            LoadKeyAnimation();
+            StartCoroutine(FireMessage(button));
+        }
+        else
+        {
+            SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
+        }
+        
+    }
+
+    IEnumerator FireMessage(GameObject button)
+    {
+        yield return new WaitForSeconds(1f);
         SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
     }
 

@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: -776688615, guid: b7721917c3244cb4582143166f69b343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneId: 49befc8a-c867-43a9-b0aa-e061cdf72060
+  SceneId: 6ffeb1fa-d1f0-42f8-b0fc-06ce768c6373
   ViewpointId: 
   SceneAssets: []
   PrefabBindings:
