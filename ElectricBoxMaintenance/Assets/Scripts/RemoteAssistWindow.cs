@@ -20,7 +20,7 @@ public class RemoteAssistWindow : MonoBehaviour {
     {
        if(button.name == "ContactButton1")
         {
-            SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
+            VertexAuthentication.LaunchRemoteAssist("5a9db979-83ef-430b-bb01-733d27feafcd");
 
         }
         else if(button.name == "ContactButton2")

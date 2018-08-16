@@ -22,6 +22,7 @@ public class VertxMessageHandler : MonoBehaviour {
             Player.Instance.LiveInfo();
         }
         else if (button  == "InteractiveGuide") {
+
             Player.Instance.InteractiveGuide();
         }
         else if(button == "Collab")
@@ -37,5 +38,10 @@ public class VertxMessageHandler : MonoBehaviour {
         {
             Player.Instance.Remote();
         }
+    }
+
+    public void DisableClipping(string name)
+    {
+        Player.Instance.DisableSnapping();
     }
 }

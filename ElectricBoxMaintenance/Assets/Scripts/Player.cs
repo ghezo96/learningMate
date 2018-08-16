@@ -84,7 +84,8 @@ public class Player : VertexSingleton<Player>
 
     }
 
-    private void DisableClippingButton_Clicked(GameObject button)
+
+    public void DisableSnapping()
     {
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
@@ -93,10 +94,13 @@ public class Player : VertexSingleton<Player>
                 a.GetComponent<BoxCollider>().enabled = false;
                 RecurrsiveDownwards(a.gameObject);
             }
-          
-        }
-       
 
+        }
+    }
+
+    public void DisableClippingButton_Clicked(GameObject button)
+    {
+        SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("DisableClipping", button.name);
     }
 
     // On scene connect, Handler is set up
