@@ -56,6 +56,33 @@ public class Player : VertexSingleton<Player>
 
        
     }
+    void RemoveBoxCollider(GameObject selectedObject)
+    {
+        if (selectedObject.GetComponent<BoxCollider>())
+        {
+            Destroy(selectedObject.GetComponent<BoxCollider>());
+        }
+    }
+
+    public void RecurrsiveDownwards(GameObject gameObject)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            GameObject childObject = gameObject.transform.GetChild(i).gameObject;
+            Debug.Log(childObject.name);
+            if (childObject.name == "Primitive")
+            {
+                Debug.Log("SPARTAAAAAAAA" + childObject.name);
+                RemoveBoxCollider(childObject);
+            }
+            else
+            {
+                RecurrsiveDownwards(childObject);
+            }
+        }
+
+
+    }
 
     private void DisableClippingButton_Clicked(GameObject button)
     {
@@ -63,7 +90,7 @@ public class Player : VertexSingleton<Player>
         {
             if (a.name.Contains("SWITCH") || a.name.Contains("CONNECTOR"))
             {
-                a.GetComponent<BoxCollider>().enabled = false;
+                RecurrsiveDownwards(gameObject);
             }
           
         }

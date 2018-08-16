@@ -66,7 +66,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             }
         }
 
-        
+        yield return new WaitForSeconds(2f);
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
             if (allObjects.Contains(a.name))

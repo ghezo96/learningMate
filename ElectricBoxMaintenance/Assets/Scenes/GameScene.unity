@@ -3285,6 +3285,11 @@ Prefab:
       propertyPath: ViewpointObject
       value: 
       objectReference: {fileID: 1543860087}
+    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: SceneId
+      value: 49befc8a-c867-43a9-b0aa-e061cdf72060
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_IsPrefabParent: 0
