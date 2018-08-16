@@ -24,10 +24,9 @@ public class SceneLinkEventManager : MonoBehaviour
 
     IEnumerator AttachManagers()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(1f);
         LoadVertxEventManager();
         LoadLiveInformationManager();
-        //LoadMessengerNode();
     }
 
     private void Instance_OnStateChange(SceneLinkStatus oldState, SceneLinkStatus newState)
@@ -181,6 +180,7 @@ public class SceneLinkEventManager : MonoBehaviour
                 Destroy(a.gameObject);
             }
         }
+        
     }
 
     public void LoadVertxEventManager()

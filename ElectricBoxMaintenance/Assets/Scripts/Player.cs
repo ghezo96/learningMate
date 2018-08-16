@@ -36,7 +36,7 @@ public class Player : VertexSingleton<Player>
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
-        homeButton.Clicked += OnButtonClicked;
+        homeButton.Clicked += HomeButton_Clicked;
         StartButton.Clicked += Start_Clicked;
         Reset.Clicked += Reset_Clicked;
         ValidateButton.Clicked += Validate_Clicked;
@@ -176,45 +176,7 @@ public class Player : VertexSingleton<Player>
     // HomeButton click event handler
     private void HomeButton_Clicked(GameObject button)
     {
-        if (SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
-        {
-            SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
-            Debug.Log("Values reset");
-        }
-        RemoteAssistance.SetActive(false);
-        button.SetActive(false);
-        if (inDecomp)
-        {
-            StartCoroutine(GoToHome());
-            windowManager.GetComponent<FadeIn>().FadeOut();
-        }
-        else
-        {
-            if (boxStatus)
-            {
-                boxStatus = false;
-                //MainBoxDoor.SetActive(true);
-                //MainBoxPanel.SetActive(true);
-            }
-            windowManager.SetActive(false);
-            mainMenuContainer.SetActiveStatus(true);
-            // Hide home button
-
-            //WholeBox.SetActive(false);
-            Reset.setActiveStatus(true);
-
-            SetVertxEventHandlerState(false);
-            // REmove CollabVertxObjectHAndler 
-            //SceneLink.Instance.GetComponent<SceneLinkEventManager>().RemoveCollabVertxObjectHandler();
-            //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
-            //MainBox.GetComponent<Movement>().enabled = false;
-            MainBox.GetComponent<BoxCollider>().enabled = true;
-
-
-            ValidateButton.setActiveStatus(false);
-            DisableClippingButton.setActiveStatus(false);
-        }
-
+        SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
     }
 
     IEnumerator GoToHome()
@@ -281,6 +243,7 @@ public class Player : VertexSingleton<Player>
 
             ValidateButton.setActiveStatus(false);
             DisableClippingButton.setActiveStatus(false);
+            StartCoroutine(ResetVertxEventHandler());
         }
 
     }
@@ -466,18 +429,17 @@ public class Player : VertexSingleton<Player>
     // Coroutine to reset the vertx event manager
     IEnumerator ResetVertxEventHandler()
     {
+        yield return new WaitForSeconds(0.5f);
         EnableIoTListeners(false);
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
-            if(a.name != "VertxEventManager")
+            if(!(a.name == "VertxEventManager" || a.name == "VertxObjectDecompositionHandler"))
             {
                 Debug.Log("Destroying object :" + a.name);
                 Destroy(a.gameObject);
-               
             }
 
         }
-        yield return null;
     }
 
 
@@ -498,6 +460,7 @@ public class Player : VertexSingleton<Player>
                 {
                     Destroy(x.gameObject);
                 }
+
             }
         }
     }

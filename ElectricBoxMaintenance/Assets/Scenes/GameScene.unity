@@ -3285,11 +3285,6 @@ Prefab:
       propertyPath: Box
       value: 
       objectReference: {fileID: 1113229465}
-    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
-        type: 2}
-      propertyPath: SceneId
-      value: ac8aece9-1f93-4880-b3af-6fa2f152e3f1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_IsPrefabParent: 0
