@@ -20,14 +20,22 @@ public class VertxMessageHandler : MonoBehaviour {
         if (button == "LiveInformation")
         {
             Player.Instance.LiveInfo();
-        } else if (button  == "InteractiveGuide") {
+        }
+        else if (button  == "InteractiveGuide") {
             Player.Instance.InteractiveGuide();
         }
         else if(button == "Collab")
         {
             Player.Instance.Collaboration();
         }
+        else if (button == "HomeButton")
+        {
+            Player.Instance.GoingHome();
 
-
+        }
+        else if(button == "RemoteAssistance")
+        {
+            Player.Instance.Remote();
+        }
     }
 }

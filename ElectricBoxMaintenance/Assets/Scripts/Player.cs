@@ -34,10 +34,11 @@ public class Player : VertexSingleton<Player>
 
         // create holographic buttons to get started with
         mainMenuContainer.ButtonClicked += OnButtonClicked;
-        homeButton.Clicked += HomeButton_Clicked;
+        homeButton.Clicked += OnButtonClicked;
         StartButton.Clicked += Start_Clicked;
         Reset.Clicked += Reset_Clicked;
         ValidateButton.Clicked += Validate_Clicked;
+
 
         if (homeButton.isActiveAndEnabled)
         {
@@ -133,7 +134,7 @@ public class Player : VertexSingleton<Player>
         }
         RemoteAssistance.SetActive(false);
         button.SetActive(false);
-        if(inDecomp)
+        if (inDecomp)
         {
             StartCoroutine(GoToHome());
             windowManager.GetComponent<FadeIn>().FadeOut();
@@ -190,6 +191,49 @@ public class Player : VertexSingleton<Player>
         SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().RemoveBox();
     }
 
+   
+    public void GoingHome()
+    {
+        if (SceneLink.Instance.transform.GetComponentInChildren<CreateWires>())
+        {
+            SceneLink.Instance.transform.GetComponentInChildren<CreateWires>().ResetWireConnections();
+            Debug.Log("Values reset");
+        }
+        RemoteAssistance.SetActive(false);
+        homeButton.setActiveStatus(false);
+        if (inDecomp)
+        {
+            StartCoroutine(GoToHome());
+            windowManager.GetComponent<FadeIn>().FadeOut();
+        }
+        else
+        {
+            if (boxStatus)
+            {
+                boxStatus = false;
+                //MainBoxDoor.SetActive(true);
+                //MainBoxPanel.SetActive(true);
+            }
+            windowManager.SetActive(false);
+            mainMenuContainer.SetActiveStatus(true);
+            // Hide home button
+
+            //WholeBox.SetActive(false);
+            Reset.setActiveStatus(true);
+
+            SetVertxEventHandlerState(false);
+            // REmove CollabVertxObjectHAndler 
+            //SceneLink.Instance.GetComponent<SceneLinkEventManager>().RemoveCollabVertxObjectHandler();
+            //sceneLink.GetComponent<SwitchAndConnectorNode>().enabled = false;
+            //MainBox.GetComponent<Movement>().enabled = false;
+            MainBox.GetComponent<BoxCollider>().enabled = true;
+
+
+            ValidateButton.setActiveStatus(false);
+        }
+
+    }
+
     public void LiveInfo()
     {
 
@@ -237,76 +281,78 @@ public class Player : VertexSingleton<Player>
         StartCoroutine(StartCollaberation());
     }
 
-    public class MessagePacket
+    public void Remote()
     {
-        public string name;
+        RemoteAssistance.SetActive(true);
+        mainMenuContainer.SetActiveStatus(false);
+        windowManager.SetActive(false);
+        homeButton.setActiveStatus(true);
+        Reset.setActiveStatus(false);
     }
 
     // Menu container button click event handler
     private void OnButtonClicked(GameObject button)
     {
         SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
-        //CurrentNodeLink.Fire("ButtonEventHandler", button.name);
-        //ButtonEventHandler(button);
     }
 
-    private void ButtonEventHandler(string button)
-    {
-        if (button == "LiveInformation")
-        {
-            //WholeBox.SetActive(true);
-            mainMenuContainer.SetActiveStatus(false);
-            windowManager.SetActive(true);
-            homeButton.setActiveStatus(true);
-            Reset.setActiveStatus(false);
-            BoundingBox.SetActive(false);
+    //private void ButtonEventHandler(string button)
+    //{
+    //    if (button == "LiveInformation")
+    //    {
+    //        //WholeBox.SetActive(true);
+    //        mainMenuContainer.SetActiveStatus(false);
+    //        windowManager.SetActive(true);
+    //        homeButton.setActiveStatus(true);
+    //        Reset.setActiveStatus(false);
+    //        BoundingBox.SetActive(false);
 
-            boxStatus = true;
-            //MainBoxDoor.SetActive(false);
-            //MainBoxPanel.SetActive(false);
+    //        boxStatus = true;
+    //        //MainBoxDoor.SetActive(false);
+    //        //MainBoxPanel.SetActive(false);
 
-            //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
-            inDecomp = true;
-            windowManager.GetComponent<FadeIn>().Fade();
-            //
-            SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
-            //
-            // Set the default values to component panel
+    //        //WholeBox.GetComponent<ObjectDecomposition>().MoveObjectsForwards();
+    //        inDecomp = true;
+    //        windowManager.GetComponent<FadeIn>().Fade();
+    //        //
+    //        SceneLink.Instance.GetComponentInChildren<ObjectDecompositionManager>().VertxDecomposeStart();
+    //        //
+    //        // Set the default values to component panel
 
-            ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
-            ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
-        }
-        else if (button == "InteractiveGuide")
-        {
-            //WholeBox.SetActive(false);
-            LoadKeyAnimation();
-            mainMenuContainer.SetActiveStatus(false);
-            windowManager.SetActive(false);
-            Reset.setActiveStatus(false);
-            homeButton.setActiveStatus(true);
+    //        ComponentWindow.Instance.SetPanelText("Tap on components", "to display more information", "");
+    //        ComponentWindow.Instance.SetColourPanel(ComponentWindowPanel);
+    //    }
+    //    else if (button == "InteractiveGuide")
+    //    {
+    //        //WholeBox.SetActive(false);
+    //        LoadKeyAnimation();
+    //        mainMenuContainer.SetActiveStatus(false);
+    //        windowManager.SetActive(false);
+    //        Reset.setActiveStatus(false);
+    //        homeButton.setActiveStatus(true);
 
-        }
-        else if (button == "Collab")
-        {
+    //    }
+    //    else if (button == "Collab")
+    //    {
 
 
-            StartCoroutine(EnableIoTListeners(false));
-            //WholeBox.SetActive(false);
-            mainMenuContainer.SetActiveStatus(false);
-            windowManager.SetActive(false);
-            Reset.setActiveStatus(false);
-            homeButton.setActiveStatus(true);
-            StartCoroutine(StartCollaberation());
-        }
-        else if (button == "RemoteAssistance")
-        {
-            RemoteAssistance.SetActive(true);
-            mainMenuContainer.SetActiveStatus(false);
-            windowManager.SetActive(false);
-            homeButton.setActiveStatus(true);
-            Reset.setActiveStatus(false);
-        }
-    }
+    //        StartCoroutine(EnableIoTListeners(false));
+    //        //WholeBox.SetActive(false);
+    //        mainMenuContainer.SetActiveStatus(false);
+    //        windowManager.SetActive(false);
+    //        Reset.setActiveStatus(false);
+    //        homeButton.setActiveStatus(true);
+    //        StartCoroutine(StartCollaberation());
+    //    }
+    //    else if (button == "RemoteAssistance")
+    //    {
+    //        RemoteAssistance.SetActive(true);
+    //        mainMenuContainer.SetActiveStatus(false);
+    //        windowManager.SetActive(false);
+    //        homeButton.setActiveStatus(true);
+    //        Reset.setActiveStatus(false);
+    //    }
+    //}
 
     // Coroutine to start loading assets from vertx
 

@@ -11,7 +11,7 @@ namespace PiUpdate
     class Program
     {
         static ElectricBox box = new ElectricBox();
-        static string sceneId = "8e864c95-8424-4233-8d71-7457167ec1bb";
+        static string sceneId = "6ffeb1fa-d1f0-42f8-b0fc-06ce768c6373";
         static string guid;
         static bool isRunningOnPi = true;
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VertexUnityPlayer;
 
 public class RemoteAssistWindow : MonoBehaviour {
     
@@ -19,9 +20,12 @@ public class RemoteAssistWindow : MonoBehaviour {
     {
        if(button.name == "ContactButton1")
         {
+            SceneLink.Instance.GetComponentInChildren<NodeLink>().Fire("ButtonEventHandler", button.name);
 
-        } else if(button.name == "ContactButton2")
+        }
+        else if(button.name == "ContactButton2")
         {
+            VertexAuthentication.LaunchRemoteAssist("669469a6-488c-464b-90b0-69d937ebdf05");
         }
     }
 

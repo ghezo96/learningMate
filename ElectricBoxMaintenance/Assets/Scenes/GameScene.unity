@@ -2779,7 +2779,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 862620897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.605, y: 0.315, z: 0}
+  m_LocalPosition: {x: 0.581, y: 0.299, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1754325792}
@@ -3001,16 +3001,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
-        type: 2}
-      propertyPath: ViewpointObject
-      value: 
-      objectReference: {fileID: 1543860087}
     - target: {fileID: 114604668224061156, guid: 281590aa20ce02f4485fa1ecbc592242,
         type: 2}
       propertyPath: Box
       value: 
       objectReference: {fileID: 1113229465}
+    - target: {fileID: 114296273663961542, guid: 281590aa20ce02f4485fa1ecbc592242,
+        type: 2}
+      propertyPath: ViewpointObject
+      value: 
+      objectReference: {fileID: 1543860087}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281590aa20ce02f4485fa1ecbc592242, type: 2}
   m_IsPrefabParent: 0
@@ -7630,7 +7630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1899369347
 MeshRenderer:
   m_ObjectHideFlags: 0

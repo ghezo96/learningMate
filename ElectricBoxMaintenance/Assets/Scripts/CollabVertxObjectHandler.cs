@@ -90,6 +90,8 @@ public class CollabVertxObjectHandler : MonoBehaviour {
     // Method to create and return Vertex Node Link Game object 
     private GameObject CreateNode(string name, string id, string nodelink)
     {
+
+
         GameObject box = GameObject.FindGameObjectWithTag("Box");
         var vertxThing = SceneLink.Instance.CreateNode(name,
             box.transform.position,
