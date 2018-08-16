@@ -90,10 +90,12 @@ public class Player : VertexSingleton<Player>
         {
             if (a.name.Contains("SWITCH") || a.name.Contains("CONNECTOR"))
             {
-                RecurrsiveDownwards(gameObject);
+                a.GetComponent<BoxCollider>().enabled = false;
+                RecurrsiveDownwards(a.gameObject);
             }
           
         }
+       
 
     }
 

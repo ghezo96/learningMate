@@ -524,7 +524,7 @@ namespace HoloToolkit.Unity.InputModule
                 
                     if ((gameObject.name.Contains("SWITCH")) && !(col.gameObject.tag == "SnapOccupied") && !(gameObject.tag == "Snapped"))
                     {
-                        col.GetComponentInParent<CreateWires>().IncrementSwitchCount();
+                        
                         
                     
                         StopDragging();
@@ -541,6 +541,7 @@ namespace HoloToolkit.Unity.InputModule
 
                         //col.gameObject.tag = "SnapOccupied";
                         gameObject.tag = "Snapped";
+                    col.GetComponentInParent<CreateWires>().IncrementSwitchCount();
                     }
                 }
                 else if (col.gameObject.name.Contains("SnapConnector"))
@@ -549,7 +550,7 @@ namespace HoloToolkit.Unity.InputModule
 
                     if ((gameObject.name.Contains("CONNECTOR")) && !(col.gameObject.tag == "SnapOccupied")&& !(gameObject.tag == "Snapped"))
                     {
-                        col.GetComponentInParent<CreateWires>().IncrementConnectorCount();
+                       
 
                         
 
@@ -565,7 +566,8 @@ namespace HoloToolkit.Unity.InputModule
 
                         //col.gameObject.tag = "SnapOccupied";
                         gameObject.tag = "Snapped";
-                    }
+                    col.GetComponentInParent<CreateWires>().IncrementConnectorCount();
+                }
                 }
         }
 

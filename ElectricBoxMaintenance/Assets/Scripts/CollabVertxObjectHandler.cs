@@ -69,6 +69,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
+            yield return new WaitForSeconds(0.1f);
             if (allObjects.Contains(a.name))
             {
                 Destroy(a.gameObject);
