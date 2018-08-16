@@ -10,6 +10,7 @@ public class Player : VertexSingleton<Player>
     public FloatingButton StartButton;
     public FloatingButton Reset;
     public FloatingButton ValidateButton;
+    public FloatingButton DisableClippingButton;
     public GameObject Camera;
     public GameObject MainBox;
     public GameObject BoundingBox;
@@ -17,6 +18,7 @@ public class Player : VertexSingleton<Player>
     public GameObject sceneLink;
     public GameObject SpatialMapping;
     public GameObject RemoteAssistance;
+    
     bool boxStatus = true;
     bool inDecomp = false;
     // panels for live information
@@ -38,6 +40,7 @@ public class Player : VertexSingleton<Player>
         StartButton.Clicked += Start_Clicked;
         Reset.Clicked += Reset_Clicked;
         ValidateButton.Clicked += Validate_Clicked;
+        DisableClippingButton.Clicked += DisableClippingButton_Clicked;
 
 
         if (homeButton.isActiveAndEnabled)
@@ -52,6 +55,19 @@ public class Player : VertexSingleton<Player>
         SceneLink.Instance.OnStateChange += SceneLink_OnStateChange;
 
        
+    }
+
+    private void DisableClippingButton_Clicked(GameObject button)
+    {
+        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
+        {
+            if (a.name.Contains("SWITCH") || a.name.Contains("CONNECTOR"))
+            {
+                a.GetComponent<BoxCollider>().enabled = false;
+            }
+          
+        }
+
     }
 
     // On scene connect, Handler is set up
@@ -163,6 +179,7 @@ public class Player : VertexSingleton<Player>
 
 
             ValidateButton.setActiveStatus(false);
+            DisableClippingButton.setActiveStatus(false);
         }
 
     }
@@ -230,6 +247,7 @@ public class Player : VertexSingleton<Player>
 
 
             ValidateButton.setActiveStatus(false);
+            DisableClippingButton.setActiveStatus(false);
         }
 
     }
@@ -368,6 +386,7 @@ public class Player : VertexSingleton<Player>
         MainBox.GetComponent<BoxCollider>().enabled = false;
 
         ValidateButton.setActiveStatus(true);
+        DisableClippingButton.setActiveStatus(true);
     }
 
     // Coroutine to load first key animation

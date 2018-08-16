@@ -14,6 +14,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
 
     GameObject VertxBoxComponent;
     List<GameObject> vertxGameObjects;
+    List<string> allObjects;
 
     public static List<GameObject> ObjectComparisonList = new List<GameObject>();
     public static int GameObjectCounter;
@@ -22,7 +23,7 @@ public class CollabVertxObjectHandler : MonoBehaviour {
     IEnumerator SpawnShit()
     {
         vertxGameObjects = new List<GameObject>();
-
+        allObjects = new List<string>();
         ComponentArray = new string[,]
         {
             {"SWITCH_1", "27a9c182-675a-4f53-b344-d50a1c874839"},
@@ -65,15 +66,18 @@ public class CollabVertxObjectHandler : MonoBehaviour {
             }
         }
 
-        // Attach listener to the switches and connections
-        foreach (GameObject gameObj in vertxGameObjects)
+        
+        foreach (NodeLink a in SceneLink.Instance.GetComponentsInChildren<NodeLink>())
         {
-            //if (gameObj.GetComponent<BoxCollider>().size.x == 1)
-            //gameObj.AddComponent<MoveAndSnap2>();
-            //gameObj.AddComponent<Rigidbody>();
-            //gameObj.GetComponent<Rigidbody>().useGravity = false;
-            //gameObj.GetComponent<Rigidbody>().isKinematic = true;
-           // Destroy(gameObj.GetComponent<BoxCollider>());
+            if (allObjects.Contains(a.name))
+            {
+                Destroy(a.gameObject);
+            }
+            else
+            {
+                allObjects.Add(a.name);
+            }
+
         }
 
         yield break;
