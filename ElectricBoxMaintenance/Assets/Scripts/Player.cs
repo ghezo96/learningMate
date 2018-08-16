@@ -111,8 +111,8 @@ public class Player : VertexSingleton<Player>
         {
             Debug.Log("SceneLink_OnStateChange - VERTX connected : ");
             StartCoroutine(ResetVertxEventHandler());
-           // StartCoroutine(GetMessageHandler());
-
+            // StartCoroutine(GetMessageHandler());
+            StartCoroutine(SaveScene());
         }
 
     }
@@ -442,6 +442,13 @@ public class Player : VertexSingleton<Player>
         }
     }
 
+    public IEnumerator SaveScene()
+    {
+        UnityEngine.Networking.UnityWebRequest webRequest = UnityEngine.Networking.UnityWebRequest.Get(VertexAuthentication.Instance.ServiceUrl + "/session/scene/save/" + SceneLink.Instance.SceneId);
+        webRequest.AddVertexAuth();
+        yield return webRequest.SendWebRequest();
+    }
+
 
     // Enable / Disable VertxEventHandler
     private void SetVertxEventHandlerState(bool state)
@@ -463,6 +470,8 @@ public class Player : VertexSingleton<Player>
 
             }
         }
+        StartCoroutine(SaveScene());
+
     }
 
     IEnumerator EnableIoTListeners(bool isEnabled)
