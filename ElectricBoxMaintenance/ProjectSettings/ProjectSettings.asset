@@ -39,7 +39,8 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: a913977355ded824dacb46ec2fb480f8,
+    type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -256,7 +257,14 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 470eefbe32c62ff4f82473ee15c2fbee, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs: []
   m_BuildTargetVRSettings:
@@ -572,7 +580,7 @@ PlayerSettings:
   metroCertificateNotAfter: 00e6510d2947d501
   metroApplicationDescription: ElectricBoxMaintenance
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: ElectricBoxMaintenance
   metroCommandLineArgsFile: 
   metroTileShowName: 0
   metroMediumTileShowName: 0
